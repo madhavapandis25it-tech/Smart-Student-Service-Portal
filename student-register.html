@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | Smart Student Service Portal</title>
+    <meta name="description" content="Create your student account for the Smart Student Service Portal.">
+    <meta name="theme-color" content="#051632">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link rel="icon" href="assets/logo/psna%20logo.png" type="image/png">
+</head>
+<body class="auth-page page-load">
+
+    <div class="auth-bg" aria-hidden="true">
+        <div class="auth-bg-gold"></div>
+        <div class="auth-bg-blend"></div>
+        <div class="auth-glow auth-glow-1"></div>
+        <div class="auth-glow auth-glow-2"></div>
+        <div class="auth-glow auth-glow-3"></div>
+        <div class="auth-bg-reflection"></div>
+        <div class="auth-particles" aria-hidden="true">
+            <div class="auth-particle" style="left:10%;top:15%;animation-delay:0s;width:3px;height:3px;"></div>
+            <div class="auth-particle" style="left:25%;top:35%;animation-delay:1.5s;width:2px;height:2px;"></div>
+            <div class="auth-particle" style="left:42%;top:22%;animation-delay:0.8s;width:3px;height:3px;"></div>
+            <div class="auth-particle" style="left:62%;top:38%;animation-delay:2.2s;width:2px;height:2px;"></div>
+            <div class="auth-particle" style="left:80%;top:12%;animation-delay:0.3s;width:4px;height:4px;"></div>
+            <div class="auth-particle" style="left:35%;top:48%;animation-delay:1.8s;width:2px;height:2px;"></div>
+            <div class="auth-particle" style="left:55%;top:28%;animation-delay:3s;width:3px;height:3px;"></div>
+            <div class="auth-particle" style="left:15%;top:42%;animation-delay:0.5s;width:2px;height:2px;"></div>
+            <div class="auth-particle" style="left:88%;top:25%;animation-delay:1.2s;width:3px;height:3px;"></div>
+            <div class="auth-particle" style="left:70%;top:52%;animation-delay:2.5s;width:2px;height:2px;"></div>
+        </div>
+        <div class="auth-blur-circle auth-blur-circle-1"></div>
+        <div class="auth-blur-circle auth-blur-circle-2"></div>
+        <div class="auth-blur-circle auth-blur-circle-3"></div>
+        <svg class="auth-abstract-curve" viewBox="0 0 800 800" aria-hidden="true">
+            <path d="M100,400 C200,200 400,100 600,300 C700,400 750,500 700,600 C650,700 500,750 300,700 C150,650 50,550 100,400 Z" fill="none" stroke="rgba(212,174,112,0.06)" stroke-width="1.5"/>
+            <path d="M200,500 C300,350 450,300 550,400 C600,450 620,520 580,580 C540,640 450,650 350,620 C280,600 220,560 200,500 Z" fill="none" stroke="rgba(212,174,112,0.04)" stroke-width="1"/>
+        </svg>
+        <div class="auth-bg-navy-depth"></div>
+    </div>
+
+    <!-- Left Side Visual Balance Decoration -->
+    <div class="auth-left-decor" aria-hidden="true">
+        <div class="auth-decor-glow"></div>
+        <div class="auth-decor-gradient"></div>
+        <div class="auth-accent-line auth-accent-line-1"></div>
+        <div class="auth-accent-line auth-accent-line-2"></div>
+        <div class="auth-glass-circle auth-glass-circle-1"></div>
+        <div class="auth-glass-circle auth-glass-circle-2"></div>
+        <div class="auth-glass-circle auth-glass-circle-3"></div>
+        <div class="auth-gold-spot"></div>
+    </div>
+
+    <!-- Header -->
+    <header class="header auth-header" role="banner">
+        <div class="header-inner">
+            <div class="header-left">
+                <div class="header-logo-wrapper">
+                    <img src="assets/logo/psna%20logo.png" alt="PSNA College of Engineering & Technology Logo" class="header-logo" id="collegeLogo">
+                    <div class="header-logo-glow" aria-hidden="true"></div>
+                </div>
+                <div class="header-brand">
+                    <h1 class="header-title">Smart Student Service Portal</h1>
+                    <p class="header-subtitle">PSNA College of Engineering & Technology, Dindigul</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <nav class="header-nav" role="navigation" aria-label="Quick links">
+                    <a href="index.html" class="header-nav-link">Home</a>
+                    <a href="student-login.html" class="header-nav-link">Login</a>
+                    <a href="#" class="header-nav-link">Help</a>
+                </nav>
+            </div>
+            <button class="header-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+                <span class="hamburger-line"></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Navigation Overlay -->
+    <div class="mobile-nav" role="dialog" aria-modal="true" aria-label="Mobile navigation">
+        <div class="mobile-nav-inner">
+            <button class="mobile-nav-close" aria-label="Close navigation menu">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+                </svg>
+            </button>
+            <nav aria-label="Mobile navigation links">
+                <a href="index.html" class="mobile-nav-link">Home</a>
+                <a href="student-login.html" class="mobile-nav-link">Login</a>
+                <a href="#" class="mobile-nav-link">Help</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Registration Page Container -->
+    <main class="main auth-page-container register-page" role="main">
+        <div class="auth-card-wrapper register-wrapper">
+            <div class="auth-card-glow" aria-hidden="true"></div>
+            <div class="auth-card reveal slide-up">
+                <div class="auth-card-glass"></div>
+                <div class="auth-card-glass-border"></div>
+                <div class="auth-card-content">
+
+                    <div class="auth-card-header">
+                        <div class="auth-card-logo">
+                            <img src="assets/logo/psna%20logo.png" alt="PSNA College Logo">
+                        </div>
+                        <h2 class="auth-card-title">Student Registration</h2>
+                        <p class="auth-card-welcome">Create Account</p>
+                        <p class="auth-card-subtitle">Fill in your details to create a new student account.</p>
+                    </div>
+
+                    <div id="regStatusLive" class="sr-only" aria-live="assertive"></div>
+
+                    <form class="auth-form" id="studentRegisterForm" novalidate>
+
+                        <div class="register-grid">
+
+                            <!-- Registration Number -->
+                            <div class="auth-field">
+                                <input type="text" inputmode="numeric" id="regNumber" class="auth-input" placeholder=" " maxlength="16" pattern="[0-9]{16}" required aria-required="true" autocomplete="off">
+                                <label for="regNumber" class="auth-label">Registration Number</label>
+                                <div class="error-msg" id="regNumberError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Roll Number -->
+                            <div class="auth-field">
+                                <input type="text" id="rollNumber" class="auth-input" placeholder=" " maxlength="10" required aria-required="true" autocomplete="off">
+                                <label for="rollNumber" class="auth-label">Roll Number</label>
+                                <div class="error-msg" id="rollNumberError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Full Name -->
+                            <div class="auth-field register-full-width">
+                                <input type="text" id="fullName" class="auth-input" placeholder=" " required aria-required="true" autocomplete="name">
+                                <label for="fullName" class="auth-label">Full Name</label>
+                                <div class="error-msg" id="fullNameError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Batch -->
+                            <div class="auth-field">
+                                <div class="auth-select-wrapper">
+                                    <select id="batch" class="auth-input auth-select" required aria-required="true">
+                                        <option value="" disabled selected></option>
+                                        <option value="2027">2027</option>
+                                        <option value="2028">2028</option>
+                                        <option value="2029">2029</option>
+                                        <option value="2030">2030</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="batch" class="auth-label">Batch</label>
+                                </div>
+                                <div class="error-msg" id="batchError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Year -->
+                            <div class="auth-field">
+                                <div class="auth-select-wrapper">
+                                    <select id="year" class="auth-input auth-select" required aria-required="true">
+                                        <option value="" disabled selected></option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="year" class="auth-label">Year</label>
+                                </div>
+                                <div class="error-msg" id="yearError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Section -->
+                            <div class="auth-field">
+                                <div class="auth-select-wrapper">
+                                    <select id="section" class="auth-input auth-select" required aria-required="true">
+                                        <option value="" disabled selected></option>
+                                        <option value="A">A</option>
+                                        <option value="B">B</option>
+                                        <option value="C">C</option>
+                                        <option value="D">D</option>
+                                        <option value="E">E</option>
+                                        <option value="F">F</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="section" class="auth-label">Section</label>
+                                </div>
+                                <div class="error-msg" id="sectionError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Department -->
+                            <div class="auth-field register-full-width">
+                                <div class="auth-select-wrapper">
+                                    <select id="department" class="auth-input auth-select" required aria-required="true">
+                                        <option value="" disabled selected></option>
+                                        <option value="Civil Engineering">Civil Engineering</option>
+                                        <option value="Mechanical Engineering">Mechanical Engineering</option>
+                                        <option value="Electronics and Communication Engineering">Electronics and Communication Engineering</option>
+                                        <option value="Electrical and Electronics Engineering">Electrical and Electronics Engineering</option>
+                                        <option value="Computer Science and Engineering">Computer Science and Engineering</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                        <option value="Bio Medical Engineering">Bio Medical Engineering</option>
+                                        <option value="Computer Science and Business Systems">Computer Science and Business Systems</option>
+                                        <option value="Artificial Intelligence and Data Science">Artificial Intelligence and Data Science</option>
+                                        <option value="CSE (Cyber Security)">CSE (Cyber Security)</option>
+                                        <option value="CSE (Artificial Intelligence and Machine Learning)">CSE (Artificial Intelligence and Machine Learning)</option>
+                                        <option value="Electronics Engineering (VLSI Design and Technology)">Electronics Engineering (VLSI Design and Technology)</option>
+                                        <option value="Business Administration (MBA)">Business Administration (MBA)</option>
+                                        <option value="Computer Applications (MCA)">Computer Applications (MCA)</option>
+                                        <option value="Science and Humanities">Science and Humanities</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="department" class="auth-label">Department</label>
+                                </div>
+                                <div class="error-msg" id="departmentError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Quota -->
+                            <div class="auth-field">
+                                <div class="auth-select-wrapper">
+                                    <select id="quota" class="auth-input auth-select" required aria-required="true">
+                                        <option value="" disabled selected></option>
+                                        <option value="Government Quota">Government Quota</option>
+                                        <option value="Management Quota">Management Quota</option>
+                                        <option value="Sports Quota">Sports Quota</option>
+                                        <option value="7.5% Reservation">7.5% Reservation</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="quota" class="auth-label">Quota</label>
+                                </div>
+                                <div class="error-msg" id="quotaError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Gender -->
+                            <div class="auth-field">
+                                <div class="auth-select-wrapper">
+                                    <select id="gender" class="auth-input auth-select" required aria-required="true">
+                                        <option value="" disabled selected></option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="gender" class="auth-label">Gender</label>
+                                </div>
+                                <div class="error-msg" id="genderError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Date of Birth -->
+                            <div class="auth-field register-full-width">
+                                <input type="date" id="dob" class="auth-input auth-date-input" required aria-required="true">
+                                <label for="dob" class="auth-label auth-date-label">Date of Birth</label>
+                                <div class="error-msg" id="dobError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Tutor Name -->
+                            <div class="auth-field register-full-width">
+                                <input type="text" id="tutorName" class="auth-input" placeholder=" " required aria-required="true" autocomplete="off">
+                                <label for="tutorName" class="auth-label">Tutor Name</label>
+                                <div class="error-msg" id="tutorNameError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Email -->
+                            <div class="auth-field register-full-width">
+                                <input type="email" id="email" class="auth-input" placeholder=" " required aria-required="true" autocomplete="email">
+                                <label for="email" class="auth-label">Email Address</label>
+                                <div class="error-msg" id="emailError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Password -->
+                            <div class="auth-field">
+                                <input type="password" id="password" class="auth-input" placeholder=" " minlength="6" required aria-required="true" autocomplete="new-password">
+                                <label for="password" class="auth-label">Password</label>
+                                <button type="button" class="auth-eye-toggle" aria-label="Show password" tabindex="0">
+                                    <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                    <svg class="eye-icon eye-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                                <div class="error-msg" id="passwordError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Confirm Password -->
+                            <div class="auth-field">
+                                <input type="password" id="confirmPassword" class="auth-input" placeholder=" " required aria-required="true" autocomplete="new-password">
+                                <label for="confirmPassword" class="auth-label">Confirm Password</label>
+                                <button type="button" class="auth-eye-toggle" aria-label="Show password" tabindex="0">
+                                    <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
+                                    <svg class="eye-icon eye-on" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                                <div class="error-msg" id="confirmPasswordError" aria-live="polite"></div>
+                            </div>
+
+                            <!-- Password Strength -->
+                            <div class="register-full-width">
+                                <div class="password-strength">
+                                    <div class="password-strength-bar">
+                                        <div class="password-strength-fill" id="passwordStrengthFill"></div>
+                                    </div>
+                                    <span class="password-strength-text" id="passwordStrengthText"></span>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="auth-field register-terms">
+                            <label class="auth-checkbox-wrapper">
+                                <input type="checkbox" id="terms" class="auth-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">I agree to the <a href="#" class="terms-link">Terms & Conditions</a> and <a href="#" class="terms-link">Privacy Policy</a>.</span>
+                            </label>
+                            <div class="error-msg" id="termsError" aria-live="polite"></div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-primary auth-submit-btn" id="submitBtn">
+                            <span class="btn-text">Create Account</span>
+                            <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+                            </svg>
+                            <div class="spinner" id="btnSpinner" aria-hidden="true" style="display: none;"></div>
+                        </button>
+
+                    </form>
+
+                    <div class="auth-card-footer">
+                        <p class="auth-signup-text">Already have an account? <a href="student-login.html" class="auth-signup-link">Log In</a></p>
+                        <div class="auth-back-home">
+                            <a href="index.html" class="back-home-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/>
+                                </svg>
+                                Back to Home
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <div class="ripple-container" aria-hidden="true"></div>
+
+    <script src="js/animations.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/student-register.js"></script>
+</body>
+</html>
