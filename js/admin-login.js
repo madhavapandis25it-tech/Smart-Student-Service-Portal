@@ -11,10 +11,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const btnSpinner = document.getElementById('btnSpinner');
     const authStatusLive = document.getElementById('authStatusLive');
+    const rememberMeCheckbox = document.getElementById('rememberMe');
     const loginErrorBanner = document.getElementById('loginErrorBanner');
     const loginErrorText = document.getElementById('loginErrorText');
 
     if (!loginForm) return;
+
+    const savedEmail = localStorage.getItem('adminRememberedEmail');
+    if (savedEmail && rememberMeCheckbox && emailField) {
+        emailField.value = savedEmail;
+        rememberMeCheckbox.checked = true;
+    }
 
     const ADMIN_CREDENTIALS = {
         email: 'admin@college.edu',
@@ -143,6 +150,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnText) btnText.textContent = 'Authenticating...';
         emailField.disabled = true;
         passwordField.disabled = true;
+
+        if (rememberMeCheckbox && rememberMeCheckbox.checked) {
+            localStorage.setItem('adminRememberedEmail', enteredEmail);
+        } else {
+            localStorage.removeItem('adminRememberedEmail');
+        }
 
         sessionStorage.setItem('adminAuthenticated', 'true');
         announceLive('Authentication successful! Redirecting to Admin Dashboard...');

@@ -2,7 +2,7 @@
 
 const AdminDashboard = (() => {
 
-    const ROLES = ['HOD', 'TUTOR', 'NODAL OFFICER', 'OS', 'WARDEN', 'DRSS'];
+    const ROLES = ['HOD', 'TUTOR', 'NODAL OFFICER', 'OS', 'WARDEN', 'DRS'];
 
     const DEPARTMENTS = [
         'Computer Science and Engineering',
@@ -29,7 +29,7 @@ const AdminDashboard = (() => {
         { id: 4, username: 'nodal_office', email: 'nodal@college.edu', role: 'NODAL OFFICER', department: 'Science and Humanities', password: 'pass123' },
         { id: 5, username: 'os_ml', email: 'os.ml@college.edu', role: 'OS', department: 'CSE (Artificial Intelligence and Machine Learning)', password: 'pass123' },
         { id: 6, username: 'warden_hostel', email: 'warden@college.edu', role: 'WARDEN', department: 'Mechanical Engineering', password: 'pass123' },
-        { id: 7, username: 'drss_admin', email: 'drss@college.edu', role: 'DRSS', department: 'Electronics and Communication Engineering', password: 'pass123' },
+        { id: 7, username: 'drs_admin', email: 'drs@college.edu', role: 'DRS', department: 'Electronics and Communication Engineering', password: 'pass123' },
         { id: 8, username: 'hod_it', email: 'hod.it@college.edu', role: 'HOD', department: 'Information Technology', password: 'pass123' }
     ];
 

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Login | SSSP</title>
+    <title>Admin Login | Smart Student Service Portal</title>
     <meta name="description" content="Admin login for Smart Student Service Portal">
     <meta name="theme-color" content="#051632">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -72,7 +72,7 @@
                 <nav class="header-nav" role="navigation" aria-label="Quick links">
                     <a href="index.html" class="header-nav-link">Home</a>
                     <a href="index.html#portals" class="header-nav-link">Back</a>
-                    <a href="#" class="header-nav-link">Help</a>
+                    <a href="help-center.html" class="header-nav-link">Help</a>
                 </nav>
             </div>
             <button class="header-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -93,7 +93,7 @@
             <nav aria-label="Mobile navigation links">
                 <a href="index.html" class="mobile-nav-link">Home</a>
                 <a href="index.html#portals" class="mobile-nav-link">Back</a>
-                <a href="#" class="mobile-nav-link">Help</a>
+                <a href="help-center.html" class="mobile-nav-link">Help</a>
             </nav>
         </div>
     </div>
@@ -110,8 +110,8 @@
                         <div class="auth-card-logo">
                             <img src="assets/logo/psna%20logo.png" alt="PSNA College Logo">
                         </div>
-                        <h2 class="auth-card-title">SSSP Admin Panel</h2>
-                        <p class="auth-card-welcome">Admin Login</p>
+                        <h2 class="auth-card-title">Admin Login</h2>
+                        <p class="auth-card-welcome">Welcome Back</p>
                         <p class="auth-card-subtitle">Sign in with your administrator credentials to manage the portal.</p>
                     </div>
 
@@ -121,7 +121,7 @@
 
                         <div class="auth-field">
                             <input type="email" id="email" class="auth-input" placeholder=" " required aria-required="true">
-                            <label for="email" class="auth-label">Username / Email</label>
+                            <label for="email" class="auth-label">Email Address</label>
                             <div class="error-msg" id="emailError" aria-live="polite"></div>
                         </div>
 
@@ -139,6 +139,15 @@
                                 </svg>
                             </button>
                             <div class="error-msg" id="passwordError" aria-live="polite"></div>
+                        </div>
+
+                        <div class="auth-options">
+                            <label class="auth-checkbox-wrapper">
+                                <input type="checkbox" id="rememberMe" class="auth-checkbox">
+                                <span class="checkbox-custom"></span>
+                                <span class="checkbox-label">Remember Me</span>
+                            </label>
+                            <a href="forgot-password.html?role=admin" class="auth-forgot-link">Forgot Password?</a>
                         </div>
 
                         <div class="auth-error-banner" id="loginErrorBanner" role="alert" style="display: none;">
@@ -161,7 +170,7 @@
                     <div class="auth-card-footer">
                         <p class="auth-privacy-notice">
                             This is a secure enterprise portal. By logging in, you agree to our
-                            <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                            <a href="terms.html">Terms of Service</a> and <a href="privacy.html">Privacy Policy</a>.
                         </p>
                         <div class="auth-back-home">
                             <a href="index.html" class="back-home-link">

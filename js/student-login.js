@@ -17,8 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const btnSpinner = document.getElementById('btnSpinner');
     const authStatusLive = document.getElementById('authStatusLive');
-    const googleBtn = document.getElementById('googleBtn');
-
     if (!loginForm) return;
 
     // Reset error structures on focus/type
@@ -117,18 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
         announceLive(`Error: ${msg}`);
     }
 
-    // Google Button Click Simulated State
-    if (googleBtn) {
-        googleBtn.addEventListener('click', () => {
-            announceLive('Google login requested. Connecting to external service...');
-            googleBtn.disabled = true;
-            setTimeout(() => {
-                announceLive('Google authentication simulation complete.');
-                googleBtn.disabled = false;
-            }, 1000);
-        });
-    }
-
     // Form submit controller
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
@@ -154,8 +140,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnText) btnText.textContent = 'Authenticating...';
         emailField.disabled = true;
         passwordField.disabled = true;
-        if (googleBtn) googleBtn.disabled = true;
-
         announceLive('Authenticating credentials... Please wait.');
 
         // Simulated academic database latency delay

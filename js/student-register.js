@@ -37,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (statusLive) statusLive.textContent = msg;
     }
 
-    // Roll number: auto uppercase
+    // Roll number: digits only, max 3
     if (rollNumber) {
         rollNumber.addEventListener('input', () => {
-            rollNumber.value = rollNumber.value.toUpperCase();
+            rollNumber.value = rollNumber.value.replace(/\D/g, '').slice(0, 3);
         });
     }
 
@@ -147,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateRollNumber() {
         const val = rollNumber.value.trim();
         if (!val) { showFieldError(rollNumber, 'Roll number is required.'); return false; }
-        if (val.length < 5 || val.length > 10) { showFieldError(rollNumber, 'Invalid roll number format.'); return false; }
+        if (!/^\d{1,3}$/.test(val)) { showFieldError(rollNumber, 'Must contain 1 to 3 digits.'); return false; }
         return true;
     }
 
@@ -253,6 +253,25 @@ document.addEventListener('DOMContentLoaded', () => {
         announce('Creating your account...');
 
         setTimeout(() => {
+            const profileData = {
+                name: fullName.value.trim(),
+                regNo: regNumber.value.trim(),
+                rollNo: rollNumber.value.trim(),
+                gender: gender.value,
+                dob: dob.value,
+                batch: batch.value,
+                currentYear: year.value,
+                semester: '1',
+                section: section.value,
+                department: department.value,
+                tutorName: tutorName.value.trim(),
+                email: email.value.trim(),
+                initials: fullName.value.trim().split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2)
+            };
+            const existing = JSON.parse(localStorage.getItem('studentProfile')) || {};
+            const merged = { ...existing, ...profileData };
+            localStorage.setItem('studentProfile', JSON.stringify(merged));
+
             announce('Account created successfully! Redirecting...');
             setTimeout(() => {
                 window.location.href = 'registration-success.html';

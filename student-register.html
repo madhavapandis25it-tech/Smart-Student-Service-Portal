@@ -74,7 +74,7 @@
                 <nav class="header-nav" role="navigation" aria-label="Quick links">
                     <a href="index.html" class="header-nav-link">Home</a>
                     <a href="student-login.html" class="header-nav-link">Login</a>
-                    <a href="#" class="header-nav-link">Help</a>
+                    <a href="help-center.html" class="header-nav-link">Help</a>
                 </nav>
             </div>
             <button class="header-mobile-toggle" aria-label="Toggle navigation menu" aria-expanded="false">
@@ -96,7 +96,7 @@
             <nav aria-label="Mobile navigation links">
                 <a href="index.html" class="mobile-nav-link">Home</a>
                 <a href="student-login.html" class="mobile-nav-link">Login</a>
-                <a href="#" class="mobile-nav-link">Help</a>
+                <a href="help-center.html" class="mobile-nav-link">Help</a>
             </nav>
         </div>
     </div>
@@ -134,7 +134,7 @@
 
                             <!-- Roll Number -->
                             <div class="auth-field">
-                                <input type="text" id="rollNumber" class="auth-input" placeholder=" " maxlength="10" required aria-required="true" autocomplete="off">
+                                <input type="text" inputmode="numeric" id="rollNumber" class="auth-input" placeholder=" " maxlength="3" pattern="[0-9]{1,3}" required aria-required="true" autocomplete="off">
                                 <label for="rollNumber" class="auth-label">Roll Number</label>
                                 <div class="error-msg" id="rollNumberError" aria-live="polite"></div>
                             </div>
@@ -325,7 +325,7 @@
                             <label class="auth-checkbox-wrapper">
                                 <input type="checkbox" id="terms" class="auth-checkbox">
                                 <span class="checkbox-custom"></span>
-                                <span class="checkbox-label">I agree to the <a href="#" class="terms-link">Terms & Conditions</a> and <a href="#" class="terms-link">Privacy Policy</a>.</span>
+                                <span class="checkbox-label">I agree to the <a href="terms.html" class="terms-link">Terms & Conditions</a> and <a href="privacy.html" class="terms-link">Privacy Policy</a>.</span>
                             </label>
                             <div class="error-msg" id="termsError" aria-live="polite"></div>
                         </div>

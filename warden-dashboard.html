@@ -9,6 +9,7 @@
 <link rel="icon" href="assets/logo/psna%20logo.png" type="image/png">
 <script src="https://cdn.tailwindcss.com"></script>
 <script>tailwind.config={theme:{extend:{colors:{navy:{DEFAULT:'#051632',light:'#0a2454'},wine:{DEFAULT:'#4E1526',light:'#7C2A40'},gold:{DEFAULT:'#D4AE70',light:'#E8C98B'}},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
+<script src="js/seed-data.js"></script>
 <style>
 body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scrollbar-color:#1a3a6a #051632}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#051632}::-webkit-scrollbar-thumb{background:#1a3a6a;border-radius:3px}
 .glass-card{background:rgba(15,48,104,0.45);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:20px}
@@ -107,22 +108,43 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
 </div>
 </div>
 
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
 <script>
 'use strict';
 const pendingData=[
 {student:'Arun Kumar R',year:'III',need:'Academic',cert:'Bonafide',reasons:'Higher Studies — GRE Application',date:'2026-07-15'},
 {student:'Priya Sharma M',year:'II',need:'Financial',cert:'Education Loan',reasons:'Bank Loan Documentation',date:'2026-07-14'},
-{student:'Ravi Chandran K',year:'IV',need:'Academic',cert:'CGPA/Percentage',reasons:'Campus Placement',date:'2026-07-13'},
+{student:'Ravi Chandran K',year:'IV',need:'Academic',cert:'CGPA/Percentage',reasons:'Campus Placement Requirement',date:'2026-07-13'},
 {student:'Meena Devi S',year:'I',need:'Personal',cert:'Bonafide',reasons:'Passport Application',date:'2026-07-12'},
-{student:'Karthik S',year:'III',need:'Academic',cert:'Original Certificate',reasons:'Transfer Certificate',date:'2026-07-11'},
-{student:'Deepa R',year:'II',need:'Financial',cert:'Education Loan',reasons:'Scholarship Verification',date:'2026-07-10'},
+{student:'Karthik Subramani',year:'III',need:'Academic',cert:'Original Certificate',reasons:'Transfer Certificate',date:'2026-07-11'},
+{student:'Deepa Rajendran',year:'II',need:'Financial',cert:'Education Loan',reasons:'Scholarship Verification',date:'2026-07-10'},
+{student:'Surya Prakash V',year:'IV',need:'Academic',cert:'CGPA/Percentage',reasons:'Post-Graduate Admission',date:'2026-07-09'},
+{student:'Lakshmi Narayanan',year:'III',need:'Personal',cert:'Bonafide',reasons:'Visa Application Support',date:'2026-07-08'},
+{student:'Vikram Balaji',year:'IV',need:'Financial',cert:'Education Loan',reasons:'Education Loan Sanction',date:'2026-07-07'},
+{student:'Anjali Murugan',year:'III',need:'Academic',cert:'Original Certificate',reasons:'Original TC for Transfer',date:'2026-07-06'},
+{student:'Santhosh Kumar P',year:'II',need:'Academic',cert:'CGPA/Percentage',reasons:'Internship Proof',date:'2026-07-05'},
+{student:'Divya Bharathi R',year:'I',need:'Personal',cert:'Bonafide',reasons:'Hostel Fee Concession',date:'2026-07-04'},
+{student:'Manoj Prasad K',year:'IV',need:'Financial',cert:'Education Loan',reasons:'Higher Studies Loan',date:'2026-07-03'},
+{student:'Tamil Selvan R',year:'II',need:'Academic',cert:'CGPA/Percentage',reasons:'MS Abroad Application',date:'2026-07-02'},
+{student:'Kaviya S',year:'III',need:'Academic',cert:'Bonafide',reasons:'Competitive Exam Hall Ticket',date:'2026-07-01'},
 ];
 const approvedData=[
-{student:'Vikram Balaji',year:'IV',need:'Academic',cert:'Bonafide',reasons:'MS Abroad Application',date:'2026-07-05',hierarchy:{hod:'Approved',os:'Approved',drs:'Pending',nodal:'—'}},
-{student:'Anjali Murugan',year:'III',need:'Financial',cert:'Education Loan',reasons:'Education Loan Sanction',date:'2026-07-03',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
-{student:'Santhosh Kumar P',year:'II',need:'Academic',cert:'CGPA/Percentage',reasons:'Internship Proof',date:'2026-07-01',hierarchy:{hod:'Approved',os:'Pending',drs:'—',nodal:'—'}},
-{student:'Divya Bharathi R',year:'I',need:'Personal',cert:'Original Certificate',reasons:'Document Verification',date:'2026-06-28',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Pending'}},
-{student:'Manoj Prasad K',year:'IV',need:'Academic',cert:'Bonafide',reasons:'Competitive Exam',date:'2026-06-25',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Vikram Balaji',year:'IV',need:'Academic',cert:'Bonafide',reasons:'MS Abroad Application',date:'2026-06-28',hierarchy:{hod:'Approved',os:'Approved',drs:'Pending',nodal:'—'}},
+{student:'Anjali Murugan',year:'III',need:'Financial',cert:'Education Loan',reasons:'Education Loan Sanction',date:'2026-06-25',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Santhosh Kumar P',year:'II',need:'Academic',cert:'CGPA/Percentage',reasons:'Internship Proof',date:'2026-06-22',hierarchy:{hod:'Approved',os:'Pending',drs:'—',nodal:'—'}},
+{student:'Divya Bharathi R',year:'I',need:'Personal',cert:'Original Certificate',reasons:'Document Verification',date:'2026-06-19',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Pending'}},
+{student:'Manoj Prasad K',year:'IV',need:'Academic',cert:'Bonafide',reasons:'Competitive Exam Hall Ticket',date:'2026-06-16',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Kaviya S',year:'III',need:'Financial',cert:'Education Loan',reasons:'Bank Loan Documentation',date:'2026-06-13',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Arjun R',year:'II',need:'Academic',cert:'CGPA/Percentage',reasons:'Campus Placement',date:'2026-06-10',hierarchy:{hod:'Approved',os:'Approved',drs:'Pending',nodal:'—'}},
+{student:'Priya M',year:'IV',need:'Academic',cert:'Bonafide',reasons:'Higher Studies — GRE',date:'2026-06-07',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Rahul K',year:'Grad',need:'Personal',cert:'Original Certificate',reasons:'Passport Application',date:'2026-06-04',hierarchy:{hod:'Approved',os:'Pending',drs:'—',nodal:'—'}},
+{student:'Sneha V',year:'III',need:'Financial',cert:'Education Loan',reasons:'Scholarship Verification',date:'2026-06-01',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Nandini R',year:'I',need:'Academic',cert:'CGPA/Percentage',reasons:'Post-Graduate Admission',date:'2026-05-28',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Pending'}},
+{student:'Gokul K',year:'IV',need:'Academic',cert:'Bonafide',reasons:'Visa Application',date:'2026-05-25',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Swathi P',year:'III',need:'Academic',cert:'Original Certificate',reasons:'Employment Verification',date:'2026-05-22',hierarchy:{hod:'Approved',os:'Approved',drs:'Pending',nodal:'—'}},
+{student:'Arun K',year:'II',need:'Financial',cert:'Education Loan',reasons:'Scholarship Application',date:'2026-05-19',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
+{student:'Bhavya S',year:'IV',need:'Personal',cert:'Bonafide',reasons:'Hostel Fee Concession',date:'2026-05-16',hierarchy:{hod:'Approved',os:'Approved',drs:'Approved',nodal:'Approved'}},
 ];
 let currentDetailIdx=-1;
 function applyFilters(){

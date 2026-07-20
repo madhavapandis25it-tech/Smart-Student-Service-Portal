@@ -581,6 +581,17 @@ ol {
     text-shadow: 0 1px 4px rgba(255, 255, 255, 0.85);
 }
 
+.hero-scroll-hint {
+    font-size: 1rem;
+    font-weight: 800;
+    color: #051632;
+    margin-top: calc(-1 * var(--space-xl));
+    margin-bottom: var(--space-2xl);
+    opacity: 0.85;
+    animation: fadeInUp 1s ease 0.5s forwards;
+    letter-spacing: 0.3px;
+}
+
 .hero-actions {
     display: flex;
     align-items: center;

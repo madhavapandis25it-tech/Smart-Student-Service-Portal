@@ -202,7 +202,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setTimeout(() => {
             const role = sessionStorage.getItem('fpRole') || 'student';
-            const loginPage = role === 'staff' ? 'staff-login.html' : 'student-login.html';
+            const loginPage = role === 'staff' ? 'staff-role-selection.html' : 'student-login.html';
             announce('Password reset successfully! Redirecting to login...');
             setTimeout(() => {
                 window.location.href = loginPage;

@@ -11,7 +11,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const btnSpinner = document.getElementById('btnSpinner');
     const authStatusLive = document.getElementById('authStatusLive');
-    const googleBtn = document.getElementById('googleBtn');
 
     if (!loginForm) return;
 
@@ -99,17 +98,6 @@ document.addEventListener('DOMContentLoaded', () => {
         announceLive(`Error: ${msg}`);
     }
 
-    if (googleBtn) {
-        googleBtn.addEventListener('click', () => {
-            announceLive('Google login requested. Connecting to external service...');
-            googleBtn.disabled = true;
-            setTimeout(() => {
-                announceLive('Google authentication simulation complete.');
-                googleBtn.disabled = false;
-            }, 1000);
-        });
-    }
-
     loginForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -131,14 +119,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnText) btnText.textContent = 'Authenticating...';
         emailField.disabled = true;
         passwordField.disabled = true;
-        if (googleBtn) googleBtn.disabled = true;
 
         announceLive('Authenticating credentials... Please wait.');
 
         setTimeout(() => {
             announceLive('Authentication successful! Loading Dashboard...');
             setTimeout(() => {
-                window.location.href = 'staff-dashboard.html';
+                window.location.href = 'staff-role-selection.html';
             }, 500);
         }, 1500);
     });

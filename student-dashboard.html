@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Dashboard | Smart Student Service Portal</title>
+<meta name="description" content="Student dashboard for managing certificate applications and academic profile.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="icon" href="assets/logo/psna%20logo.png" type="image/png">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>tailwind.config={theme:{extend:{colors:{navy:{DEFAULT:'#051632',light:'#0a2454',lighter:'#0f3068'},wine:{DEFAULT:'#4E1526',light:'#7C2A40',dark:'#350B1B'},gold:{DEFAULT:'#D4AE70',light:'#E8C98B',dark:'#B88E4C'}},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scrollbar-color:#1a3a6a #051632;overflow-x:hidden}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#051632}::-webkit-scrollbar-thumb{background:#1a3a6a;border-radius:3px}
+.glass-card{background:rgba(15,48,104,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:20px}
+.glass-card-light{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.06);border-radius:16px}
+.glow-gold{box-shadow:0 0 30px rgba(212,174,112,0.08)}
+.sidebar{position:fixed;top:64px;left:0;bottom:0;width:260px;z-index:40;transition:transform 0.3s ease;background:rgba(5,22,50,0.92);backdrop-filter:blur(20px);border-right:1px solid rgba(255,255,255,0.06);overflow-y:auto}
+.sidebar.closed{transform:translateX(-100%)}
+.nav-item{display:flex;align-items:center;gap:12px;padding:12px 20px;cursor:pointer;transition:all 0.2s;border-radius:12px;margin:2px 10px;color:rgba(255,255,255,0.55);font-size:0.875rem;font-weight:500}
+.nav-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+.nav-item.active{background:linear-gradient(135deg,rgba(78,21,38,0.4),rgba(124,42,64,0.3));color:#D4AE70;font-weight:600}
+.nav-item.active svg{stroke:#D4AE70}
+.nav-sub{max-height:0;overflow:hidden;transition:max-height 0.3s ease}
+.nav-sub.open{max-height:300px}
+.nav-sub-item{padding:10px 20px 10px 48px;cursor:pointer;transition:all 0.2s;color:rgba(255,255,255,0.45);font-size:0.8rem;border-radius:10px;margin:1px 10px}
+.nav-sub-item:hover{background:rgba(255,255,255,0.06);color:#fff}
+.nav-sub-item.active{color:#D4AE70;font-weight:600}
+.main-content{margin-left:260px;padding-top:80px;transition:margin-left 0.3s ease;min-height:100vh}
+.main-content.expanded{margin-left:0}
+.profile-dropdown{opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.25s ease}.profile-dropdown.open{opacity:1;visibility:visible;transform:translateY(0)}
+.modal-overlay{opacity:0;visibility:hidden;transition:all 0.3s ease}.modal-overlay.open{opacity:1;visibility:visible}
+.modal-panel{transform:scale(0.95) translateY(10px);transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);max-height:90vh;overflow-y:auto}.modal-overlay.open .modal-panel{transform:scale(1) translateY(0)}
+.status-badge{padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;display:inline-block}
+.badge-pending{background:rgba(251,191,36,0.15);color:#FBBF24;border:1px solid rgba(251,191,36,0.2)}
+.badge-approved{background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.2)}
+.badge-rejected{background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid rgba(239,68,68,0.2)}
+.badge-progress{background:rgba(59,130,246,0.15);color:#60A5FA;border:1px solid rgba(59,130,246,0.2)}
+.btn-primary{padding:10px 24px;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s;border:none;background:linear-gradient(135deg,#4E1526,#7C2A40);color:#fff;display:inline-flex;align-items:center;gap:8px}
+.btn-primary:hover{transform:scale(1.02);box-shadow:0 4px 20px rgba(78,21,38,0.35)}
+.btn-primary:disabled{opacity:0.5;cursor:not-allowed;transform:none}
+.btn-secondary{padding:10px 24px;border-radius:12px;font-weight:700;font-size:0.85rem;cursor:pointer;transition:all 0.2s;border:1px solid rgba(255,255,255,0.12);background:rgba(255,255,255,0.06);color:#fff;display:inline-flex;align-items:center;gap:8px}
+.btn-secondary:hover{background:rgba(255,255,255,0.1)}
+.app-card{cursor:pointer;transition:all 0.3s ease;position:relative;overflow:hidden}
+.app-card:hover{transform:translateY(-4px);border-color:rgba(212,174,112,0.3);box-shadow:0 12px 40px rgba(212,174,112,0.1)}
+.app-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;border-radius:20px 20px 0 0}
+.app-card.original::before{background:linear-gradient(90deg,#D4AE70,#E8C98B)}
+.app-card.bonafide::before{background:linear-gradient(90deg,#4E1526,#7C2A40)}
+.app-card.cgpa::before{background:linear-gradient(90deg,#059669,#10B981)}
+.form-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Inter',sans-serif;padding:12px 16px;border-radius:12px;width:100%;font-size:0.85rem;transition:all 0.2s}
+.form-input:focus{border-color:#D4AE70;box-shadow:0 0 0 3px rgba(212,174,112,0.1);outline:none}
+.form-input::placeholder{color:rgba(255,255,255,0.25)}
+.form-input:disabled{opacity:0.5;cursor:not-allowed}
+.form-select{appearance:none;-webkit-appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23D4AE70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:40px}
+.form-label{font-size:0.7rem;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.4);margin-bottom:6px;display:block}
+.form-error{font-size:0.75rem;color:#EF4444;margin-top:4px;display:none}
+.form-error.show{display:block}
+.form-group{margin-bottom:16px}
+.search-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Inter',sans-serif}.search-input:focus{border-color:#4E1526;box-shadow:0 0 0 3px rgba(78,21,38,0.15);outline:none}
+.search-input::placeholder{color:rgba(255,255,255,0.3)}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeInUp 0.5s ease forwards}
+@keyframes slideIn{from{transform:translateX(-20px);opacity:0}to{transform:translateX(0);opacity:1}}
+.nav-enter{animation:slideIn 0.3s ease forwards}
+@keyframes successPop{0%{transform:scale(0.5);opacity:0}50%{transform:scale(1.15)}100%{transform:scale(1);opacity:1}}
+.success-pop{animation:successPop 0.5s ease forwards}
+@keyframes rippleAnim{to{transform:scale(4);opacity:0}}
+.ripple{position:absolute;border-radius:50%;background:rgba(212,174,112,0.3);pointer-events:none;animation:rippleAnim 0.6s ease-out forwards}
+.bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
+.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;color:rgba(255,255,255,0.3)}
+.empty-state svg{margin-bottom:16px;opacity:0.3}
+.stepper{display:flex;align-items:center;gap:0;flex-wrap:wrap}
+.step{display:flex;align-items:center;gap:8px}
+.step-dot{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;flex-shrink:0;transition:all 0.3s}
+.step-dot.done{background:#10B981;color:#fff}
+.step-dot.active{background:#D4AE70;color:#051632;box-shadow:0 0 16px rgba(212,174,112,0.4)}
+.step-dot.pending{background:rgba(255,255,255,0.08);color:rgba(255,255,255,0.3)}
+.step-line{width:24px;height:2px;background:rgba(255,255,255,0.08);flex-shrink:0}
+.step-line.done{background:#10B981}
+.step-label{font-size:0.65rem;color:rgba(255,255,255,0.4);font-weight:500}
+.notif-dot{width:8px;height:8px;border-radius:50%;background:#EF4444;position:absolute;top:2px;right:2px}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{padding:14px 24px;border-radius:14px;font-size:0.85rem;font-weight:600;color:#fff;animation:fadeInUp 0.3s ease;display:flex;align-items:center;gap:10px;min-width:280px;max-width:400px}
+.toast.success{background:linear-gradient(135deg,#059669,#10B981);box-shadow:0 8px 30px rgba(16,185,129,0.3)}
+.toast.error{background:linear-gradient(135deg,#DC2626,#EF4444);box-shadow:0 8px 30px rgba(239,68,68,0.3)}
+.toast.info{background:linear-gradient(135deg,#1D4ED8,#3B82F6);box-shadow:0 8px 30px rgba(59,130,246,0.3)}
+@media(max-width:768px){.sidebar{transform:translateX(-100%)}.sidebar.open{transform:translateX(0)}.main-content{margin-left:0}.main-content.shifted{margin-left:0}}
+/* ===== CUSTOM DROPDOWN ===== */
+.custom-dd-wrap{position:relative;width:100%}
+.custom-dd-trigger{display:flex;align-items:center;justify-content:space-between;width:100%;cursor:pointer;user-select:none;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);color:#fff;font-family:'Inter',sans-serif;padding:12px 16px;border-radius:12px;font-size:0.85rem;transition:all 0.2s;text-align:left;min-height:46px}
+.custom-dd-trigger:hover{border-color:rgba(255,255,255,0.2)}
+.custom-dd-trigger:focus-visible{border-color:#D4AE70;box-shadow:0 0 0 3px rgba(212,174,112,0.1);outline:none}
+.custom-dd-trigger .dd-label{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.custom-dd-trigger .dd-placeholder{color:rgba(255,255,255,0.25)}
+.custom-dd-trigger .dd-arrow{flex-shrink:0;transition:transform 0.25s ease;margin-left:8px}
+.custom-dd-trigger.open .dd-arrow{transform:rotate(180deg)}
+.custom-dd-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:200;max-height:220px;overflow-y:auto;background:rgba(10,36,84,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:6px;opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.22s ease;box-shadow:0 16px 48px rgba(0,0,0,0.5)}
+.custom-dd-menu.open{opacity:1;visibility:visible;transform:translateY(0)}
+.custom-dd-opt{padding:10px 14px;cursor:pointer;border-radius:10px;color:rgba(255,255,255,0.8);font-size:0.85rem;font-weight:500;transition:all 0.15s ease}
+.custom-dd-opt:hover,.custom-dd-opt.hovered{background:#D4AE70;color:#051632;font-weight:600}
+.custom-dd-opt.selected{background:rgba(212,174,112,0.15);color:#D4AE70;font-weight:600}
+.custom-dd-opt.selected:hover{background:#D4AE70;color:#051632}
+.custom-dd-menu::-webkit-scrollbar{width:4px}
+.custom-dd-menu::-webkit-scrollbar-track{background:transparent}
+.custom-dd-menu::-webkit-scrollbar-thumb{background:#D4AE70;border-radius:2px}
+.custom-dd-menu{scrollbar-width:thin;scrollbar-color:#D4AE70 transparent}
+</style>
+</head>
+<body class="min-h-screen text-white relative">
+<div class="bg-orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(212,174,112,0.08),transparent 70%);top:-150px;left:-100px"></div>
+<div class="bg-orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(78,21,38,0.1),transparent 70%);bottom:-100px;right:-80px"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3" style="background:rgba(5,22,50,0.92);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)">
+<div class="flex items-center justify-between">
+    <div class="flex items-center gap-3">
+        <button id="menuToggle" class="w-9 h-9 rounded-xl flex items-center justify-center hover:bg-white/5 transition lg:hidden" aria-label="Toggle menu">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+        <img src="assets/logo/psna%20logo.png" alt="Logo" class="w-9 h-9 sm:w-10 sm:h-10 object-contain rounded-lg" style="filter:brightness(1.2)">
+        <div class="hidden sm:block"><h1 class="text-sm font-bold text-white tracking-tight">Smart Student Service Portal</h1><p class="text-xs font-semibold" style="color:#D4AE70">Student Dashboard</p></div>
+    </div>
+    <div class="relative">
+        <button id="profileBtn" class="flex items-center gap-3 px-3 py-2 rounded-2xl transition-all hover:bg-white/5">
+            <div class="text-right hidden sm:block"><p class="text-sm font-semibold text-white" id="headerStudentName">Kaviya S</p><p class="text-xs" style="color:rgba(255,255,255,0.5)" id="headerRegNo">21CSE045</p></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold overflow-hidden" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="avatarCircle"><span id="avatarInitials">KS</span></div>
+        </button>
+        <div id="profileDropdown" class="profile-dropdown absolute right-0 top-full mt-2 w-64 glass-card p-2 z-50">
+            <div class="px-4 py-3 border-b border-white/6 mb-2">
+                <p class="text-sm font-bold text-white" id="dropName">Kaviya S</p>
+                <p class="text-xs text-white/40" id="dropReg">21CSE045</p>
+                <p class="text-xs text-white/40" id="dropDept">Computer Science & Engineering</p>
+            </div>
+            <button onclick="navigateTo('profile')" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
+            </button>
+            <button onclick="openEditProfile()" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4L18.5 2.5z"/></svg>Edit Profile
+            </button>
+            <a href="student-login.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition flex items-center gap-3">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout
+            </a>
+        </div>
+    </div>
+</div>
+</header>
+
+<aside class="sidebar" id="sidebar">
+    <div class="py-4">
+        <div onclick="navigateTo('home')" class="nav-item active" data-nav="home"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>Home</div>
+        <div onclick="toggleSubNav(event)" class="nav-item" data-nav="applications"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Applications<svg class="ml-auto" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div>
+        <div class="nav-sub" id="appSubNav">
+            <div class="nav-sub-item" onclick="openApplicationForm('original')">Original Certificate</div>
+            <div class="nav-sub-item" onclick="openApplicationForm('bonafide')">Bonafide Certificate</div>
+            <div class="nav-sub-item" onclick="openApplicationForm('cgpa')">CGPA / Percentage</div>
+        </div>
+        <div onclick="navigateTo('myapps')" class="nav-item" data-nav="myapps"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>My Applications</div>
+        <div onclick="navigateTo('notifications')" class="nav-item" data-nav="notifications" style="position:relative"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications<span class="notif-dot" id="notifBadge"></span></div>
+        <div onclick="navigateTo('profile')" class="nav-item" data-nav="profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
+        <a href="student-login.html" class="nav-item" style="color:rgba(239,68,68,0.7)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+    </div>
+</aside>
+
+<main class="main-content" id="mainContent">
+    <div class="px-4 sm:px-6 pb-10 max-w-7xl mx-auto">
+
+        <!-- ===== HOME VIEW ===== -->
+        <div id="view-home" class="view active">
+            <div class="glass-card p-6 sm:p-8 mb-6 mt-4 animate-in" style="background:linear-gradient(135deg,rgba(78,21,38,0.25),rgba(10,36,84,0.4))">
+                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                    <div><h2 class="text-xl sm:text-2xl font-black text-white">Welcome back, <span style="color:#D4AE70" id="welcomeName">Kaviya</span></h2><p class="text-sm text-white/40 mt-1">Track your certificate applications and manage your academic profile.</p></div>
+                    <button onclick="navigateTo('myapps')" class="btn-primary text-sm px-5 py-2.5">View My Applications</button>
+                </div>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6 animate-in" style="animation-delay:0.05s">
+                <div class="glass-card p-5"><p class="text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Total Applications</p><p class="text-2xl sm:text-3xl font-black text-white" id="statTotal">5</p></div>
+                <div class="glass-card p-5"><p class="text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Pending</p><p class="text-2xl sm:text-3xl font-black" style="color:#FBBF24" id="statPending">2</p></div>
+                <div class="glass-card p-5"><p class="text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Approved</p><p class="text-2xl sm:text-3xl font-black" style="color:#10B981" id="statApproved">2</p></div>
+                <div class="glass-card p-5"><p class="text-xs font-semibold uppercase tracking-wider text-white/40 mb-2">Rejected</p><p class="text-2xl sm:text-3xl font-black" style="color:#EF4444" id="statRejected">1</p></div>
+            </div>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-5 animate-in" style="animation-delay:0.1s">
+                <div class="app-card original glass-card p-6 border-2 border-transparent" onclick="openApplicationForm('original')"><div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(212,174,112,0.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><h3 class="text-white font-bold text-lg">Original Certificate</h3><p class="text-white/40 text-sm mt-1">Apply for 10th, 12th, UG Degree, or Transfer Certificate</p><span class="inline-block mt-4 text-xs font-bold" style="color:#D4AE70">Apply Now →</span></div>
+                <div class="app-card bonafide glass-card p-6 border-2 border-transparent" onclick="openApplicationForm('bonafide')"><div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(78,21,38,0.2)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C2A40" stroke-width="1.5"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg></div><h3 class="text-white font-bold text-lg">Bonafide Certificate</h3><p class="text-white/40 text-sm mt-1">Request a bonafide certificate for various purposes</p><span class="inline-block mt-4 text-xs font-bold" style="color:#D4AE70">Apply Now →</span></div>
+                <div class="app-card cgpa glass-card p-6 border-2 border-transparent" onclick="openApplicationForm('cgpa')"><div class="w-12 h-12 rounded-2xl flex items-center justify-center mb-4" style="background:rgba(16,185,129,0.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="1.5"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg></div><h3 class="text-white font-bold text-lg">CGPA / Percentage</h3><p class="text-white/40 text-sm mt-1">Request CGPA or Percentage certificate for placements</p><span class="inline-block mt-4 text-xs font-bold" style="color:#D4AE70">Apply Now →</span></div>
+            </div>
+        </div>
+
+        <!-- ===== APPLICATION FORM VIEW ===== -->
+        <div id="view-appform" class="view hidden">
+            <button onclick="navigateTo('home')" class="flex items-center gap-2 text-sm text-white/40 hover:text-white/80 transition mb-4 animate-in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to Dashboard</button>
+            <div class="glass-card p-6 sm:p-8 animate-in">
+                <h2 class="text-xl font-bold text-white mb-1" id="formTitle">Apply for Original Certificate</h2>
+                <p class="text-xs text-white/40 mb-6 uppercase tracking-widest font-semibold" id="formSubtitle">Upload required documents and submit</p>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-6 p-4 rounded-xl" style="background:rgba(212,174,112,0.06);border:1px solid rgba(212,174,112,0.1)">
+                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Name</span><span class="text-sm font-semibold text-white" id="afName">Kaviya S</span></div>
+                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Reg No</span><span class="text-sm font-semibold text-white" id="afReg">21CSE045</span></div>
+                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Department</span><span class="text-sm font-semibold text-white" id="afDept">CSE</span></div>
+                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Year / Semester</span><span class="text-sm font-semibold text-white" id="afYear">III / 5</span></div>
+                    <div class="py-2 flex justify-between sm:border-b border-white/4"><span class="text-xs font-semibold text-white/40">Academic Status</span><span class="text-sm font-semibold text-white" id="afStatus">Studying</span></div>
+                    <div class="py-2 flex justify-between"><span class="text-xs font-semibold text-white/40">Email</span><span class="text-sm font-semibold text-white" id="afEmail">kaviya@psna.ac.in</span></div>
+                </div>
+
+                <div id="formFields"></div>
+
+                <div class="flex gap-3 mt-8">
+                    <button onclick="submitApplication()" class="btn-primary flex-1" id="submitAppBtn">Submit Application</button>
+                    <button onclick="navigateTo('home')" class="btn-secondary">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== MY APPLICATIONS VIEW ===== -->
+        <div id="view-myapps" class="view hidden">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 animate-in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>My Applications</h2>
+            <div class="glass-card p-4 mb-6 flex flex-wrap items-center gap-4 animate-in">
+                <div class="flex-1 min-w-[200px] relative">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                    <input type="text" id="appSearch" placeholder="Search applications..." class="search-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium" oninput="renderMyApps()">
+                </div>
+                <div class="custom-dd-wrap" id="appFilterWrap" style="min-width:140px"><select id="appFilter" class="form-input form-select w-auto min-w-[140px] py-3" onchange="renderMyApps()"><option value="all">All Status</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option></select></div>
+            </div>
+            <div id="myAppsContainer" class="space-y-4 animate-in"></div>
+            <div id="myAppsEmpty" class="empty-state hidden"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p class="text-lg font-semibold">No applications yet</p><p class="text-sm mt-1">Start by applying for a certificate from the dashboard.</p></div>
+        </div>
+
+        <!-- ===== APPLICATION DETAIL VIEW ===== -->
+        <div id="view-appdetail" class="view hidden">
+            <button onclick="navigateTo('myapps')" class="flex items-center gap-2 text-sm text-white/40 hover:text-white/80 transition mb-4 animate-in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to My Applications</button>
+            <div class="glass-card p-6 sm:p-8 animate-in" id="appDetailContent"></div>
+        </div>
+
+        <!-- ===== NOTIFICATIONS VIEW ===== -->
+        <div id="view-notifications" class="view hidden">
+            <div class="flex items-center justify-between mb-6 animate-in">
+                <h2 class="text-xl font-bold text-white flex items-center gap-2"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications</h2>
+                <button onclick="markAllNotifRead()" class="text-xs font-semibold text-gold-DEFAULT hover:text-gold-light transition">Mark All as Read</button>
+            </div>
+            <div id="notifContainer" class="space-y-3 animate-in"></div>
+            <div id="notifEmpty" class="empty-state hidden"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg><p class="text-lg font-semibold">No notifications</p><p class="text-sm mt-1">You're all caught up!</p></div>
+        </div>
+
+        <!-- ===== PROFILE VIEW ===== -->
+        <div id="view-profile" class="view hidden">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 animate-in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>My Profile</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="lg:col-span-1">
+                    <div class="glass-card p-6 text-center animate-in">
+                        <div class="relative inline-block mb-4">
+                            <div class="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold mx-auto overflow-hidden" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="profileAvatar"><span>KS</span></div>
+                            <label class="absolute bottom-1 right-0 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer" style="background:#D4AE70"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#051632" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><input type="file" accept="image/*" class="hidden" id="profilePhotoInput" onchange="updateProfilePhoto(event)"></label>
+                        </div>
+                        <h3 class="text-lg font-bold text-white">Kaviya S</h3>
+                        <p class="text-sm" style="color:#D4AE70">21CSE045</p>
+                        <p class="text-xs text-white/40 mt-1">CSE — 3rd Year</p>
+                        <hr class="border-white/6 my-4">
+                        <div class="space-y-3">
+                            <div class="flex justify-between text-sm"><span class="text-white/40">Gender</span><span class="text-white font-medium">Female</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">DOB</span><span class="text-white font-medium">15-06-2004</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">Blood Group</span><span class="text-white font-medium">B+</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">Batch</span><span class="text-white font-medium">2027</span></div>
+                        </div>
+                        <div class="mt-4 flex gap-2">
+                            <label class="cursor-pointer w-28 h-16 rounded-xl flex flex-col items-center justify-center gap-1" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="text-[10px] text-white/30">Photo</span><input type="file" accept="image/*" class="hidden"></label>
+                            <label class="cursor-pointer w-28 h-16 rounded-xl flex flex-col items-center justify-center gap-1" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/><path d="M18 2l3 3-9 9-4 1 1-4 9-9z"/></svg><span class="text-[10px] text-white/30">Signature</span><input type="file" accept="image/*" class="hidden"></label>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:col-span-2 space-y-6">
+                    <div class="glass-card p-6 animate-in"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Personal Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Student Name</label><input class="form-input" id="pName" disabled></div><div><label class="form-label">Register Number</label><input class="form-input" id="pRegNo" disabled></div><div><label class="form-label">Roll Number</label><input class="form-input" id="pRollNo" disabled></div><div><label class="form-label">Gender</label><input class="form-input" id="pGender" disabled></div><div><label class="form-label">Date of Birth</label><input class="form-input" id="pDob" disabled></div><div><label class="form-label">Blood Group</label><input class="form-input" id="pBloodGroup"></div><div><label class="form-label">Community</label><input class="form-input" id="pCommunity"></div><div><label class="form-label">Nationality</label><input class="form-input" id="pNationality"></div><div><label class="form-label">Aadhaar Number</label><input class="form-input" id="pAadhaar"></div></div></div>
+                    <div class="glass-card p-6 animate-in" style="animation-delay:0.05s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Academic Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Degree</label><input class="form-input" id="pDegree" disabled></div><div><label class="form-label">Department</label><input class="form-input" id="pDept" disabled></div><div><label class="form-label">Batch</label><input class="form-input" id="pBatch" disabled></div><div><label class="form-label">Admission Year</label><input class="form-input" id="pAdmissionYear" disabled></div><div><label class="form-label">Current Year</label><input class="form-input" id="pCurrentYear" disabled></div><div><label class="form-label">Semester</label><input class="form-input" id="pSemester" disabled></div><div><label class="form-label">Section</label><input class="form-input" id="pSection" disabled></div><div><label class="form-label">Academic Status</label><input class="form-input" id="pAcadStatus" disabled></div></div></div>
+                    <div class="glass-card p-6 animate-in" style="animation-delay:0.1s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Contact Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Mobile Number</label><input class="form-input" id="pPhone"></div><div><label class="form-label">Email Address</label><input class="form-input" id="pEmail"></div><div class="sm:col-span-2"><label class="form-label">Address</label><textarea class="form-input" id="pAddress" rows="2"></textarea></div><div><label class="form-label">City</label><input class="form-input" id="pCity"></div><div><label class="form-label">State</label><input class="form-input" id="pState"></div><div><label class="form-label">Pincode</label><input class="form-input" id="pPincode"></div></div></div>
+                    <div class="glass-card p-6 animate-in" style="animation-delay:0.15s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Parent / Guardian Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Father Name</label><input class="form-input" id="pFatherName"></div><div><label class="form-label">Mother Name</label><input class="form-input" id="pMotherName"></div><div><label class="form-label">Guardian Name</label><input class="form-input" id="pGuardianName"></div><div><label class="form-label">Parent Mobile</label><input class="form-input" id="pParentPhone"></div></div></div>
+                    <div class="flex justify-end gap-3 animate-in" style="animation-delay:0.2s"><button onclick="saveProfileChanges()" class="btn-primary">Save Changes</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- CONFIRMATION MODAL -->
+<div id="confirmModal" class="modal-overlay fixed inset-0 z-[200] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
+<div class="modal-panel glass-card p-8 w-full max-w-sm relative">
+    <div class="text-center">
+        <div class="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4" style="background:rgba(212,174,112,0.12)"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/></svg></div>
+        <h3 class="text-lg font-bold text-white mb-2">Confirm Submission</h3>
+        <p class="text-sm text-white/50">Are you sure you want to submit this application?</p>
+        <div class="flex gap-3 mt-6"><button onclick="confirmSubmit()" class="btn-primary flex-1">Yes, Submit</button><button onclick="closeConfirmModal()" class="btn-secondary flex-1">Cancel</button></div>
+    </div>
+</div>
+</div>
+
+<!-- SUCCESS MODAL -->
+<div id="successModal" class="modal-overlay fixed inset-0 z-[200] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
+<div class="modal-panel glass-card p-8 w-full max-w-sm relative text-center">
+    <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 success-pop" style="background:rgba(16,185,129,0.15)"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+    <h3 class="text-lg font-bold text-white mb-2">Application Submitted!</h3>
+    <p class="text-sm text-white/50">Your application has been submitted successfully.</p>
+    <div class="mt-4 p-3 rounded-xl" style="background:rgba(255,255,255,0.04)"><p class="text-xs text-white/40">Application ID</p><p class="text-sm font-bold text-white" id="successAppId">APP-2026-0001</p></div>
+    <button onclick="closeSuccessModal()" class="btn-primary w-full mt-6">View My Applications</button>
+</div>
+</div>
+
+<!-- REJECTION DETAIL MODAL -->
+<div id="rejectionModal" class="modal-overlay fixed inset-0 z-[200] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
+<div class="modal-panel glass-card p-8 w-full max-w-md relative">
+    <button onclick="closeRejectionModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+    <div class="text-center mb-4"><div class="w-14 h-14 rounded-full flex items-center justify-center mx-auto" style="background:rgba(239,68,68,0.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div></div>
+    <h3 class="text-lg font-bold text-white mb-4 text-center">Application Rejected</h3>
+    <div class="space-y-3" id="rejectionContent"></div>
+</div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
+<script>
+'use strict';
+// ===== STUDENT DATA =====
+const profileDefaults={name:'Kaviya S',regNo:'21CSE045',rollNo:'21001',gender:'Female',dob:'15-06-2004',bloodGroup:'B+',community:'OC',nationality:'Indian',aadhaar:'XXXX-XXXX-1234',degree:'B.E.',department:'Computer Science & Engineering',batch:'2027',admissionYear:'2023',currentYear:'3rd Year',semester:'5',section:'A',academicStatus:'Studying',expectedGradYear:'2027',phone:'+91 98765 43210',email:'kaviya.s@psna.ac.in',address:'123, Anna Nagar, Dindigul',city:'Dindigul',state:'Tamil Nadu',pincode:'624001',fatherName:'S. Subramanian',motherName:'S. Lalitha',guardianName:'S. Subramanian',parentPhone:'+91 98765 12345',tutorName:'',initials:'KS'};
+function loadProfile(){const stored=JSON.parse(localStorage.getItem('studentProfile'));return stored?{...profileDefaults,...stored}:profileDefaults;}
+let studentProfile=loadProfile();
+
+let applications=JSON.parse(localStorage.getItem('certificateApps'))||[];
+let notifications=JSON.parse(localStorage.getItem('studentNotifs'))||[];
+
+// Seed sample data
+if(applications.length===0){const now=new Date();applications=[{id:'APP-2026-0001',type:'Bonafide',purpose:'Internship',copies:2,status:'Pending',currentApprover:'Tutor',date:new Date(now-86400000*3).toISOString(),lastUpdated:new Date(now-86400000*2).toISOString(),workflow:{tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'},steps:[{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]},{id:'APP-2026-0002',type:'CGPA/Percentage',certType:'CGPA',purpose:'Placement',status:'Approved',currentApprover:'Completed',date:new Date(now-86400000*10).toISOString(),lastUpdated:new Date(now-86400000*1).toISOString(),workflow:{tutor:'Approved',hod:'Approved',nodal:'Approved',os:'Approved',drs:'Approved'},steps:[{role:'Tutor',status:'done',date:'2026-07-10'},{role:'HOD',status:'done',date:'2026-07-12'},{role:'Nodal Officer',status:'done',date:'2026-07-14'},{role:'OS',status:'done',date:'2026-07-16'},{role:'DRS',status:'done',date:'2026-07-18'}]},{id:'APP-2026-0003',type:'Original',certificateType:'10th Certificate',purpose:'Passport',status:'Rejected',currentApprover:'HOD',date:new Date(now-86400000*5).toISOString(),lastUpdated:new Date(now-86400000*3).toISOString(),rejectedBy:'HOD',rejectionReason:'Incomplete document — marksheet not attached',rejectionDate:new Date(now-86400000*3).toISOString(),workflow:{tutor:'Approved',hod:'Rejected'},steps:[{role:'Tutor',status:'done',date:'2026-07-13'},{role:'HOD',status:'rejected',date:'2026-07-15'},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]},{id:'APP-2026-0004',type:'Bonafide',purpose:'Hostel',copies:1,status:'Pending',currentApprover:'HOD',date:new Date(now-86400000*2).toISOString(),lastUpdated:new Date(now-86400000*1).toISOString(),workflow:{tutor:'Approved',hod:'Pending',nodal:'—',os:'—',drs:'—'},steps:[{role:'Tutor',status:'done',date:'2026-07-17'},{role:'HOD',status:'active',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]}];saveApps();}
+if(notifications.length===0){notifications=[{id:'N001',appId:'APP-2026-0004',message:'Application APP-2026-0004 has been approved by Tutor',type:'tutor_approved',read:false,date:new Date(Date.now()-86400000*1).toISOString()},{id:'N002',appId:'APP-2026-0003',message:'Application APP-2026-0003 was rejected by HOD',type:'hod_rejected',read:false,date:new Date(Date.now()-86400000*3).toISOString()},{id:'N003',appId:'APP-2026-0002',message:'Application APP-2026-0002 has been approved. Certificate ready for collection.',type:'cert_ready',read:true,date:new Date(Date.now()-86400000*1).toISOString()}];saveNotifs();}
+
+// ===== PERSISTENCE =====
+function saveApps(){localStorage.setItem('certificateApps',JSON.stringify(applications));}
+function saveNotifs(){localStorage.setItem('studentNotifs',JSON.stringify(notifications));}
+
+// ===== NAVIGATION =====
+let currentView='home';
+let appFormType='';
+
+function navigateTo(view){document.querySelectorAll('.view').forEach(v=>v.classList.add('hidden'));document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));const el=document.getElementById('view-'+view);if(el){el.classList.remove('hidden');el.classList.add('active');}currentView=view;document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));const navEl=document.querySelector(`[data-nav="${view}"]`);if(navEl)navEl.classList.add('active');document.getElementById('sidebar').classList.remove('open');if(view==='home'){renderHomeStats();}else if(view==='myapps'){renderMyApps();}else if(view==='profile'){populateProfileView();}else if(view==='notifications'){renderNotifs();}updateBadge();}
+
+function toggleSubNav(e){const sub=document.getElementById('appSubNav');sub.classList.toggle('open');const icon=e.currentTarget.querySelector('svg:last-child');if(icon)icon.style.transform=sub.classList.contains('open')?'rotate(180deg)':'rotate(0)';}
+
+// ===== HOME =====
+function renderHomeStats(){const total=applications.length;const pending=applications.filter(a=>a.status==='Pending').length;const approved=applications.filter(a=>a.status==='Approved').length;const rejected=applications.filter(a=>a.status==='Rejected').length;document.getElementById('statTotal').textContent=total;document.getElementById('statPending').textContent=pending;document.getElementById('statApproved').textContent=approved;document.getElementById('statRejected').textContent=rejected;}
+
+// ===== APPLICATION FORM =====
+function openApplicationForm(type){appFormType=type;const titles={original:'Apply for Original Certificate',bonafide:'Apply for Bonafide Certificate',cgpa:'Apply for CGPA / Percentage Certificate'};const subs={original:'Submit your request for original academic documents',bonafide:'Request a bonafide certificate for official purposes',cgpa:'Request CGPA or Percentage certificate'};document.getElementById('formTitle').textContent=titles[type];document.getElementById('formSubtitle').textContent=subs[type];document.getElementById('afName').textContent=studentProfile.name;document.getElementById('afReg').textContent=studentProfile.regNo;document.getElementById('afDept').textContent=studentProfile.department;document.getElementById('afYear').textContent=studentProfile.currentYear+' / '+studentProfile.semester;document.getElementById('afStatus').textContent=studentProfile.academicStatus;document.getElementById('afEmail').textContent=studentProfile.email;let html='';
+
+if(type==='original'){const isGrad=studentProfile.academicStatus==='Graduated';html=`<div class="form-group"><label class="form-label">Certificate Type</label><div class="custom-dd-wrap"><select id="origCertType" onchange="validateForm()"><option value="">Select certificate type</option><option value="10th Certificate">10th Certificate</option><option value="12th Certificate">12th Certificate</option>${isGrad?'<option value="UG Degree Certificate">UG Degree Certificate</option>':''}<option value="Transfer Certificate (TC)">Transfer Certificate (TC)</option></select></div><div class="form-error" id="errCertType">Please select a certificate type</div></div>
+<div class="form-group"><label class="form-label">Purpose / Reason</label><div class="custom-dd-wrap"><select id="origPurpose" onchange="toggleOtherReason('orig',this.value)"><option value="">Select purpose</option><option value="Higher Studies">Higher Studies</option><option value="Passport">Passport</option><option value="Visa">Visa</option><option value="Government Verification">Government Verification</option><option value="Employment">Employment</option><option value="Scholarship">Scholarship</option><option value="Education Loan">Education Loan</option><option value="Other">Other</option></select></div><div class="form-error" id="errOrigPurpose">Please select a purpose</div></div>
+<div class="form-group hidden" id="origOtherReasonGroup"><label class="form-label">Specify Reason</label><textarea class="form-input" id="origOtherReason" rows="2" placeholder="Enter your reason..."></textarea></div>`;}else if(type==='bonafide'){html=`<div class="form-group"><label class="form-label">Purpose / Reason</label><div class="custom-dd-wrap"><select id="bonaPurpose" onchange="toggleOtherReason('bona',this.value)"><option value="">Select purpose</option><option value="Internship">Internship</option><option value="Scholarship">Scholarship</option><option value="Passport">Passport</option><option value="Visa">Visa</option><option value="Higher Studies">Higher Studies</option><option value="Hostel">Hostel</option><option value="Education Loan">Education Loan</option><option value="Bank">Bank</option><option value="Other">Other</option></select></div><div class="form-error" id="errBonaPurpose">Please select a purpose</div></div>
+<div class="form-group hidden" id="bonaOtherReasonGroup"><label class="form-label">Specify Reason</label><textarea class="form-input" id="bonaOtherReason" rows="2" placeholder="Enter your reason..."></textarea></div>
+<div class="form-group"><label class="form-label">Number of Copies</label><div class="flex items-center gap-3"><button type="button" onclick="changeCopies(-1)" class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1)">−</button><input type="number" id="bonaCopies" value="1" min="1" max="10" class="form-input w-20 text-center" readonly><button type="button" onclick="changeCopies(1)" class="w-10 h-10 rounded-xl flex items-center justify-center" style="background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.1)">+</button><span class="text-xs text-white/30">Max 10</span></div></div>`;}else if(type==='cgpa'){html=`<div class="form-group"><label class="form-label">Certificate Type</label><div class="custom-dd-wrap"><select id="cgpaCertType" onchange="validateForm()"><option value="">Select type</option><option value="CGPA">CGPA Certificate</option><option value="Percentage">Percentage Certificate</option></select></div><div class="form-error" id="errCgpaCertType">Please select certificate type</div></div>
+<div class="form-group"><label class="form-label">Purpose / Reason</label><div class="custom-dd-wrap"><select id="cgpaPurpose" onchange="toggleOtherReason('cgpa',this.value)"><option value="">Select purpose</option><option value="Placement">Placement</option><option value="Higher Studies">Higher Studies</option><option value="Government">Government</option><option value="Passport">Passport</option><option value="Visa">Visa</option><option value="Other">Other</option></select></div><div class="form-error" id="errCgpaPurpose">Please select a purpose</div></div>
+<div class="form-group hidden" id="cgpaOtherReasonGroup"><label class="form-label">Specify Reason</label><textarea class="form-input" id="cgpaOtherReason" rows="2" placeholder="Enter your reason..."></textarea></div>`;}
+document.getElementById('formFields').innerHTML=html;
+setTimeout(()=>{initCustomDropdown('origCertType');initCustomDropdown('origPurpose');initCustomDropdown('bonaPurpose');initCustomDropdown('cgpaCertType');initCustomDropdown('cgpaPurpose');},0);
+document.getElementById('submitAppBtn').disabled=true;navigateTo('appform');}
+
+function toggleOtherReason(prefix,val){const group=document.getElementById(prefix+'OtherReasonGroup');if(group){group.classList.toggle('hidden',val!=='Other');}validateForm();}
+
+function changeCopies(delta){const inp=document.getElementById('bonaCopies');let v=parseInt(inp.value)||1;v=Math.max(1,Math.min(10,v+delta));inp.value=v;}
+
+function validateForm(){let valid=true;if(appFormType==='original'){const ct=document.getElementById('origCertType');const pu=document.getElementById('origPurpose');if(!ct.value){valid=false;document.getElementById('errCertType').classList.add('show');}else{document.getElementById('errCertType').classList.remove('show');}if(!pu.value){valid=false;document.getElementById('errOrigPurpose').classList.add('show');}else{document.getElementById('errOrigPurpose').classList.remove('show');}}else if(appFormType==='bonafide'){const pu=document.getElementById('bonaPurpose');if(!pu.value){valid=false;document.getElementById('errBonaPurpose').classList.add('show');}else{document.getElementById('errBonaPurpose').classList.remove('show');}}else if(appFormType==='cgpa'){const ct=document.getElementById('cgpaCertType');const pu=document.getElementById('cgpaPurpose');if(!ct.value){valid=false;document.getElementById('errCgpaCertType').classList.add('show');}else{document.getElementById('errCgpaCertType').classList.remove('show');}if(!pu.value){valid=false;document.getElementById('errCgpaPurpose').classList.add('show');}else{document.getElementById('errCgpaPurpose').classList.remove('show');}}document.getElementById('submitAppBtn').disabled=!valid;}
+
+function submitApplication(){if(document.getElementById('submitAppBtn').disabled)return;document.getElementById('confirmModal').classList.add('open');}
+
+let pendingSubmitData=null;
+
+function confirmSubmit(){closeConfirmModal();const now=new Date();const appId='APP-2026-'+String(applications.length+1).padStart(4,'0');let certType='',purpose='',copies=1;
+if(appFormType==='original'){certType=document.getElementById('origCertType').value;purpose=document.getElementById('origPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('origOtherReason').value;}else if(appFormType==='bonafide'){certType='Bonafide';purpose=document.getElementById('bonaPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('bonaOtherReason').value;copies=parseInt(document.getElementById('bonaCopies').value)||1;}else if(appFormType==='cgpa'){certType=document.getElementById('cgpaCertType').value;purpose=document.getElementById('cgpaPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('cgpaOtherReason').value;}
+
+const types={original:'Original',bonafide:'Bonafide',cgpa:'CGPA/Percentage'};
+const app={id:appId,type:types[appFormType],certificateType:certType,purpose:copies>1?purpose+' ('+copies+' copies)':purpose,copies:copies,status:'Pending',currentApprover:'Tutor',date:now.toISOString(),lastUpdated:now.toISOString(),workflow:{tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'},steps:[{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]};
+applications.unshift(app);saveApps();
+
+const notif={id:'N'+String(notifications.length+1).padStart(3,'0'),appId:appId,message:'Application '+appId+' has been submitted successfully',type:'submitted',read:false,date:now.toISOString()};notifications.unshift(notif);saveNotifs();
+
+document.getElementById('successAppId').textContent=appId;document.getElementById('successModal').classList.add('open');
+renderHomeStats();showToast('Application Submitted Successfully','success');}
+
+function closeConfirmModal(){document.getElementById('confirmModal').classList.remove('open');}
+function closeSuccessModal(){document.getElementById('successModal').classList.remove('open');navigateTo('myapps');}
+function closeRejectionModal(){document.getElementById('rejectionModal').classList.remove('open');}
+
+// ===== MY APPLICATIONS =====
+function renderMyApps(){const container=document.getElementById('myAppsContainer');const empty=document.getElementById('myAppsEmpty');const search=(document.getElementById('appSearch').value||'').toLowerCase();const filter=document.getElementById('appFilter').value;let filtered=applications;if(search)filtered=filtered.filter(a=>a.id.toLowerCase().includes(search)||a.type.toLowerCase().includes(search));if(filter!=='all')filtered=filtered.filter(a=>a.status===filter);
+if(filtered.length===0){container.innerHTML='';empty.classList.remove('hidden');return;}empty.classList.add('hidden');
+container.innerHTML=filtered.map(a=>{
+const statusClass=a.status==='Pending'?'badge-pending':a.status==='Approved'?'badge-approved':'badge-rejected';
+const stepDots=a.steps.map((s,i)=>{
+let cls='step-dot ';let label='';if(s.status==='done'){cls+='done';label='✓';}else if(s.status==='active'){cls+='active';label=String(i+1);}else if(s.status==='rejected'){cls+='pending';label='✗';}else{cls+='pending';label=String(i+1);}
+const line=i<a.steps.length-1?`<div class="step-line ${s.status==='done'?'done':''}"></div>`:'';
+return`<div class="step"><div class="${cls}">${label}</div>${line}</div>`;
+}).join('');
+return`<div class="glass-card p-5 sm:p-6 hover:border-gold-DEFAULT/20 border border-transparent transition-all"><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4"><div><div class="flex items-center gap-3"><h3 class="text-white font-bold">${a.id}</h3><span class="status-badge ${statusClass}">${a.status}</span></div><p class="text-sm text-white/40 mt-1">${a.type}${a.certificateType?' — '+a.certificateType:''} · ${a.purpose}</p></div><div class="text-right text-xs text-white/30"><p>Applied: ${formatDate(a.date)}</p><p class="mt-1">Current: ${a.currentApprover}</p></div></div><div class="flex flex-wrap items-center gap-1 mb-4">${stepDots}</div><div class="flex flex-wrap gap-2"><button onclick="viewAppDetail('${a.id}')" class="view-btn">View Details</button>${a.status==='Pending'&&a.currentApprover==='Tutor'?`<button onclick="cancelApp('${a.id}')" class="reject-btn">Cancel</button>`:''}</div></div>`;
+}).join('');}
+
+function viewAppDetail(id){const app=applications.find(a=>a.id===id);if(!app){showToast('Application not found','error');return;}
+const container=document.getElementById('appDetailContent');
+const statusClass=app.status==='Pending'?'badge-pending':app.status==='Approved'?'badge-approved':'badge-rejected';
+const stepsHtml=app.steps.map((s,i)=>{
+const statusMap={done:'Approved',active:'Waiting...',rejected:'Rejected',pending:'Pending'};
+const colorMap={done:'text-green-400',active:'text-gold-DEFAULT',rejected:'text-red-400',pending:'text-white/30'};
+const iconMap={done:'✓',active:'●',rejected:'✗',pending:'○'};
+return`<div class="flex items-start gap-3 py-3 border-b border-white/4 last:border-0"><div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${s.status==='done'?'bg-green-500/15 text-green-400':s.status==='active'?'bg-gold/10 text-gold-DEFAULT':s.status==='rejected'?'bg-red-500/15 text-red-400':'bg-white/5 text-white/30'}">${iconMap[s.status]}</div><div class="flex-1"><p class="text-sm font-semibold text-white">${s.role}</p><p class="text-xs ${colorMap[s.status]}">${statusMap[s.status]}${s.date?' · '+s.date:''}</p></div></div>`;
+}).join('');
+const rejectionHtml=app.status==='Rejected'?`<div class="mt-4 p-4 rounded-xl" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15)"><p class="text-sm font-bold text-red-400 mb-2">Rejected by ${app.rejectedBy||'N/A'}</p><p class="text-sm text-white/60">${app.rejectionReason||'No reason provided'}</p><p class="text-xs text-white/30 mt-1">${app.rejectionDate?formatDate(app.rejectionDate):''}</p></div>`:'';
+container.innerHTML=`<div class="flex items-center justify-between mb-6"><div><h3 class="text-lg font-bold text-white">${app.id}</h3><p class="text-xs text-white/40 mt-1">${app.type}${app.certificateType?' — '+app.certificateType:''}</p></div><span class="status-badge ${statusClass}">${app.status}</span></div><div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 p-4 rounded-xl" style="background:rgba(255,255,255,0.03)"><div><p class="text-xs text-white/40">Purpose</p><p class="text-sm font-semibold text-white">${app.purpose}</p></div><div><p class="text-xs text-white/40">Applied Date</p><p class="text-sm font-semibold text-white">${formatDate(app.date)}</p></div><div><p class="text-xs text-white/40">Current Approver</p><p class="text-sm font-semibold text-white">${app.currentApprover}</p></div>${app.copies?`<div><p class="text-xs text-white/40">Copies</p><p class="text-sm font-semibold text-white">${app.copies}</p></div>`:''}</div><h4 class="text-sm font-bold text-white mb-3">Approval Timeline</h4><div class="space-y-1">${stepsHtml}</div>${rejectionHtml}`;
+navigateTo('appdetail');}
+
+function cancelApp(id){if(!confirm('Are you sure you want to cancel this application?'))return;applications=applications.filter(a=>a.id!==id);saveApps();renderMyApps();renderHomeStats();showToast('Application cancelled','info');}
+
+// ===== NOTIFICATIONS =====
+function renderNotifs(){const container=document.getElementById('notifContainer');const empty=document.getElementById('notifEmpty');if(notifications.length===0){container.innerHTML='';empty.classList.remove('hidden');return;}empty.classList.add('hidden');
+const typeLabels={submitted:'Application Submitted',tutor_approved:'Tutor Approved',tutor_rejected:'Tutor Rejected',hod_approved:'HOD Approved',hod_rejected:'HOD Rejected',nodal_approved:'Nodal Officer Approved',os_approved:'OS Approved',drs_approved:'DRS Approved',cert_ready:'Certificate Ready'};
+container.innerHTML=notifications.map((n,i)=>{
+const iconMap={submitted:'📋',tutor_approved:'✅',tutor_rejected:'❌',hod_approved:'✅',hod_rejected:'❌',nodal_approved:'✅',os_approved:'✅',drs_approved:'✅',cert_ready:'🎓'};
+return`<div class="glass-card p-4 flex items-start gap-3 transition-all ${n.read?'opacity-60':'border-l-2'}" style="${n.read?'':'border-left-color:#D4AE70'}"><div class="text-lg flex-shrink-0">${iconMap[n.type]||'📌'}</div><div class="flex-1 min-w-0"><p class="text-sm font-semibold text-white ${n.read?'':'font-bold'}">${typeLabels[n.type]||n.type}</p><p class="text-xs text-white/40 mt-0.5">${n.message}</p><p class="text-xs text-white/20 mt-1">${formatDate(n.date)}</p></div><div class="flex gap-1 flex-shrink-0"><button onclick="markNotifRead(${i})" class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-white/10 transition" title="Mark read"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg></button><button onclick="deleteNotif(${i})" class="w-7 h-7 rounded-lg flex items-center justify-center hover:bg-white/10 transition" title="Delete"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button></div></div>`;
+}).join('');updateBadge();}
+
+function markNotifRead(i){notifications[i].read=true;saveNotifs();renderNotifs();updateBadge();}
+function deleteNotif(i){notifications.splice(i,1);saveNotifs();renderNotifs();updateBadge();}
+function markAllNotifRead(){notifications.forEach(n=>n.read=true);saveNotifs();renderNotifs();updateBadge();showToast('All notifications marked as read','info');}
+function updateBadge(){const unread=notifications.filter(n=>!n.read).length;const badge=document.getElementById('notifBadge');if(badge)badge.style.display=unread>0?'block':'none';}
+
+// ===== PROFILE =====
+function openEditProfile(){navigateTo('profile');}
+
+function populateProfileView(){
+    const map={pName:'name',pRegNo:'regNo',pRollNo:'rollNo',pGender:'gender',pDob:'dob',pBloodGroup:'bloodGroup',pCommunity:'community',pNationality:'nationality',pAadhaar:'aadhaar',pDegree:'degree',pDept:'department',pBatch:'batch',pAdmissionYear:'admissionYear',pCurrentYear:'currentYear',pSemester:'semester',pSection:'section',pAcadStatus:'academicStatus',pPhone:'phone',pEmail:'email',pAddress:'address',pCity:'city',pState:'state',pPincode:'pincode',pFatherName:'fatherName',pMotherName:'motherName',pGuardianName:'guardianName',pParentPhone:'parentPhone'};
+    Object.keys(map).forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) el.value=studentProfile[map[id]]||'';
+    });
+}
+
+function saveProfileChanges(){
+    const editable=['pBloodGroup','pCommunity','pNationality','pAadhaar','pPhone','pEmail','pAddress','pCity','pState','pPincode','pFatherName','pMotherName','pGuardianName','pParentPhone'];
+    editable.forEach(id=>{
+        const el=document.getElementById(id);
+        if(el) studentProfile[id.replace('p','').replace(/^./,c=>c.toLowerCase())]=el.value;
+    });
+    localStorage.setItem('studentProfile',JSON.stringify(studentProfile));
+    updateProfileHeader();
+    showToast('Profile updated successfully','success');
+}
+
+function updateProfileHeader(){
+    document.getElementById('headerStudentName').textContent=studentProfile.name;
+    document.getElementById('headerRegNo').textContent=studentProfile.regNo;
+    document.getElementById('avatarInitials').textContent=studentProfile.initials;
+    document.getElementById('welcomeName').textContent=studentProfile.name.split(' ')[0];
+    document.querySelector('#avatarCircle span').textContent=studentProfile.initials;
+    document.getElementById('dropName').textContent=studentProfile.name;
+    document.getElementById('dropReg').textContent=studentProfile.regNo;
+    document.getElementById('dropDept').textContent=studentProfile.department;
+}
+
+function updateProfilePhoto(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=function(ev){const url=ev.target.result;document.querySelector('#avatarCircle').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;document.querySelector('#profileAvatar').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;};r.readAsDataURL(file);}
+
+// ===== CUSTOM DROPDOWN COMPONENT =====
+function initCustomDropdown(selectId){
+    const old=document.querySelector(`[data-dd-id="${selectId}"]`);
+    if(old){const s=old.querySelector('select');if(s){s.style.display='';}old.remove();}
+    const select=document.getElementById(selectId);if(!select)return null;
+    let wrap=select.closest('.custom-dd-wrap');if(!wrap){wrap=document.createElement('div');wrap.className='custom-dd-wrap';select.parentNode.insertBefore(wrap,select);wrap.appendChild(select);}
+    wrap.dataset.ddId=selectId;
+    const trigger=document.createElement('button');trigger.type='button';trigger.className='custom-dd-trigger';trigger.setAttribute('aria-haspopup','listbox');trigger.setAttribute('aria-expanded','false');
+    const label=document.createElement('span');label.className='dd-label'+(select.selectedIndex===0?' dd-placeholder':'');
+    const selOpt=select.options[select.selectedIndex];label.textContent=selOpt?selOpt.text:(select.options[0]?select.options[0].text:'');
+    const arrow=document.createElement('span');arrow.className='dd-arrow';arrow.innerHTML='<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+    trigger.appendChild(label);trigger.appendChild(arrow);
+    const menu=document.createElement('div');menu.className='custom-dd-menu';menu.setAttribute('role','listbox');
+    let isOpen=false;let focusIdx=-1;
+    function buildOpts(){
+        menu.innerHTML='';focusIdx=-1;
+        Array.from(select.options).forEach((o,i)=>{
+            const d=document.createElement('div');d.className='custom-dd-opt'+(o.selected?' selected':'');d.textContent=o.text;d.dataset.value=o.value;d.dataset.idx=i;d.setAttribute('role','option');d.setAttribute('aria-selected',String(o.selected));
+            d.addEventListener('click',(e)=>{e.stopPropagation();pick(o.value);});
+            menu.appendChild(d);
+        });
+    }
+    buildOpts();
+    wrap.appendChild(trigger);wrap.appendChild(menu);
+    select.style.display='none';
+    function pick(val){
+        select.value=val;
+        const o=select.options[select.selectedIndex];const t=o?o.text:'';
+        label.textContent=t;label.className='dd-label';
+        menu.querySelectorAll('.custom-dd-opt').forEach(el=>{const sel=el.dataset.value===val;el.classList.toggle('selected',sel);el.setAttribute('aria-selected',String(sel));});
+        close();select.dispatchEvent(new Event('change',{bubbles:true}));
+    }
+    function open(){if(isOpen)return;menu.classList.add('open');trigger.classList.add('open');trigger.setAttribute('aria-expanded','true');isOpen=true;const sel=menu.querySelector('.selected');if(sel)focusIdx=parseInt(sel.dataset.idx);else focusIdx=0;highlight(focusIdx);}
+    function close(){menu.classList.remove('open');trigger.classList.remove('open');trigger.setAttribute('aria-expanded','false');isOpen=false;menu.querySelectorAll('.custom-dd-opt').forEach(el=>el.classList.remove('hovered'));}
+    function highlight(idx){menu.querySelectorAll('.custom-dd-opt').forEach(el=>el.classList.remove('hovered'));const items=menu.querySelectorAll('.custom-dd-opt');if(items[idx]){items[idx].classList.add('hovered');items[idx].scrollIntoView({block:'nearest'});focusIdx=idx;}}
+    trigger.addEventListener('click',(e)=>{e.stopPropagation();isOpen?close():open();});
+    trigger.addEventListener('keydown',(e)=>{
+        if(e.key==='Enter'||e.key===' '){e.preventDefault();isOpen?close():open();}
+        if(e.key==='Escape'){e.preventDefault();close();trigger.focus();}
+        if(e.key==='ArrowDown'){e.preventDefault();if(!isOpen){open();return;}highlight(Math.min(focusIdx+1,select.options.length-1));}
+        if(e.key==='ArrowUp'){e.preventDefault();if(!isOpen){open();return;}highlight(Math.max(focusIdx-1,0));}
+        if(e.key==='Enter'&&isOpen){const h=menu.querySelector('.hovered');if(h){h.click();}}
+    });
+    document.addEventListener('click',function handler(ev){if(!wrap.contains(ev.target))close();});
+    return {getValue:()=>select.value,setValue:(v)=>{const o=Array.from(select.options).find(o=>o.value===v);if(o)pick(v);},refresh:buildOpts,destroy:()=>{select.style.display='';wrap.remove();}};
+}
+// ===== END CUSTOM DROPDOWN =====
+
+// ===== UTILITY =====
+function formatDate(d){if(!d)return'—';const dt=new Date(d);return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
+
+function showToast(msg,type='info'){const container=document.getElementById('toastContainer');const t=document.createElement('div');t.className='toast '+type;const icons={success:'✓',error:'✗',info:'ℹ'};t.innerHTML=`<span>${icons[type]||'ℹ'}</span><span>${msg}</span>`;container.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300);},3000);}
+
+// ===== EVENT BINDINGS =====
+document.getElementById('profileBtn').addEventListener('click',(e)=>{e.stopPropagation();document.getElementById('profileDropdown').classList.toggle('open');});
+document.addEventListener('click',()=>document.getElementById('profileDropdown').classList.remove('open'));
+document.getElementById('menuToggle').addEventListener('click',()=>{document.getElementById('sidebar').classList.toggle('open');});
+document.getElementById('sidebar').addEventListener('click',(e)=>{if(window.innerWidth<1024&&e.target.closest('.nav-item, .nav-sub-item')){document.getElementById('sidebar').classList.remove('open');}});
+document.getElementById('confirmModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeConfirmModal();});
+document.getElementById('successModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeSuccessModal();});
+document.getElementById('rejectionModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeRejectionModal();});
+
+// ===== INIT =====
+initCustomDropdown('appFilter');updateProfileHeader();populateProfileView();renderHomeStats();renderMyApps();renderNotifs();updateBadge();
+</script>
+</body>
+</html>
