@@ -1,5 +1,14 @@
 'use strict';
 
+const roleRoutes = {
+  'Tutor': 'tutor-login.html',
+  'HOD': 'hod-login.html',
+  'Nodal Officer': 'nodal-officer-login.html',
+  'Office Superintendent': 'os-login.html',
+  'DRS': 'drs-login.html',
+  'Warden': 'warden-login.html'
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const roleCards = document.querySelectorAll('.role-card');
@@ -25,17 +34,17 @@ document.addEventListener('DOMContentLoaded', () => {
     function selectRole(role, card) {
         try {
             sessionStorage.setItem('selectedStaffRole', role);
-        } catch (err) {
-            // fallback: sessionStorage may be unavailable
-        }
+        } catch (err) {}
 
         card.classList.add('selected');
         card.style.transition = 'transform 0.3s var(--ease-spring)';
         card.style.transform = 'scale(0.96)';
 
+        const target = roleRoutes[role] || 'staff-login.html';
+
         setTimeout(() => {
             card.style.transform = '';
-            window.location.href = 'staff-login.html';
+            window.location.href = target;
         }, 300);
     }
 
