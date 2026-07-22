@@ -3,45 +3,125 @@
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nodal Officer Dashboard | Smart Student Service Portal</title>
-<meta name="description" content="Nodal Officer dashboard for institutional certificate verification.">
+<meta name="description" content="Nodal Officer dashboard for institutional certificate verification and approval.">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="icon" href="assets/logo/psna%20logo.png" type="image/png">
 <script src="https://cdn.tailwindcss.com"></script>
-<script>tailwind.config={theme:{extend:{colors:{navy:{DEFAULT:'#051632',light:'#0a2454'},wine:{DEFAULT:'#4E1526',light:'#7C2A40'},gold:{DEFAULT:'#D4AE70',light:'#E8C98B'}},fontFamily:{inter:['Inter','sans-serif']}}}}</script>
-<script src="js/seed-data.js"></script>
+<script>
+tailwind.config={theme:{extend:{colors:{navy:{DEFAULT:'#051632',light:'#0a2454',lighter:'#0f3068'},wine:{DEFAULT:'#4E1526',light:'#7C2A40',dark:'#350B1B'},gold:{DEFAULT:'#D4AE70',light:'#E8C98B',dark:'#B88E4C'}},fontFamily:{inter:['Inter','sans-serif']}}}}
+</script>
+<script src="js/seed-data.js" defer></script>
 <style>
-body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scrollbar-color:#1a3a6a #051632}::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#051632}::-webkit-scrollbar-thumb{background:#1a3a6a;border-radius:3px}
-.glass-card{background:rgba(15,48,104,0.45);backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:20px}
-.table-row:hover{background:rgba(212,174,112,0.06)}
-.profile-dropdown{opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.25s ease}.profile-dropdown.open{opacity:1;visibility:visible;transform:translateY(0)}
+body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scrollbar-color:#1a3a6a #051632}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#051632}::-webkit-scrollbar-thumb{background:#1a3a6a;border-radius:3px}
+.glass-card{background:rgba(15,48,104,0.45);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(255,255,255,0.08);border-radius:20px}
+.glass-card-light{background:rgba(255,255,255,0.04);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,0.06);border-radius:16px}
+.glow-gold{box-shadow:0 0 30px rgba(212,174,112,0.08)}
+.glow-wine{box-shadow:0 0 30px rgba(78,21,38,0.15)}
+.profile-dropdown{opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.25s ease}
+.profile-dropdown.open{opacity:1;visibility:visible;transform:translateY(0)}
 .modal-overlay{opacity:0;visibility:hidden;transition:all 0.3s ease}.modal-overlay.open{opacity:1;visibility:visible}
 .modal-panel{transform:scale(0.95) translateY(10px);transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1);max-height:90vh;overflow-y:auto}.modal-overlay.open .modal-panel{transform:scale(1) translateY(0)}
-.badge-pending{padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:rgba(251,191,36,0.15);color:#FBBF24;border:1px solid rgba(251,191,36,0.2)}
-.badge-approved{padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.2)}
-.accept-btn{padding:6px 14px;border-radius:10px;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1px solid rgba(16,185,129,0.2);background:rgba(16,185,129,0.15);color:#10B981}.accept-btn:hover{background:#10B981;color:#fff}
-.reject-btn{padding:6px 14px;border-radius:10px;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1px solid rgba(239,68,68,0.2);background:rgba(239,68,68,0.12);color:#EF4444}.reject-btn:hover{background:#EF4444;color:#fff}
+.status-badge{padding:4px 12px;border-radius:20px;font-size:0.7rem;font-weight:700;letter-spacing:0.04em;text-transform:uppercase;display:inline-block}
+.badge-pending{background:rgba(251,191,36,0.15);color:#FBBF24;border:1px solid rgba(251,191,36,0.2)}
+.badge-approved{background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.2)}
+.badge-rejected{background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid rgba(239,68,68,0.2)}
+.badge-forwarded{background:rgba(99,102,241,0.15);color:#818CF8;border:1px solid rgba(99,102,241,0.2)}
 .view-btn{padding:6px 14px;border-radius:10px;font-size:0.75rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:1px solid rgba(212,174,112,0.2);background:rgba(212,174,112,0.1);color:#D4AE70}.view-btn:hover{background:#D4AE70;color:#051632}
-.search-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Inter',sans-serif}.search-input:focus{border-color:#4E1526;box-shadow:0 0 0 3px rgba(78,21,38,0.15);outline:none}
+.search-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Inter',sans-serif;transition:all 0.2s}.search-input:focus{border-color:#D4AE70;box-shadow:0 0 0 3px rgba(212,174,112,0.1);outline:none}
 .search-input::placeholder{color:rgba(255,255,255,0.3)}
-.date-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Inter',sans-serif;color-scheme:dark}.date-input:focus{border-color:#4E1526;outline:none}
-@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.animate-in{animation:fadeInUp 0.5s ease forwards}
+.filter-select{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Inter',sans-serif;border-radius:12px;padding:10px 32px 10px 14px;font-size:0.8rem;font-weight:500;appearance:none;-webkit-appearance:none;cursor:pointer;transition:all 0.2s;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23D4AE70' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 10px center;background-size:12px}
+.filter-select:focus{border-color:#D4AE70;outline:none;box-shadow:0 0 0 3px rgba(212,174,112,0.1)}
+.filter-select option{background:#0a2454;color:#fff}
+.date-input{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:#fff;font-family:'Inter',sans-serif;color-scheme:dark;border-radius:12px;padding:10px 14px;font-size:0.8rem;transition:all 0.2s}.date-input:focus{border-color:#D4AE70;outline:none}
+.sort-btn{background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08);color:rgba(255,255,255,0.6);font-family:'Inter',sans-serif;border-radius:12px;padding:10px 16px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.sort-btn:hover{background:rgba(255,255,255,0.1);color:#fff}
+.sort-btn.active{background:rgba(212,174,112,0.1);border-color:rgba(212,174,112,0.2);color:#D4AE70}
+.stat-card{transition:all 0.3s ease;cursor:default}.stat-card:hover{transform:translateY(-4px)}
+.table-header{color:rgba(255,255,255,0.4);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;padding:12px 16px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.06);white-space:nowrap}
+.table-cell{padding:14px 16px;font-size:0.8rem;border-bottom:1px solid rgba(255,255,255,0.04);white-space:nowrap}
+.table-row{transition:all 0.15s ease}.table-row:hover{background:rgba(212,174,112,0.04)}.table-row{cursor:pointer}
+.tab-btn{padding:10px 20px;border-radius:12px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.25s ease;border:none;font-family:'Inter',sans-serif;background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.5);border:1px solid rgba(255,255,255,0.06)}
+.tab-btn:hover{background:rgba(255,255,255,0.08);color:#fff}
+.tab-btn.active{background:linear-gradient(135deg,#4E1526,#7C2A40);color:#fff;border-color:transparent;box-shadow:0 4px 20px rgba(78,21,38,0.3)}
+.tab-btn .tab-count{display:inline-block;margin-left:6px;padding:1px 8px;border-radius:8px;font-size:0.65rem;background:rgba(255,255,255,0.08)}
+.tab-btn.active .tab-count{background:rgba(255,255,255,0.15)}
+.timeline-node{position:relative;padding-left:32px;padding-bottom:24px}
+.timeline-node:last-child{padding-bottom:0}
+.timeline-line{position:absolute;left:10px;top:24px;bottom:0;width:2px;background:rgba(255,255,255,0.06)}
+.timeline-node:last-child .timeline-line{display:none}
+.timeline-dot{position:absolute;left:3px;top:4px;width:16px;height:16px;border-radius:50%;border:2px solid;z-index:1;display:flex;align-items:center;justify-content:center}
+.timeline-dot.done{background:#10B981;border-color:#10B981}
+.timeline-dot.active{background:#FBBF24;border-color:#FBBF24;animation:pulse 2s infinite}
+.timeline-dot.pending{background:rgba(255,255,255,0.06);border-color:rgba(255,255,255,0.15)}
+.timeline-dot.rejected{background:#EF4444;border-color:#EF4444}
+.detail-section-title{font-size:0.7rem;font-weight:700;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:0.08em;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.detail-label{font-size:0.65rem;font-weight:600;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:0.06em}
+.detail-value{font-size:0.85rem;font-weight:600;color:#fff;word-break:break-word}
+.metric-chip{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:8px 16px;display:flex;align-items:center;gap:8px;font-size:0.75rem;color:rgba(255,255,255,0.6)}
+.metric-chip strong{color:#D4AE70;font-size:0.9rem}
+.toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
+.toast{padding:14px 24px;border-radius:16px;font-size:0.85rem;font-weight:600;color:#fff;animation:slideIn 0.35s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 8px 32px rgba(0,0,0,0.2)}
+.toast.success{background:rgba(16,185,129,0.9);border:1px solid rgba(16,185,129,0.3)}
+.toast.error{background:rgba(239,68,68,0.9);border:1px solid rgba(239,68,68,0.3)}
+.toast.info{background:rgba(99,102,241,0.9);border:1px solid rgba(99,102,241,0.3)}
+@keyframes slideIn{from{opacity:0;transform:translateX(40px) scale(0.95)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.6;transform:scale(1.15)}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.animate-in{animation:fadeInUp 0.5s ease forwards}
 .bg-orb{position:fixed;border-radius:50%;filter:blur(100px);pointer-events:none;z-index:0}
-.dept-badge{padding:3px 10px;border-radius:8px;font-size:0.7rem;font-weight:700;background:rgba(212,174,112,0.12);color:#D4AE70;border:1px solid rgba(212,174,112,0.15)}
+.notif-dot{position:absolute;top:2px;right:2px;width:8px;height:8px;background:#EF4444;border-radius:50%;border:2px solid #051632}
+.modal-body{max-height:calc(90vh - 80px);overflow-y:auto;scrollbar-width:thin;scrollbar-color:#1a3a6a transparent}
+.rejection-banner{background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15);border-radius:12px;padding:12px 16px;margin-top:8px}
+.rejection-banner-label{font-size:0.65rem;font-weight:600;color:#EF4444;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:4px}
+.rejection-banner-text{font-size:0.85rem;color:#FCA5A5;font-weight:500}
+.report-btn{background:rgba(212,174,112,0.1);border:1px solid rgba(212,174,112,0.2);color:#D4AE70;font-family:'Inter',sans-serif;border-radius:12px;padding:10px 16px;font-size:0.8rem;font-weight:600;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.report-btn:hover{background:rgba(212,174,112,0.2);color:#fff}
+.report-dropdown{opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.25s ease;position:fixed;min-width:230px;z-index:9999;box-shadow:0 16px 48px rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:16px;background:rgba(10,36,84,0.95);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px)}
+.report-dropdown.open{opacity:1;visibility:visible;transform:translateY(0)}
+@media(max-width:768px){.filter-select,.date-input,.sort-btn,.report-btn{width:100%}.stat-card .text-3xl{font-size:1.5rem}.tab-btn{font-size:0.7rem;padding:8px 14px}}
+@media(max-width:640px){.table-cell,.table-header{font-size:0.7rem;padding:10px 8px}.modal-panel{padding:20px!important}}
+@media print{body{background:#fff;color:#000}.no-print{display:none!important}.glass-card{background:#fff;border:1px solid #ddd;backdrop-filter:none}.table-cell,.table-header{color:#333!important}}
 </style>
 </head>
 <body class="min-h-screen text-white relative overflow-x-hidden">
 <div class="bg-orb" style="width:500px;height:500px;background:radial-gradient(circle,rgba(212,174,112,0.08),transparent 70%);top:-150px;left:-100px"></div>
 <div class="bg-orb" style="width:400px;height:400px;background:radial-gradient(circle,rgba(78,21,38,0.1),transparent 70%);bottom:-100px;right:-80px"></div>
+<div class="bg-orb" style="width:300px;height:300px;background:radial-gradient(circle,rgba(100,140,200,0.06),transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%)"></div>
 
-<header class="fixed top-0 left-0 right-0 z-50 px-6 py-3" style="background:rgba(5,22,50,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)">
+<header class="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3" style="background:rgba(5,22,50,0.85);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06)">
 <div class="max-w-7xl mx-auto flex items-center justify-between">
-    <div class="flex items-center gap-3"><img src="assets/logo/psna%20logo.png" alt="Logo" class="w-10 h-10 object-contain rounded-lg" style="filter:brightness(1.2)"><div><h1 class="text-sm font-bold text-white tracking-tight">Smart Student Service Portal</h1><p class="text-xs font-semibold" style="color:#D4AE70">Nodal Officer Dashboard</p></div></div>
-    <div class="relative">
-        <button id="profileBtn" class="flex items-center gap-3 px-3 py-2 rounded-2xl transition-all hover:bg-white/5"><div class="text-right hidden sm:block"><p class="text-sm font-semibold text-white">Dr. Senthil Nathan P</p><p class="text-xs" style="color:rgba(255,255,255,0.5)">Welcome, Nodal Officer</p></div><div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="avatarCircle">SN</div></button>
-        <div id="profileDropdown" class="profile-dropdown absolute right-0 top-full mt-2 w-56 glass-card p-2 z-50">
-            <button id="viewProfileBtn" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>View Profile Dashboard</button>
-            <a href="nodal-officer-login.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition flex items-center gap-3"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+    <div class="flex items-center gap-3">
+        <img src="assets/logo/psna%20logo.png" alt="Logo" class="w-10 h-10 object-contain rounded-lg" style="filter:brightness(1.2)">
+        <div>
+            <h1 class="text-sm font-bold text-white tracking-tight">Smart Student Service Portal</h1>
+            <p class="text-xs font-semibold" style="color:#D4AE70">Nodal Officer Dashboard</p>
+        </div>
+    </div>
+    <div class="flex items-center gap-3 sm:gap-4">
+        <button id="notifBtn" class="relative w-9 h-9 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/8 transition-all" title="Notifications">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="notif-dot" id="notifDot" style="display:none"></span>
+        </button>
+        <div class="relative">
+            <button id="profileBtn" class="flex items-center gap-3 px-2 sm:px-3 py-2 rounded-2xl transition-all hover:bg-white/5">
+                <div class="text-right hidden sm:block">
+                    <p class="text-sm font-semibold text-white">Dr. Senthil Nathan P</p>
+                    <p class="text-xs" style="color:rgba(255,255,255,0.5)">Welcome, Nodal Officer</p>
+                </div>
+                <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="avatarCircle">SN</div>
+            </button>
+            <div id="profileDropdown" class="profile-dropdown absolute right-0 top-full mt-2 w-56 glass-card p-2 z-50">
+                <button id="viewProfileBtn" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    View Profile Dashboard
+                </button>
+                <a href="nodal-officer-login.html" class="block px-4 py-3 rounded-xl text-sm font-medium text-red-400 hover:bg-red-500/10 transition flex items-center gap-3">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                    Logout
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -49,145 +129,936 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
 
 <main class="relative z-10 pt-20 px-4 sm:px-6 pb-10 max-w-7xl mx-auto">
 
-<!-- Search & Date Range Control Bar -->
-<div class="glass-card p-4 mb-6 mt-4 flex flex-wrap items-center gap-4 animate-in">
-    <div class="flex-1 min-w-[200px] relative">
-        <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" id="searchInput" placeholder="Search by student name, department, or certificate..." class="search-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium" oninput="applyFilters()">
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6 mt-4 animate-in">
+    <div>
+        <h2 class="text-xl font-bold text-white">Cross-Department Verification</h2>
+        <p class="text-xs text-white/40 mt-1">Institutional-level certificate verification and approval</p>
     </div>
-    <div class="flex items-center gap-2">
-        <label class="text-xs font-semibold text-white/40 uppercase">From:</label>
-        <input type="date" id="dateFrom" class="date-input px-3 py-2.5 rounded-xl text-sm" onchange="applyFilters()">
-    </div>
-    <div class="flex items-center gap-2">
-        <label class="text-xs font-semibold text-white/40 uppercase">To:</label>
-        <input type="date" id="dateTo" class="date-input px-3 py-2.5 rounded-xl text-sm" onchange="applyFilters()">
+    <div class="flex items-center gap-3">
+        <span class="text-xs text-white/30">Department:</span>
+        <span class="px-3 py-1.5 rounded-lg text-xs font-bold" style="background:rgba(212,174,112,0.1);color:#D4AE70;border:1px solid rgba(212,174,112,0.15)">All Departments</span>
     </div>
 </div>
 
-<!-- Certificate Filter Tabs -->
-<div class="flex flex-wrap gap-2 mb-6 animate-in" id="filterTabs"></div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-8 mt-4 animate-in">
-    <button id="pendingCard" class="glass-card p-6 text-left transition-all hover:scale-[1.02] cursor-pointer border-2 border-gold-DEFAULT/30" style="box-shadow:0 0 30px rgba(212,174,112,0.08)" onclick="switchTab('pending')"><div class="flex items-center justify-between mb-3"><div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:rgba(251,191,36,0.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><span class="text-3xl font-black" style="color:#FBBF24" id="pendingCount">10</span></div><h3 class="text-white font-bold text-lg">Pending Approvals</h3><p class="text-white/40 text-sm mt-1">Cross-department verification queue</p></button>
-    <button id="approvedCard" class="glass-card p-6 text-left transition-all hover:scale-[1.02] cursor-pointer border-2 border-transparent" onclick="switchTab('approved')"><div class="flex items-center justify-between mb-3"><div class="w-12 h-12 rounded-2xl flex items-center justify-center" style="background:rgba(16,185,129,0.12)"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div><span class="text-3xl font-black" style="color:#10B981" id="approvedCount">18</span></div><h3 class="text-white font-bold text-lg">Approved Requests</h3><p class="text-white/40 text-sm mt-1">Completed approvals history</p></button>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-6 animate-in">
+    <div class="glass-card p-5 stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(212,174,112,0.1)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
+            <span class="text-2xl font-black" style="color:#D4AE70" id="statTotal">0</span>
+        </div>
+        <h3 class="text-white font-bold text-sm">Total Requests</h3>
+        <p class="text-white/40 text-xs mt-1" id="statTotalDetail">All cross-department requests</p>
+    </div>
+    <div class="glass-card p-5 stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(251,191,36,0.1)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FBBF24" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <span class="text-2xl font-black" style="color:#FBBF24" id="statPending">0</span>
+        </div>
+        <h3 class="text-white font-bold text-sm">Pending Requests</h3>
+        <p class="text-white/40 text-xs mt-1">Awaiting nodal officer review</p>
+    </div>
+    <div class="glass-card p-5 stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(16,185,129,0.1)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <span class="text-2xl font-black" style="color:#10B981" id="statApproved">0</span>
+        </div>
+        <h3 class="text-white font-bold text-sm">Approved Requests</h3>
+        <p class="text-white/40 text-xs mt-1">Approved & forwarded to OS</p>
+    </div>
+    <div class="glass-card p-5 stat-card">
+        <div class="flex items-center justify-between mb-3">
+            <div class="w-11 h-11 rounded-2xl flex items-center justify-center" style="background:rgba(239,68,68,0.1)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            </div>
+            <span class="text-2xl font-black" style="color:#EF4444" id="statRejected">0</span>
+        </div>
+        <h3 class="text-white font-bold text-sm">Rejected Requests</h3>
+        <p class="text-white/40 text-xs mt-1">Rejected by nodal officer</p>
+    </div>
 </div>
 
-<div id="pendingSection" class="glass-card p-6 animate-in" style="animation-delay:0.1s">
-    <h2 class="text-lg font-bold text-white mb-4">Pending Approvals — All Departments</h2>
-    <div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-white/40 text-xs uppercase tracking-wider border-b border-white/6"><th class="text-left py-3 px-4">Req ID</th><th class="text-left py-3 px-4">Student</th><th class="text-left py-3 px-4">Department</th><th class="text-left py-3 px-4">Year</th><th class="text-left py-3 px-4">Need</th><th class="text-left py-3 px-4">Certificate</th><th class="text-left py-3 px-4">Reasons</th><th class="text-left py-3 px-4">Date</th><th class="text-center py-3 px-4">Actions</th></tr></thead><tbody id="pendingTableBody"></tbody></table></div>
-    <p id="noResults" class="text-center text-white/30 py-8 hidden">No matching requests found.</p>
+<div class="flex flex-wrap gap-3 mb-6 animate-in" style="animation-delay:0.05s">
+    <div class="metric-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Avg. Review Time: <strong id="metricAvgTime">—</strong></div>
+    <div class="metric-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> Today: <strong id="metricToday">0</strong></div>
+    <div class="metric-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg> This Week: <strong id="metricWeek">0</strong></div>
 </div>
 
-<div id="approvedSection" class="glass-card p-6 hidden animate-in">
-    <h2 class="text-lg font-bold text-white mb-4">Approved Requests — All Departments</h2>
-    <div class="overflow-x-auto"><table class="w-full text-sm"><thead><tr class="text-white/40 text-xs uppercase tracking-wider border-b border-white/6"><th class="text-left py-3 px-4">Req ID</th><th class="text-left py-3 px-4">Student</th><th class="text-left py-3 px-4">Department</th><th class="text-left py-3 px-4">Year</th><th class="text-left py-3 px-4">Need</th><th class="text-left py-3 px-4">Certificate</th><th class="text-left py-3 px-4">Reasons</th><th class="text-left py-3 px-4">Date</th><th class="text-left py-3 px-4">Status</th><th class="text-left py-3 px-4">Hierarchy</th></tr></thead><tbody id="approvedTableBody"></tbody></table></div>
+<div class="glass-card p-4 sm:p-5 mb-4 animate-in" style="animation-delay:0.1s">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-3">
+        <div class="relative lg:col-span-2">
+            <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="searchInput" placeholder="Search name, reg no, request ID, certificate..." class="search-input w-full pl-9 pr-3 py-2.5 rounded-xl text-sm" oninput="applyFilters()">
+        </div>
+        <select id="certFilter" class="filter-select" onchange="applyFilters()">
+            <option value="all">All Certificates</option>
+            <option value="Original">Original Certificate</option>
+            <option value="Bonafide">Bonafide</option>
+            <option value="Income">Income Certificate</option>
+            <option value="Community">Community Certificate</option>
+            <option value="Conduct">Conduct Certificate</option>
+            <option value="Nativity">Nativity Certificate</option>
+            <option value="Migration">Migration Certificate</option>
+            <option value="Transfer">Transfer Certificate</option>
+            <option value="Education Loan">Education Loan</option>
+            <option value="CGPA/Percentage">CGPA / Percentage</option>
+            <option value="Other">Any Other Certificate</option>
+        </select>
+        <input type="date" id="dateFrom" class="date-input" title="From Date" onchange="applyFilters()">
+        <input type="date" id="dateTo" class="date-input" title="To Date" onchange="applyFilters()">
+        <button id="sortToggle" class="sort-btn" onclick="toggleSort()">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+            <span id="sortLabel">Latest First</span>
+        </button>
+        <div class="relative">
+            <button id="reportBtn" class="report-btn w-full justify-center" onclick="toggleReportDropdown(event)">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                Reports
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+        </div>
+    </div>
 </div>
+
+<div class="mb-4 animate-in" style="animation-delay:0.12s">
+    <div class="flex flex-wrap gap-2" id="tabBar">
+        <button class="tab-btn active" data-tab="all" onclick="switchTab('all',this)">
+            All <span class="tab-count" id="tabCountAll">0</span>
+        </button>
+        <button class="tab-btn" data-tab="pending" onclick="switchTab('pending',this)">
+            Pending <span class="tab-count" id="tabCountPending">0</span>
+        </button>
+        <button class="tab-btn" data-tab="approved" onclick="switchTab('approved',this)">
+            Approved <span class="tab-count" id="tabCountApproved">0</span>
+        </button>
+        <button class="tab-btn" data-tab="rejected" onclick="switchTab('rejected',this)">
+            Rejected <span class="tab-count" id="tabCountRejected">0</span>
+        </button>
+    </div>
+</div>
+
+<div id="tableSection" class="glass-card p-4 sm:p-5 animate-in" style="animation-delay:0.15s">
+    <div class="flex items-center justify-between mb-4">
+        <h2 class="text-base font-bold text-white flex items-center gap-2" id="tableTitle">
+            <span id="tableIcon"></span>
+            <span id="tableLabel">All Requests</span>
+            <span class="text-xs font-normal text-white/30 ml-1" id="resultCount"></span>
+        </h2>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+            <thead>
+                <tr class="table-header">
+                    <th>Request ID</th>
+                    <th>Student Name</th>
+                    <th>Register No</th>
+                    <th>Department</th>
+                    <th>Certificate Type</th>
+                    <th>Purpose</th>
+                    <th>Applied Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody"></tbody>
+        </table>
+    </div>
+    <p id="noResults" class="text-center text-white/30 py-10 hidden">
+        <svg class="mx-auto mb-3" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.4"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg><br>No matching requests found.
+    </p>
+</div>
+
 </main>
 
+<div id="reportDropdown" class="report-dropdown p-2">
+    <button onclick="generateReport()" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Generate Report
+    </button>
+    <button onclick="exportExcel()" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export Excel
+    </button>
+    <button onclick="exportPDF()" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        Export PDF
+    </button>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
 <div id="profileModal" class="modal-overlay fixed inset-0 z-[100] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.6)">
-<div class="modal-panel glass-card p-8 w-full max-w-md relative">
-    <button onclick="closeProfileModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <div class="text-center mb-6"><div class="relative inline-block"><div class="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="modalAvatar">SN</div><label class="absolute bottom-2 right-0 w-7 h-7 rounded-full flex items-center justify-center cursor-pointer" style="background:#D4AE70"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#051632" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><input type="file" accept="image/*" class="hidden" onchange="previewImage(event)"></label></div><h3 class="text-xl font-bold text-white">Dr. Senthil Nathan P</h3><p class="text-sm" style="color:#D4AE70">Nodal Officer</p></div>
+<div class="modal-panel glass-card p-6 sm:p-8 w-full max-w-md relative">
+    <button onclick="closeProfileModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <div class="text-center mb-6">
+        <div class="relative inline-block">
+            <div class="w-20 h-20 rounded-full flex items-center justify-center text-2xl font-bold mx-auto mb-3" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="modalAvatar">SN</div>
+            <label class="absolute bottom-2 right-0 w-7 h-7 rounded-full flex items-center justify-center cursor-pointer" style="background:#D4AE70">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#051632" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+                <input type="file" accept="image/*" class="hidden" id="profileImageInput" onchange="previewImage(event)">
+            </label>
+        </div>
+        <h3 class="text-xl font-bold text-white">Dr. Senthil Nathan P</h3>
+        <p class="text-sm" style="color:#D4AE70">Nodal Officer</p>
+    </div>
     <div class="space-y-4">
-        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Contact Number</label><input type="tel" id="contactInput" value="+91 87654 32109" class="w-full px-4 py-3 rounded-xl text-white text-sm font-medium focus:outline-none" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.12)"></div>
-        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Designation</label><div class="px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-white/60 text-sm">Professor — Institutional Nodal Officer</div></div>
-        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Assigned Role</label><div class="px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-sm"><span class="px-3 py-1 rounded-lg text-xs font-bold" style="background:rgba(78,21,38,0.3);color:#D4AE70;border:1px solid rgba(78,21,38,0.4)">Nodal Officer</span></div></div>
-        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Department</label><div class="px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-white/60 text-sm">Administration — All Departments</div></div>
-        <button onclick="saveProfile()" class="w-full py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02]" style="background:linear-gradient(135deg,#4E1526,#7C2A40)">Save Changes</button>
+        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Contact Number</label>
+            <input type="tel" id="contactInput" value="+91 87654 32109" class="w-full px-4 py-3 rounded-xl text-white text-sm font-medium focus:outline-none" style="background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.12)">
+        </div>
+        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Designation</label>
+            <div class="px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-white/60 text-sm">Professor — Institutional Nodal Officer</div></div>
+        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Assigned Role</label>
+            <div class="px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-sm"><span class="px-3 py-1 rounded-lg text-xs font-bold" style="background:rgba(78,21,38,0.3);color:#D4AE70;border:1px solid rgba(78,21,38,0.4)">Nodal Officer</span></div></div>
+        <div><label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-1 block">Department</label>
+            <div class="px-4 py-3 rounded-xl bg-white/4 border border-white/6 text-white/60 text-sm">Administration — All Departments</div></div>
+        <button onclick="saveProfile()" class="w-full py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02]" style="background:linear-gradient(135deg,#4E1526,#7C2A40);box-shadow:0 4px 20px rgba(78,21,38,0.35)">Save Changes</button>
     </div>
 </div>
 </div>
 
-<!-- Detail View Modal -->
 <div id="detailModal" class="modal-overlay fixed inset-0 z-[110] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.7)">
-<div class="modal-panel glass-card p-8 w-full max-w-lg relative">
-    <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
-    <h3 class="text-xl font-bold text-white mb-1">Application Details</h3>
-    <p class="text-xs text-white/40 mb-6 uppercase tracking-widest font-semibold">Student Certificate Request</p>
-    <div class="space-y-3" id="detailContent"></div>
-    <div class="flex gap-3 mt-8">
-        <button id="detailAcceptBtn" class="flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02]" style="background:linear-gradient(135deg,#059669,#10B981)">✓ Accept Request</button>
-        <button id="detailRejectBtn" class="flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02]" style="background:linear-gradient(135deg,#DC2626,#EF4444)">✗ Reject Request</button>
+<div class="modal-panel glass-card p-6 sm:p-8 w-full max-w-2xl relative">
+    <div class="modal-body">
+    <button onclick="closeDetailModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition z-10">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3 class="text-lg font-bold text-white mb-1">Request Details</h3>
+    <p class="text-xs text-white/40 mb-5 uppercase tracking-widest font-semibold" id="detailReqId">—</p>
+
+    <div id="detailRejectionBanner" class="rejection-banner hidden">
+        <div class="rejection-banner-label">Rejected</div>
+        <div class="rejection-banner-text" id="detailRejectionReason">—</div>
     </div>
+
+    <div class="mb-5">
+        <div class="detail-section-title">Student Information</div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-4" id="detailStudentInfo"></div>
+    </div>
+
+    <div class="mb-5">
+        <div class="detail-section-title">Request Information</div>
+        <div class="grid grid-cols-2 gap-4" id="detailRequestInfo"></div>
+    </div>
+
+    <div class="mb-5" id="detailDocsSection">
+        <div class="detail-section-title">Uploaded Documents</div>
+        <div id="detailDocs" class="flex flex-wrap gap-2"></div>
+    </div>
+
+    <div class="mb-5">
+        <div class="detail-section-title">Approval Timeline</div>
+        <div id="detailTimeline" class="space-y-0"></div>
+    </div>
+
+    <div class="mb-5" id="detailRemarksSection" style="display:none">
+        <div class="detail-section-title">Student Remarks</div>
+        <div class="glass-card-light p-3 text-sm text-white/70" id="detailStudentRemarks">—</div>
+    </div>
+
+    <div class="flex flex-col sm:flex-row gap-3 mt-6 pt-4 border-t border-white/6" id="detailActions">
+        <button id="detailAcceptBtn" class="flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02] flex items-center justify-center gap-2" style="background:linear-gradient(135deg,#059669,#10B981)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+            Approve & Forward to OS
+        </button>
+        <button id="detailRejectBtn" class="flex-1 py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02] flex items-center justify-center gap-2" style="background:linear-gradient(135deg,#DC2626,#EF4444)">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            Reject Request
+        </button>
+        <button onclick="closeDetailModal()" class="flex-1 py-3 rounded-xl font-bold text-sm text-white/60 bg-white/6 border border-white/8 transition-all hover:bg-white/10 hover:text-white flex items-center justify-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            Close
+        </button>
+    </div>
+
+    <div id="rejectRemarksSection" class="mt-4 pt-4 border-t border-white/6 hidden">
+        <label class="text-xs font-semibold text-white/40 uppercase tracking-wider mb-2 block">Rejection Reason <span class="text-red-400">*</span></label>
+        <textarea id="rejectRemarksInput" rows="3" class="w-full px-4 py-3 rounded-xl text-sm text-white font-medium focus:outline-none resize-none" style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.08)" placeholder="e.g. Incorrect document uploaded, Invalid purpose, Missing attachment..."></textarea>
+        <div class="flex gap-3 mt-3">
+            <button id="confirmRejectBtn" class="flex-1 py-2.5 rounded-xl font-bold text-sm text-white transition-all" style="background:linear-gradient(135deg,#DC2626,#EF4444)">Confirm Rejection</button>
+            <button onclick="cancelReject()" class="flex-1 py-2.5 rounded-xl font-bold text-sm text-white/60 bg-white/6 border border-white/8 transition-all hover:bg-white/10 hover:text-white">Cancel</button>
+        </div>
+    </div>
+    </div>
+</div>
+</div>
+
+<!-- Report Modal -->
+<div id="reportModal" class="modal-overlay fixed inset-0 z-[120] flex items-center justify-center p-4" style="background:rgba(0,0,0,0.7)">
+<div class="modal-panel glass-card p-6 sm:p-8 w-full max-w-3xl relative">
+    <button onclick="closeReportModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full flex items-center justify-center text-white/40 hover:text-white hover:bg-white/10 transition">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3 class="text-lg font-bold text-white mb-1">Cross-Department Report</h3>
+    <p class="text-xs text-white/40 mb-6 uppercase tracking-widest font-semibold">All Departments — Certificate Request Summary</p>
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-6" id="reportStats"></div>
+    <div class="mb-5">
+        <div class="detail-section-title">Certificate Type Distribution</div>
+        <div id="reportChartBars" class="space-y-3 mt-4"></div>
+    </div>
+    <div class="mb-5">
+        <div class="detail-section-title">Department-wise Breakdown</div>
+        <div id="reportDeptBreakdown" class="space-y-3 mt-4"></div>
+    </div>
+    <button onclick="closeReportModal()" class="w-full py-3 rounded-xl font-bold text-sm text-white transition-all hover:scale-[1.02]" style="background:linear-gradient(135deg,#4E1526,#7C2A40)">Close Report</button>
 </div>
 </div>
 
 <script src="js/animations.js"></script>
 <script src="js/main.js"></script>
-<script src="js/dashboard-filters.js"></script>
 <script>
 'use strict';
-const ROLE='Nodal Officer';const NEXT_ROLE='OS';const ROLE_KEY='nodal';const NEXT_KEY='os';
-let apps=JSON.parse(localStorage.getItem('certificateApps'))||[];
-function saveApps(){localStorage.setItem('certificateApps',JSON.stringify(apps));}
 
-function getPending(){return apps.filter(a=>a.workflow&&a.workflow[ROLE_KEY]==='Pending'&&a.status!=='Rejected');}
-function getApproved(){return apps.filter(a=>a.status==='Approved'||(a.workflow&&a.workflow[ROLE_KEY]==='Approved'));}
-let currentDetailIdx='';
-function applyFilters(){
-    const q=(document.getElementById('searchInput').value||'').toLowerCase();
-    const from=document.getElementById('dateFrom').value;const to=document.getElementById('dateTo').value;
-    const rows=document.querySelectorAll('#pendingTableBody tr');let visible=0;
-    rows.forEach(function(row){
-        const text=row.textContent.toLowerCase();
-        const allTd=row.querySelectorAll('td');let rd='';
-        allTd.forEach(function(td){var t=td.textContent.trim();if(/^\d{4}-(?:0[1-9]|1[0-2])-(?:0[1-9]|[12]\d|3[01])$/.test(t))rd=t;});
-        const matchText=!q||text.includes(q);
-        const matchFrom=!from||rd>=from;const matchTo=!to||rd<=to;
-        const show=matchText&&matchFrom&&matchTo;
-        row.style.display=show?'':'none';if(show)visible++;
+const NODAL_NAME = 'Dr. Senthil Nathan P';
+const ROLE = 'Nodal Officer';
+const NEXT_ROLE = 'OS';
+const ROLE_KEY = 'nodal';
+const NEXT_KEY = 'os';
+
+function demoRegNo(regNo) {
+    if (!regNo) return '2503 9213 2502 1068';
+    var h = 0;
+    for (var i = 0; i < regNo.length; i++) { h = ((h << 5) - h) + regNo.charCodeAt(i); h |= 0; }
+    var s = '2503' + String(Math.abs(h) % 1000000000000).padStart(12, '0');
+    return s.slice(0, 4) + ' ' + s.slice(4, 8) + ' ' + s.slice(8, 12) + ' ' + s.slice(12, 16);
+}
+
+let apps = [];
+let currentSort = 'desc';
+let currentTab = 'all';
+let currentDetailId = null;
+
+function getDeptApps() {
+    return apps;
+}
+
+function getTabData(tab) {
+    var all = getDeptApps();
+    switch (tab) {
+        case 'pending':
+            return all.filter(function(a) { return a.workflow && a.workflow.nodal === 'Pending' && a.status !== 'Rejected'; });
+        case 'approved':
+            return all.filter(function(a) { return a.workflow && a.workflow.nodal === 'Approved' && a.status !== 'Rejected'; });
+        case 'rejected':
+            return all.filter(function(a) { return a.status === 'Rejected' && a.rejectedBy === 'Nodal Officer'; });
+        default:
+            return all;
+    }
+}
+
+function applyFilters() {
+    renderTable();
+    renderStats();
+    renderMetrics();
+    updateTabCounts();
+}
+
+function getFilteredAndSorted() {
+    var q = (document.getElementById('searchInput').value || '').toLowerCase().trim();
+    var certFilter = document.getElementById('certFilter').value;
+    var dateFrom = document.getElementById('dateFrom').value;
+    var dateTo = document.getElementById('dateTo').value;
+
+    var list = getTabData(currentTab);
+
+    if (q) {
+        list = list.filter(function(a) {
+            var s = a.student;
+            return (s.name && s.name.toLowerCase().includes(q)) ||
+                   (s.regNo && s.regNo.toLowerCase().includes(q)) ||
+                   (a.id && a.id.toLowerCase().includes(q)) ||
+                   (a.type && a.type.toLowerCase().includes(q)) ||
+                   (a.purpose && a.purpose.toLowerCase().includes(q));
+        });
+    }
+
+    if (certFilter !== 'all') {
+        list = list.filter(function(a) {
+            var ct = (a.certificateType || a.type || '').toLowerCase();
+            return ct.includes(certFilter.toLowerCase());
+        });
+    }
+
+    if (dateFrom) {
+        list = list.filter(function(a) { return a.date.slice(0, 10) >= dateFrom; });
+    }
+    if (dateTo) {
+        list = list.filter(function(a) { return a.date.slice(0, 10) <= dateTo; });
+    }
+
+    list.sort(function(a, b) {
+        var da = a.date || a.lastUpdated || '';
+        var db = b.date || b.lastUpdated || '';
+        return currentSort === 'desc' ? db.localeCompare(da) : da.localeCompare(db);
     });
-    document.getElementById('noResults').classList.toggle('hidden',visible>0);
+
+    return list;
 }
-function renderPending(){
-    const t=document.getElementById('pendingTableBody');const list=getPending().filter(function(a){return window._certFilterCurrent==='all'||a.type===window._certFilterCurrent;});
-    t.innerHTML=list.map((r,i)=>`<tr class="table-row border-b border-white/4 transition"><td class="py-3 px-4 text-white/40 text-xs font-mono whitespace-nowrap">${r.id}</td><td class="py-4 px-4 font-semibold text-white">${r.student.name}</td><td class="py-4 px-4"><span class="dept-badge">${r.student.department}</span></td><td class="py-4 px-4 text-white/60">${r.student.year}</td><td class="py-4 px-4"><span class="px-2 py-1 rounded-lg text-xs font-bold bg-white/10 text-gold-DEFAULT">${r.need||r.type}</span></td><td class="py-4 px-4 text-white/70">${r.type}</td><td class="py-4 px-4 text-white/50 max-w-[180px] truncate">${r.purpose}</td><td class="py-4 px-4 text-white/40 whitespace-nowrap">${r.date.slice(0,10)}</td><td class="py-4 px-4 text-center whitespace-nowrap"><button class="view-btn mr-1" onclick="viewDetail('${r.id}')">⊕ View</button><button class="accept-btn mr-1" onclick="acceptRow('${r.id}')">✓ Accept</button><button class="reject-btn" onclick="rejectRow('${r.id}')">✗ Reject</button></td></tr>`).join('');
-    document.getElementById('pendingCount').textContent=list.length;
-    applyFilters();
+
+function toggleSort() {
+    currentSort = currentSort === 'desc' ? 'asc' : 'desc';
+    document.getElementById('sortLabel').textContent = currentSort === 'desc' ? 'Latest First' : 'Oldest First';
+    document.getElementById('sortToggle').classList.toggle('active', currentSort === 'asc');
+    renderTable();
 }
-function renderApproved(){const t=document.getElementById('approvedTableBody');const list=getApproved().filter(function(a){return window._certFilterCurrent==='all'||a.type===window._certFilterCurrent;});
-    t.innerHTML=list.map(r=>{const w=r.workflow;const h={tutor:w.tutor,hod:w.hod,nodal:w.nodal,os:w.os,drs:w.drs};
-        const badges=Object.entries(h).map(([k,v])=>`<span class="inline-block px-2 py-0.5 rounded text-[10px] font-bold mr-1 mb-1 ${v==='Approved'?'bg-green-500/15 text-green-400 border border-green-500/20':v==='Pending'?'bg-yellow-500/15 text-yellow-400 border border-yellow-500/20':'bg-white/5 text-white/25 border border-white/6'}">${k.toUpperCase()}: ${v}</span>`).join('');
-        return`<tr class="table-row border-b border-white/4 transition"><td class="py-3 px-4 text-white/40 text-xs font-mono whitespace-nowrap">${r.id}</td><td class="py-4 px-4 font-semibold text-white">${r.student.name}</td><td class="py-4 px-4"><span class="dept-badge">${r.student.department}</span></td><td class="py-4 px-4 text-white/60">${r.student.year}</td><td class="py-4 px-4"><span class="px-2 py-1 rounded-lg text-xs font-bold bg-white/10 text-gold-DEFAULT">${r.need||r.type}</span></td><td class="py-4 px-4 text-white/70">${r.type}</td><td class="py-4 px-4 text-white/50 max-w-[150px] truncate">${r.purpose}</td><td class="py-4 px-4 text-white/40 whitespace-nowrap">${r.date.slice(0,10)}</td><td class="py-4 px-4"><span class="badge-approved">Approved</span></td><td class="py-4 px-4"><div class="flex flex-wrap">${badges}</div></td></tr>`}).join('');
-    document.getElementById('approvedCount').textContent=list.length;}
-function switchTab(tab){
-  ['pending','approved'].forEach(t=>{document.getElementById(t+'Section').classList.toggle('hidden',tab!==t);const c=document.getElementById(t+'Card');if(t==='pending'){c.classList.toggle('border-gold-DEFAULT/30',tab===t);c.classList.toggle('border-transparent',tab!==t);}else{c.classList.toggle('border-green-500/30',tab===t);c.classList.toggle('border-transparent',tab!==t);}});
+
+function switchTab(tab, btn) {
+    currentTab = tab;
+    document.querySelectorAll('.tab-btn').forEach(function(t) { t.classList.remove('active'); });
+    if (btn) btn.classList.add('active');
+    renderTable();
+    updateTabInfo();
 }
-function acceptRow(id){
-    const app=apps.find(a=>a.id===id);if(!app)return;
-    app.workflow.nodal='Approved';app.currentApprover=NEXT_ROLE;
-    const idx=app.steps.findIndex(s=>s.role===ROLE);if(idx>=0){app.steps[idx].status='done';app.steps[idx].date=new Date().toISOString().slice(0,10);}
-    const nidx=app.steps.findIndex(s=>s.role===NEXT_ROLE);if(nidx>=0){app.steps[nidx].status='active';}
-    app.lastUpdated=new Date().toISOString();saveApps();
-    renderPending();renderApproved();showToast('Approved — forwarded to '+NEXT_ROLE,'#10B981');
+
+function updateTabInfo() {
+    var labels = { all: 'All Requests', pending: 'Pending Requests', approved: 'Approved Requests', rejected: 'Rejected Requests' };
+    var colors = { all: '#D4AE70', pending: '#FBBF24', approved: '#10B981', rejected: '#EF4444' };
+    document.getElementById('tableLabel').textContent = labels[currentTab] || 'All Requests';
+    var iconEl = document.getElementById('tableIcon');
+    iconEl.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="' + colors[currentTab] + '" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>';
 }
-function rejectRow(id){
-    const app=apps.find(a=>a.id===id);if(!app)return;
-    app.workflow.nodal='Rejected';app.status='Rejected';app.rejectedBy=ROLE;app.rejectionReason='Rejected by Nodal Officer';app.rejectionDate=new Date().toISOString();
-    const idx=app.steps.findIndex(s=>s.role===ROLE);if(idx>=0){app.steps[idx].status='rejected';}
-    app.lastUpdated=new Date().toISOString();saveApps();
-    renderPending();renderApproved();showToast('Request rejected','#EF4444');
+
+var MOCK_RECORDS = [
+    { id:'NOCR-2026-000001', type:'Original Certificate', certificateType:'Original Certificate', need:'Personal', purpose:'Passport Application', copies:1, status:'Pending', currentApprover:'Nodal Officer', student:{ name:'Thivii S', regNo:'22CSE098', department:'CSE', year:'II', section:'B', gender:'Female', quota:'General', email:'thivii@psna.ac.in', phone:'+91 98765 11119' }, date:'2026-07-22', lastUpdated:'2026-07-22', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Pending', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-20' },{ role:'HOD', status:'done', date:'2026-07-21' },{ role:'Nodal Officer', status:'active', date:'' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000002', type:'Income Certificate', certificateType:'Income Certificate', need:'Financial', purpose:'Government Scholarship Application', copies:2, status:'Pending', currentApprover:'Nodal Officer', student:{ name:'Sneha V', regNo:'22ECE062', department:'ECE', year:'II', section:'A', gender:'Female', quota:'MBC', email:'sneha@psna.ac.in', phone:'+91 98765 22220' }, date:'2026-07-21', lastUpdated:'2026-07-21', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Pending', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-19' },{ role:'HOD', status:'done', date:'2026-07-20' },{ role:'Nodal Officer', status:'active', date:'' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000003', type:'Community Certificate', certificateType:'Community Certificate', need:'Personal', purpose:'Government Reservation Application', copies:3, status:'Pending', currentApprover:'Nodal Officer', student:{ name:'Rahul M', regNo:'22EEE071', department:'EEE', year:'III', section:'B', gender:'Male', quota:'BC', email:'rahulm@psna.ac.in', phone:'+91 98765 33321' }, date:'2026-07-20', lastUpdated:'2026-07-20', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Pending', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-18' },{ role:'HOD', status:'done', date:'2026-07-19' },{ role:'Nodal Officer', status:'active', date:'' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000004', type:'Bonafide Certificate', certificateType:'Bonafide Certificate', need:'Academic', purpose:'Higher Studies — GRE Application', copies:1, status:'Pending', currentApprover:'Nodal Officer', student:{ name:'Priya R', regNo:'21IT055', department:'IT', year:'III', section:'A', gender:'Female', quota:'MBC', email:'priyar@psna.ac.in', phone:'+91 98765 44422' }, date:'2026-07-19', lastUpdated:'2026-07-19', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Pending', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-17' },{ role:'HOD', status:'done', date:'2026-07-18' },{ role:'Nodal Officer', status:'active', date:'' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000005', type:'Transfer Certificate', certificateType:'Transfer Certificate', need:'Academic', purpose:'College Transfer Application', copies:2, status:'Pending', currentApprover:'Nodal Officer', student:{ name:'Kavin D', regNo:'20MECH041', department:'MECH', year:'IV', section:'B', gender:'Male', quota:'SC', email:'kavin@psna.ac.in', phone:'+91 98765 55523' }, date:'2026-07-18', lastUpdated:'2026-07-18', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Pending', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-16' },{ role:'HOD', status:'done', date:'2026-07-17' },{ role:'Nodal Officer', status:'active', date:'' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000006', type:'Education Loan Certificate', certificateType:'Education Loan Certificate', need:'Financial', purpose:'Bank Education Loan Sanction', copies:1, status:'Approved', currentApprover:'OS', student:{ name:'Arun T', regNo:'22CSE088', department:'CSE', year:'II', section:'A', gender:'Male', quota:'General', email:'arunt@psna.ac.in', phone:'+91 98765 66624' }, date:'2026-07-17', lastUpdated:'2026-07-16', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Approved', os:'Pending', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-14' },{ role:'HOD', status:'done', date:'2026-07-15' },{ role:'Nodal Officer', status:'done', date:'2026-07-16' },{ role:'OS', status:'active', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000007', type:'Migration Certificate', certificateType:'Migration Certificate', need:'Academic', purpose:'University Migration', copies:2, status:'Approved', currentApprover:'OS', student:{ name:'Nandhini S', regNo:'21ECE033', department:'ECE', year:'III', section:'B', gender:'Female', quota:'General', email:'nandhini@psna.ac.in', phone:'+91 98765 77725' }, date:'2026-07-16', lastUpdated:'2026-07-14', rejectedBy:null, rejectionReason:null, rejectionDate:null, workflow:{ tutor:'Approved', hod:'Approved', nodal:'Approved', os:'Pending', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-12' },{ role:'HOD', status:'done', date:'2026-07-13' },{ role:'Nodal Officer', status:'done', date:'2026-07-14' },{ role:'OS', status:'active', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000008', type:'Nativity Certificate', certificateType:'Nativity Certificate', need:'Personal', purpose:'Native Place Verification', copies:1, status:'Rejected', currentApprover:'Nodal Officer', student:{ name:'Yuva K', regNo:'20MECH032', department:'MECH', year:'IV', section:'A', gender:'Male', quota:'SC', email:'yuva@psna.ac.in', phone:'+91 98765 88826' }, date:'2026-07-15', lastUpdated:'2026-07-13', rejectedBy:'Nodal Officer', rejectionReason:'Incorrect document uploaded — required documents not attached', rejectionDate:'2026-07-13', workflow:{ tutor:'Approved', hod:'Approved', nodal:'Rejected', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-11' },{ role:'HOD', status:'done', date:'2026-07-12' },{ role:'Nodal Officer', status:'rejected', date:'2026-07-13' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] },
+    { id:'NOCR-2026-000009', type:'Conduct Certificate', certificateType:'Conduct Certificate', need:'Academic', purpose:'Higher Studies Abroad Application', copies:2, status:'Rejected', currentApprover:'Nodal Officer', student:{ name:'John P', regNo:'21EEE047', department:'EEE', year:'III', section:'A', gender:'Male', quota:'BC', email:'john@psna.ac.in', phone:'+91 98765 99927' }, date:'2026-07-14', lastUpdated:'2026-07-12', rejectedBy:'Nodal Officer', rejectionReason:'Invalid purpose — purpose does not match certificate type', rejectionDate:'2026-07-12', workflow:{ tutor:'Approved', hod:'Approved', nodal:'Rejected', os:'—', drs:'—' }, steps:[{ role:'Tutor', status:'done', date:'2026-07-10' },{ role:'HOD', status:'done', date:'2026-07-11' },{ role:'Nodal Officer', status:'rejected', date:'2026-07-12' },{ role:'OS', status:'pending', date:'' },{ role:'DRS', status:'pending', date:'' }] }
+];
+
+function seedMockData() {
+    var existing = JSON.parse(localStorage.getItem('certificateApps')) || [];
+    var mockIds = MOCK_RECORDS.map(function(m) { return m.id; });
+    var allMockPresent = mockIds.every(function(mid) { return existing.some(function(a) { return a.id === mid; }); });
+    if (!allMockPresent) {
+        var filtered = existing.filter(function(a) { return mockIds.indexOf(a.id) < 0; });
+        filtered = filtered.concat(MOCK_RECORDS);
+        localStorage.setItem('certificateApps', JSON.stringify(filtered));
+    }
 }
-function viewDetail(id){
-    const r=apps.find(a=>a.id===id);if(!r)return;
-    const fields=[['Student Name',r.student.name],['Reg. Number',r.student.regNo],['Department',r.student.department],['Year',r.student.year],['Certificate Type',r.type],['Reason',r.purpose],['Application Date',r.date.slice(0,10)],['Email',r.student.email],['Phone',r.student.phone]];
-    document.getElementById('detailContent').innerHTML=fields.map(([l,v])=>`<div class="flex justify-between items-start py-2 border-b border-white/4"><span class="text-xs font-semibold text-white/40 uppercase tracking-wider">${l}</span><span class="text-sm font-semibold text-white text-right max-w-[60%]">${v}</span></div>`).join('');
-    document.getElementById('detailModal').classList.add('open');currentDetailIdx=id;
+
+function loadData() {
+    seedMockData();
+    apps = JSON.parse(localStorage.getItem('certificateApps')) || [];
 }
-function closeDetailModal(){document.getElementById('detailModal').classList.remove('open');currentDetailIdx='';}
-function showToast(m,c){const t=document.createElement('div');t.className='fixed bottom-6 right-6 z-[200] px-6 py-3 rounded-2xl text-sm font-bold text-white';t.style.cssText=`background:${c};box-shadow:0 8px 30px ${c}40;animation:fadeInUp 0.3s ease`;t.textContent=m;document.body.appendChild(t);setTimeout(()=>t.remove(),2500);}
-document.getElementById('profileBtn').addEventListener('click',(e)=>{e.stopPropagation();document.getElementById('profileDropdown').classList.toggle('open');});
-document.addEventListener('click',()=>document.getElementById('profileDropdown').classList.remove('open'));
-document.getElementById('viewProfileBtn').addEventListener('click',()=>{document.getElementById('profileDropdown').classList.remove('open');document.getElementById('profileModal').classList.add('open');});
-function closeProfileModal(){document.getElementById('profileModal').classList.remove('open');}
-document.getElementById('profileModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeProfileModal();});
-document.getElementById('detailModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeDetailModal();});
-document.getElementById('detailAcceptBtn').addEventListener('click',()=>{if(currentDetailIdx){acceptRow(currentDetailIdx);closeDetailModal();}});
-document.getElementById('detailRejectBtn').addEventListener('click',()=>{if(currentDetailIdx){rejectRow(currentDetailIdx);closeDetailModal();}});
-function previewImage(e){const f=e.target.files[0];if(f){const r=new FileReader();r.onload=ev=>{document.getElementById('avatarCircle').innerHTML=`<img src="${ev.target.result}" class="w-full h-full rounded-full object-cover">`;document.getElementById('modalAvatar').innerHTML=`<img src="${ev.target.result}" class="w-full h-full rounded-full object-cover">`;};r.readAsDataURL(f);}}
-function saveProfile(){showToast('Profile updated','#10B981');closeProfileModal();}
-initCertFilter({containerId:'filterTabs',renderFn:function(){renderPending();renderApproved();}});switchTab('pending');renderPending();renderApproved();
+
+function saveApps() {
+    localStorage.setItem('certificateApps', JSON.stringify(apps));
+}
+
+function renderAll() {
+    renderStats();
+    renderTable();
+    renderMetrics();
+    updateTabCounts();
+}
+
+function renderStats() {
+    var all = getDeptApps();
+    var pending = getTabData('pending');
+    var approved = getTabData('approved');
+    var rejected = getTabData('rejected');
+    document.getElementById('statTotal').textContent = all.length;
+    document.getElementById('statPending').textContent = pending.length;
+    document.getElementById('statApproved').textContent = approved.length;
+    document.getElementById('statRejected').textContent = rejected.length;
+    document.getElementById('statTotalDetail').textContent = all.length + ' cross-department requests';
+}
+
+function updateTabCounts() {
+    document.getElementById('tabCountAll').textContent = getDeptApps().length;
+    document.getElementById('tabCountPending').textContent = getTabData('pending').length;
+    document.getElementById('tabCountApproved').textContent = getTabData('approved').length;
+    document.getElementById('tabCountRejected').textContent = getTabData('rejected').length;
+}
+
+function renderMetrics() {
+    var all = getDeptApps();
+    var approved = getTabData('approved');
+    var now = new Date();
+    var todayStr = now.toISOString().slice(0, 10);
+    var weekStart = new Date(now);
+    weekStart.setDate(now.getDate() - now.getDay());
+    var weekStartStr = weekStart.toISOString().slice(0, 10);
+
+    document.getElementById('metricToday').textContent = all.filter(function(a) { return a.date >= todayStr; }).length;
+    document.getElementById('metricWeek').textContent = all.filter(function(a) { return a.date >= weekStartStr; }).length;
+
+    if (approved.length > 0) {
+        var totalDays = approved.reduce(function(sum, a) {
+            if (a.steps && a.steps[2] && a.steps[2].date) {
+                var d = new Date(a.steps[2].date);
+                var applied = new Date(a.date);
+                return sum + (d - applied) / 86400000;
+            }
+            return sum;
+        }, 0);
+        var avg = (totalDays / approved.length).toFixed(1);
+        document.getElementById('metricAvgTime').textContent = avg + ' days';
+    } else {
+        document.getElementById('metricAvgTime').textContent = 'N/A';
+    }
+}
+
+function renderTable() {
+    var tbody = document.getElementById('tableBody');
+    var list = getFilteredAndSorted();
+    document.getElementById('resultCount').textContent = '(' + list.length + ')';
+    document.getElementById('noResults').classList.toggle('hidden', list.length > 0);
+
+    tbody.innerHTML = list.map(function(a) {
+        var wf = a.workflow || {};
+        var statusLabel = 'Pending';
+        var badgeClass = 'badge-pending';
+        if (a.status === 'Rejected' && a.rejectedBy === 'Nodal Officer') {
+            statusLabel = 'Rejected';
+            badgeClass = 'badge-rejected';
+        } else if (wf.nodal === 'Approved' && a.currentApprover === 'Completed') {
+            statusLabel = 'Approved';
+            badgeClass = 'badge-approved';
+        } else if (wf.nodal === 'Approved') {
+            statusLabel = 'Forwarded';
+            badgeClass = 'badge-forwarded';
+        }
+
+        var s = a.student || {};
+        var deptLabel = s.department || '—';
+
+        return '<tr class="table-row" onclick="viewDetail(\'' + a.id + '\')">' +
+            '<td class="table-cell text-white/40 font-mono text-xs">' + (a.id || '—') + '</td>' +
+            '<td class="table-cell font-semibold text-white">' + (s.name || '—') + '</td>' +
+            '<td class="table-cell text-white/60 font-mono text-xs">' + demoRegNo(s.regNo) + '</td>' +
+            '<td class="table-cell"><span class="px-2 py-1 rounded-lg text-xs font-bold bg-white/10 text-gold-DEFAULT">' + deptLabel + '</span></td>' +
+            '<td class="table-cell"><span class="px-2 py-1 rounded-lg text-xs font-bold bg-white/10 text-gold-DEFAULT">' + (a.type || a.certificateType || '—') + '</span></td>' +
+            '<td class="table-cell text-white/50 max-w-[180px] truncate">' + (a.purpose || '—') + '</td>' +
+            '<td class="table-cell text-white/40 text-xs">' + (a.date ? a.date.slice(0, 10) : '—') + '</td>' +
+            '<td class="table-cell"><span class="status-badge ' + badgeClass + '">' + statusLabel + '</span></td>' +
+            '<td class="table-cell">' +
+                '<button class="view-btn text-xs" onclick="event.stopPropagation();viewDetail(\'' + a.id + '\')">View</button>' +
+            '</td></tr>';
+    }).join('');
+}
+
+function viewDetail(id) {
+    var a = apps.find(function(app) { return app.id === id; });
+    if (!a) return;
+    currentDetailId = id;
+
+    document.getElementById('detailReqId').textContent = a.id || '—';
+
+    var banner = document.getElementById('detailRejectionBanner');
+    if (a.status === 'Rejected' && a.rejectedBy === 'Nodal Officer') {
+        banner.classList.remove('hidden');
+        document.getElementById('detailRejectionReason').textContent = a.rejectionReason || 'No reason provided';
+    } else {
+        banner.classList.add('hidden');
+    }
+
+    var s = a.student || {};
+    var deptLabel = s.department || '—';
+    var yearLabel = s.year || '—';
+    var sectionLabel = s.section || '—';
+
+    document.getElementById('detailStudentInfo').innerHTML =
+        '<div><div class="detail-label">Student Name</div><div class="detail-value mt-1">' + (s.name || '—') + '</div></div>' +
+        '<div><div class="detail-label">Register Number</div><div class="detail-value mt-1">' + demoRegNo(s.regNo) + '</div></div>' +
+        '<div><div class="detail-label">Roll Number</div><div class="detail-value mt-1">—</div></div>' +
+        '<div><div class="detail-label">Department</div><div class="detail-value mt-1">' + deptLabel + '</div></div>' +
+        '<div><div class="detail-label">Year</div><div class="detail-value mt-1">' + yearLabel + '</div></div>' +
+        '<div><div class="detail-label">Section</div><div class="detail-value mt-1">' + sectionLabel + '</div></div>' +
+        '<div><div class="detail-label">Year & Section</div><div class="detail-value mt-1">' + yearLabel + ' - ' + sectionLabel + '</div></div>' +
+        '<div><div class="detail-label">Gender</div><div class="detail-value mt-1">' + (s.gender || '—') + '</div></div>' +
+        '<div><div class="detail-label">Quota</div><div class="detail-value mt-1">' + (s.quota || '—') + '</div></div>' +
+        '<div><div class="detail-label">Tutor Name</div><div class="detail-value mt-1">Dr. Kavitha S</div></div>';
+
+    document.getElementById('detailRequestInfo').innerHTML =
+        '<div><div class="detail-label">Request ID</div><div class="detail-value mt-1">' + (a.id || '—') + '</div></div>' +
+        '<div><div class="detail-label">Certificate Type</div><div class="detail-value mt-1">' + (a.type || a.certificateType || '—') + '</div></div>' +
+        '<div><div class="detail-label">Purpose</div><div class="detail-value mt-1">' + (a.purpose || '—') + '</div></div>' +
+        '<div><div class="detail-label">Applied Date</div><div class="detail-value mt-1">' + (a.date ? a.date.slice(0, 10) : '—') + '</div></div>' +
+        '<div><div class="detail-label">Current Stage</div><div class="detail-value mt-1">' + (a.currentApprover || '—') + '</div></div>' +
+        '<div><div class="detail-label">Current Status</div><div class="detail-value mt-1"><span class="status-badge ' +
+            (a.status === 'Rejected' ? 'badge-rejected' : (a.status === 'Approved' ? 'badge-approved' : 'badge-pending')) + '">' +
+            (a.status || 'Pending') + '</span></div></div>';
+
+    var docsDiv = document.getElementById('detailDocs');
+    var docNames = ['10th_Marksheet.pdf', '12th_Marksheet.pdf', 'Aadhaar_Card.pdf', 'Community_Certificate.pdf'];
+    docsDiv.innerHTML = docNames.map(function(n) {
+        return '<a href="#" onclick="event.preventDefault();showToast(\'Document preview: ' + n.replace(/_/g, ' ') + '\',\'info\')" class="inline-flex items-center gap-2 px-3 py-2 rounded-xl text-xs font-medium transition-all hover:bg-white/10" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.06);color:#D4AE70">' +
+        '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>' +
+        n.replace(/_/g, ' ') + '</a>';
+    }).join('');
+
+    var remarksSection = document.getElementById('detailRemarksSection');
+    if (a.studentRemarks) {
+        remarksSection.style.display = 'block';
+        document.getElementById('detailStudentRemarks').textContent = a.studentRemarks;
+    } else {
+        remarksSection.style.display = 'none';
+    }
+
+    var allStages = [
+        { key: 'submitted', label: 'Student Submitted' },
+        { key: 'tutor', label: 'Tutor Review' },
+        { key: 'hod', label: 'HOD Review' },
+        { key: 'nodal', label: 'Nodal Officer Review' },
+        { key: 'os', label: 'Office Staff Review' },
+        { key: 'drs', label: 'DRS Review' },
+        { key: 'completed', label: 'Completed' }
+    ];
+
+    var steps = a.steps || [];
+
+    var timelineHtml = allStages.map(function(stage) {
+        var dotClass = 'pending';
+        var statusText = 'Pending';
+        var userInfo = '';
+
+        if (stage.key === 'submitted') {
+            dotClass = 'done';
+            statusText = 'Completed';
+            userInfo = '<div class="text-xs text-white/40 mt-1">' + (a.date ? a.date.slice(0, 10) : '—') + '</div>';
+        } else if (stage.key === 'completed') {
+            if (a.currentApprover === 'Completed' && a.status === 'Approved') {
+                dotClass = 'done';
+                statusText = 'Completed';
+                userInfo = '<div class="text-xs text-white/40 mt-1">' + (a.lastUpdated ? a.lastUpdated.slice(0, 10) : '—') + '</div>';
+            }
+        } else {
+            var stepKeys = ['tutor', 'hod', 'nodal', 'os', 'drs'];
+            var stepIdx = stepKeys.indexOf(stage.key);
+            if (stepIdx >= 0 && stepIdx < steps.length) {
+                var step = steps[stepIdx];
+                if (step.status === 'done' || step.status === 'approved') {
+                    dotClass = 'done';
+                    statusText = 'Completed';
+                    userInfo = step.date
+                        ? '<div class="text-xs text-white/40 mt-1">' + new Date(step.date).toLocaleDateString('en-IN', { day: 'numeric', month: 'short', year: 'numeric' }) +
+                          ' at ' + new Date(step.date).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' }) + '</div>'
+                        : '';
+                } else if (step.status === 'active') {
+                    dotClass = 'active';
+                    statusText = 'In Progress';
+                } else if (step.status === 'rejected') {
+                    dotClass = 'rejected';
+                    statusText = 'Rejected';
+                    userInfo = '<div class="text-xs text-white/40 mt-1">' + (a.rejectionDate || '—') + '</div>';
+                }
+            }
+        }
+
+        if (a.status === 'Rejected' && stage.key === 'nodal' && a.rejectedBy === 'Nodal Officer') {
+            dotClass = 'rejected';
+            statusText = 'Rejected by Nodal Officer';
+            userInfo = '<div class="text-xs text-red-400 mt-1">' + (a.rejectionDate ? a.rejectionDate.slice(0, 10) : '—') + '</div>';
+        }
+
+        if (a.status === 'Rejected' && a.rejectedBy && a.rejectedBy !== 'Nodal Officer') {
+            var rejectedRoleKey = '';
+            if (a.rejectedBy === 'Tutor') rejectedRoleKey = 'tutor';
+            else if (a.rejectedBy === 'HOD') rejectedRoleKey = 'hod';
+            if (stage.key === rejectedRoleKey) {
+                dotClass = 'rejected';
+                statusText = 'Rejected by ' + a.rejectedBy;
+                userInfo = '<div class="text-xs text-red-400 mt-1">' + (a.rejectionDate || '—') + '</div>';
+            }
+        }
+
+        return '<div class="timeline-node">' +
+            '<div class="timeline-line"></div>' +
+            '<div class="timeline-dot ' + dotClass + '">' +
+                (dotClass === 'done' ? '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4"><polyline points="20 6 9 17 4 12"/></svg>' : '') +
+                (dotClass === 'rejected' ? '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>' : '') +
+            '</div>' +
+            '<div class="text-sm font-semibold text-white">' + stage.label + '</div>' +
+            '<div class="text-xs font-medium ' + (dotClass === 'done' ? 'text-green-400' : dotClass === 'active' ? 'text-yellow-400' : dotClass === 'rejected' ? 'text-red-400' : 'text-white/30') + '">' + statusText + '</div>' +
+            userInfo +
+        '</div>';
+    }).join('');
+    document.getElementById('detailTimeline').innerHTML = timelineHtml;
+
+    var actionsDiv = document.getElementById('detailActions');
+    var isActionable = a.workflow && a.workflow.nodal === 'Pending' && a.status !== 'Rejected';
+    actionsDiv.style.display = isActionable ? 'flex' : 'none';
+
+    document.getElementById('detailModal').classList.add('open');
+    document.getElementById('rejectRemarksSection').classList.add('hidden');
+}
+
+function closeDetailModal() {
+    document.getElementById('detailModal').classList.remove('open');
+    document.getElementById('rejectRemarksSection').classList.add('hidden');
+    currentDetailId = null;
+}
+
+function approveRequest(id) {
+    var a = apps.find(function(app) { return app.id === id; });
+    if (!a) return;
+    a.workflow.nodal = 'Approved';
+    a.currentApprover = NEXT_ROLE;
+    var stepIdx = a.steps.findIndex(function(s) { return s.role === ROLE; });
+    if (stepIdx >= 0) {
+        a.steps[stepIdx].status = 'done';
+        a.steps[stepIdx].date = new Date().toISOString();
+    }
+    var nextIdx = a.steps.findIndex(function(s) { return s.role === NEXT_ROLE; });
+    if (nextIdx >= 0) {
+        a.steps[nextIdx].status = 'active';
+        a.steps[nextIdx].date = '';
+    }
+    a.lastUpdated = new Date().toISOString();
+    saveApps();
+    loadData();
+    renderAll();
+    if (currentTab === 'pending') switchTab('approved', document.querySelector('.tab-btn[data-tab="approved"]'));
+    showToast(a.id + ' — Approved & forwarded to Office Staff.', 'success');
+}
+
+function rejectRequest(id, reason) {
+    var a = apps.find(function(app) { return app.id === id; });
+    if (!a) return;
+    a.workflow.nodal = 'Rejected';
+    a.status = 'Rejected';
+    a.rejectedBy = 'Nodal Officer';
+    a.rejectionReason = reason;
+    a.rejectionDate = new Date().toISOString();
+    var stepIdx = a.steps.findIndex(function(s) { return s.role === ROLE; });
+    if (stepIdx >= 0) {
+        a.steps[stepIdx].status = 'rejected';
+        a.steps[stepIdx].date = new Date().toISOString();
+    }
+    a.lastUpdated = new Date().toISOString();
+    saveApps();
+    loadData();
+    renderAll();
+    closeDetailModal();
+    if (currentTab === 'pending') switchTab('rejected', document.querySelector('.tab-btn[data-tab="rejected"]'));
+    showToast(a.id + ' — Request rejected.', 'error');
+}
+
+document.getElementById('detailAcceptBtn').addEventListener('click', function () {
+    if (currentDetailId) { approveRequest(currentDetailId); closeDetailModal(); }
+});
+
+document.getElementById('detailRejectBtn').addEventListener('click', function () {
+    document.getElementById('rejectRemarksSection').classList.remove('hidden');
+    document.getElementById('rejectRemarksInput').value = '';
+    document.getElementById('rejectRemarksInput').focus();
+});
+
+document.getElementById('confirmRejectBtn').addEventListener('click', function () {
+    var reason = document.getElementById('rejectRemarksInput').value.trim();
+    if (!reason) { showToast('Please provide a rejection reason.', 'error'); return; }
+    if (currentDetailId) rejectRequest(currentDetailId, reason);
+});
+
+function cancelReject() {
+    document.getElementById('rejectRemarksSection').classList.add('hidden');
+    document.getElementById('rejectRemarksInput').value = '';
+}
+
+function showToast(msg, type) {
+    var c = document.getElementById('toastContainer');
+    var t = document.createElement('div');
+    t.className = 'toast ' + type;
+    t.textContent = msg;
+    c.appendChild(t);
+    setTimeout(function () { if (t.parentNode) t.remove(); }, 3500);
+}
+
+function toggleReportDropdown(e) {
+    e.stopPropagation();
+    var dd = document.getElementById('reportDropdown');
+    var btn = document.getElementById('reportBtn');
+    var isOpen = dd.classList.contains('open');
+
+    if (isOpen) {
+        dd.classList.remove('open');
+        return;
+    }
+
+    var rect = btn.getBoundingClientRect();
+    var ddHeight = 180;
+    var spaceBelow = window.innerHeight - rect.bottom - 8;
+    var spaceAbove = rect.top - 8;
+
+    if (spaceBelow >= ddHeight || spaceBelow >= spaceAbove) {
+        dd.style.top = rect.bottom + 4 + 'px';
+        dd.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 240)) + 'px';
+        dd.style.bottom = 'auto';
+        dd.style.transformOrigin = 'top center';
+    } else {
+        dd.style.bottom = (window.innerHeight - rect.top) + 4 + 'px';
+        dd.style.left = Math.max(8, Math.min(rect.left, window.innerWidth - 240)) + 'px';
+        dd.style.top = 'auto';
+        dd.style.transformOrigin = 'bottom center';
+    }
+    dd.classList.add('open');
+}
+
+document.addEventListener('click', function() {
+    document.getElementById('reportDropdown').classList.remove('open');
+});
+
+window.addEventListener('resize', function() {
+    document.getElementById('reportDropdown').classList.remove('open');
+});
+
+function generateReport() {
+    document.getElementById('reportDropdown').classList.remove('open');
+    var all = getDeptApps();
+    var pending = getTabData('pending');
+    var approved = getTabData('approved');
+    var rejected = getTabData('rejected');
+
+    document.getElementById('reportStats').innerHTML =
+        '<div class="glass-card-light p-4 text-center"><div class="text-2xl font-bold text-gold-DEFAULT">' + all.length + '</div><div class="text-xs text-white/40 mt-1">Total Requests</div></div>' +
+        '<div class="glass-card-light p-4 text-center"><div class="text-2xl font-bold" style="color:#FBBF24">' + pending.length + '</div><div class="text-xs text-white/40 mt-1">Pending</div></div>' +
+        '<div class="glass-card-light p-4 text-center"><div class="text-2xl font-bold" style="color:#10B981">' + approved.length + '</div><div class="text-xs text-white/40 mt-1">Approved</div></div>' +
+        '<div class="glass-card-light p-4 text-center"><div class="text-2xl font-bold" style="color:#EF4444">' + rejected.length + '</div><div class="text-xs text-white/40 mt-1">Rejected</div></div>';
+
+    var certCounts = {};
+    all.forEach(function(a) {
+        var t = a.type || a.certificateType || 'Other';
+        certCounts[t] = (certCounts[t] || 0) + 1;
+    });
+    var maxCount = Math.max.apply(null, Object.values(certCounts));
+    var sortedCerts = Object.entries(certCounts).sort(function(a, b) { return b[1] - a[1]; });
+    document.getElementById('reportChartBars').innerHTML = sortedCerts.map(function(entry) {
+        var label = entry[0], count = entry[1];
+        var pct = maxCount > 0 ? (count / maxCount * 100) : 0;
+        return '<div><div class="flex justify-between text-xs mb-1"><span class="text-white/70">' + label + '</span><span class="text-white font-bold">' + count + '</span></div><div class="w-full h-4 rounded-full" style="background:rgba(255,255,255,0.06)"><div class="h-full rounded-full transition-all" style="width:' + pct + '%;background:linear-gradient(90deg,#4E1526,#D4AE70)"></div></div></div>';
+    }).join('');
+
+    var deptCounts = {};
+    all.forEach(function(a) {
+        var d = (a.student && a.student.department) ? a.student.department : 'Unknown';
+        deptCounts[d] = (deptCounts[d] || 0) + 1;
+    });
+    var maxDept = Math.max.apply(null, Object.values(deptCounts));
+    document.getElementById('reportDeptBreakdown').innerHTML = Object.entries(deptCounts).sort(function(a, b) { return b[1] - a[1]; }).map(function(entry) {
+        var label = entry[0], count = entry[1];
+        var pct = maxDept > 0 ? (count / maxDept * 100) : 0;
+        return '<div><div class="flex justify-between text-xs mb-1"><span class="text-white/70">' + label + '</span><span class="text-white font-bold">' + count + '</span></div><div class="w-full h-4 rounded-full" style="background:rgba(255,255,255,0.06)"><div class="h-full rounded-full transition-all" style="width:' + pct + '%;background:linear-gradient(90deg,#7C2A40,#D4AE70)"></div></div></div>';
+    }).join('');
+
+    document.getElementById('reportModal').classList.add('open');
+}
+
+function closeReportModal() {
+    document.getElementById('reportModal').classList.remove('open');
+}
+
+document.getElementById('reportModal').addEventListener('click', function(e) {
+    if (e.target === e.currentTarget) closeReportModal();
+});
+
+function exportExcel() {
+    document.getElementById('reportDropdown').classList.remove('open');
+    var deptApps = getDeptApps();
+    var rows = [];
+    rows.push('Request ID,Student Name,Register No,Department,Certificate Type,Purpose,Applied Date,Status');
+    deptApps.forEach(function(a) {
+        var s = a.student || {};
+        var status = (a.status === 'Rejected' && a.rejectedBy === 'Nodal Officer') ? 'Rejected' : (a.workflow && a.workflow.nodal === 'Approved') ? 'Approved' : 'Pending';
+        var purpose = a.purpose || '';
+        var certType = a.type || a.certificateType || '';
+        var row = '"' + (a.id || '') + '","' + (s.name || '') + '","' + (s.regNo || '') + '","' + (s.department || '') + '","' + certType + '","' + purpose + '","' + (a.date ? a.date.slice(0,10) : '') + '","' + status + '"';
+        rows.push(row);
+    });
+    var csv = rows.join('\n');
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.setAttribute('download', 'nodal_officer_report_' + new Date().toISOString().slice(0,10) + '.csv');
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    showToast('Excel report downloaded successfully.', 'success');
+}
+
+function exportPDF() {
+    document.getElementById('reportDropdown').classList.remove('open');
+    var deptApps = getDeptApps();
+    var rowsHtml = deptApps.map(function(a) {
+        var s = a.student || {};
+        var status = (a.status === 'Rejected' && a.rejectedBy === 'Nodal Officer') ? 'Rejected' : (a.workflow && a.workflow.nodal === 'Approved') ? 'Approved' : 'Pending';
+        var certType = a.type || a.certificateType || '';
+        return '<tr><td>' + (a.id || '') + '</td><td>' + (s.name || '') + '</td><td>' + (s.regNo || '') + '</td><td>' + (s.department || '') + '</td><td>' + certType + '</td><td>' + (a.date ? a.date.slice(0,10) : '') + '</td><td>' + status + '</td></tr>';
+    }).join('');
+
+    var html = '<!DOCTYPE html><html><head><title>Nodal Officer Cross-Department Report</title><style>' +
+        'body{font-family:Arial,sans-serif;padding:40px}h1{font-size:18px;margin-bottom:5px}h2{font-size:14px;color:#666;margin-bottom:20px}' +
+        'table{width:100%;border-collapse:collapse;font-size:11px}th{background:#f5f5f5;text-align:left;padding:8px;border:1px solid #ddd}' +
+        'td{padding:8px;border:1px solid #ddd}.header{margin-bottom:30px}.dept{color:#4E1526;font-weight:bold}' +
+        '</style></head><body onload="window.print()">' +
+        '<div class="header"><h1>Smart Student Service Portal</h1><h2>Cross-Department Report — All Departments</h2>' +
+        '<p style="font-size:12px;color:#666">Generated: ' + new Date().toLocaleString() + ' | Total Requests: ' + deptApps.length + '</p></div>' +
+        '<table><thead><tr><th>Request ID</th><th>Student Name</th><th>Register No</th><th>Department</th><th>Certificate Type</th><th>Applied Date</th><th>Status</th></tr></thead><tbody>' +
+        rowsHtml + '</tbody></table></body></html>';
+
+    var blob = new Blob([html], { type: 'text/html' });
+    var url = URL.createObjectURL(blob);
+    var printWin = window.open(url, 'nodalReportPrint');
+    if (!printWin) { showToast('Please allow popups for this site to export PDF.', 'error'); return; }
+    printWin.focus();
+    showToast('PDF report opened for printing.', 'info');
+}
+
+document.getElementById('profileBtn').addEventListener('click', function (e) {
+    e.stopPropagation();
+    document.getElementById('profileDropdown').classList.toggle('open');
+});
+document.addEventListener('click', function () {
+    document.getElementById('profileDropdown').classList.remove('open');
+});
+document.getElementById('viewProfileBtn').addEventListener('click', function () {
+    document.getElementById('profileDropdown').classList.remove('open');
+    document.getElementById('profileModal').classList.add('open');
+});
+function closeProfileModal() {
+    document.getElementById('profileModal').classList.remove('open');
+}
+document.getElementById('profileModal').addEventListener('click', function (e) {
+    if (e.target === e.currentTarget) closeProfileModal();
+});
+document.getElementById('detailModal').addEventListener('click', function (e) {
+    if (e.target === e.currentTarget) closeDetailModal();
+});
+document.getElementById('notifBtn').addEventListener('click', function () {
+    showToast('No new notifications.', 'info');
+});
+
+function previewImage(e) {
+    var file = e.target.files[0];
+    if (file) {
+        var r = new FileReader();
+        r.onload = function (ev) {
+            var url = ev.target.result;
+            document.getElementById('avatarCircle').innerHTML = '<img src="' + url + '" class="w-full h-full rounded-full object-cover">';
+            document.getElementById('modalAvatar').innerHTML = '<img src="' + url + '" class="w-full h-full rounded-full object-cover">';
+        };
+        r.readAsDataURL(file);
+    }
+}
+function saveProfile() {
+    showToast('Profile updated successfully', 'success');
+    closeProfileModal();
+}
+
+loadData();
+renderAll();
+updateTabInfo();
 </script>
 </body>
 </html>
