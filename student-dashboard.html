@@ -80,6 +80,77 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
 .step-line.done{background:#10B981}
 .step-label{font-size:0.65rem;color:rgba(255,255,255,0.4);font-weight:500}
 .notif-dot{width:8px;height:8px;border-radius:50%;background:#EF4444;position:absolute;top:2px;right:2px}
+/* ===== APPLICATION TABLE ===== */
+.apps-table-wrap{overflow-x:auto;border-radius:16px;background:rgba(15,48,104,0.3);border:1px solid rgba(255,255,255,0.06)}
+.apps-table{width:100%;border-collapse:collapse;min-width:900px;font-size:0.8rem}
+.apps-table thead{background:rgba(255,255,255,0.04)}
+.apps-table th{padding:14px 16px;text-align:left;font-weight:700;font-size:0.65rem;text-transform:uppercase;letter-spacing:0.06em;color:rgba(255,255,255,0.4);border-bottom:1px solid rgba(255,255,255,0.06);white-space:nowrap}
+.apps-table td{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,0.04);color:rgba(255,255,255,0.85);font-weight:500}
+.apps-table tbody tr{transition:all 0.15s}
+.apps-table tbody tr:hover{background:rgba(255,255,255,0.04)}
+.apps-table tbody tr:last-child td{border-bottom:none}
+.apps-table .td-id{color:#D4AE70;font-weight:700;cursor:pointer;transition:color 0.2s}
+.apps-table .td-id:hover{color:#E8C98B;text-decoration:underline}
+.apps-table .td-date{font-size:0.75rem;color:rgba(255,255,255,0.45);white-space:nowrap}
+.apps-table .td-actions{white-space:nowrap}
+.view-app-btn,.reapply-btn,.download-btn,.cancel-app-btn{padding:5px 14px;border-radius:8px;font-size:0.7rem;font-weight:700;cursor:pointer;transition:all 0.2s;border:none;display:inline-block;margin-right:4px}
+.view-app-btn{background:rgba(212,174,112,0.12);color:#D4AE70;border:1px solid rgba(212,174,112,0.2)}
+.view-app-btn:hover{background:rgba(212,174,112,0.2)}
+.reapply-btn{background:rgba(59,130,246,0.12);color:#60A5FA;border:1px solid rgba(59,130,246,0.2)}
+.reapply-btn:hover{background:rgba(59,130,246,0.2)}
+.download-btn{background:rgba(16,185,129,0.12);color:#10B981;border:1px solid rgba(16,185,129,0.2)}
+.download-btn:hover{background:rgba(16,185,129,0.2)}
+.cancel-app-btn{background:rgba(239,68,68,0.12);color:#EF4444;border:1px solid rgba(239,68,68,0.2)}
+.cancel-app-btn:hover{background:rgba(239,68,68,0.2)}
+/* ===== DETAIL PAGE ===== */
+.detail-header{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px;margin-bottom:24px;padding-bottom:20px;border-bottom:1px solid rgba(255,255,255,0.06)}
+.detail-header-left h2{font-size:1.25rem;font-weight:800;color:#fff}
+.detail-header-left p{font-size:0.75rem;color:rgba(255,255,255,0.35);margin-top:2px}
+.detail-section{margin-bottom:28px}
+.detail-section-title{font-size:0.7rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:rgba(255,255,255,0.3);margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.detail-section-title svg{opacity:0.5}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;padding:16px;border-radius:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.04)}
+.detail-grid-item{}
+.detail-grid-item .label{font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.04em;color:rgba(255,255,255,0.3);margin-bottom:4px}
+.detail-grid-item .value{font-size:0.85rem;font-weight:600;color:#fff}
+/* ===== TIMELINE ===== */
+.timeline{position:relative;padding-left:36px}
+.timeline::before{content:'';position:absolute;left:15px;top:8px;bottom:8px;width:2px;background:rgba(255,255,255,0.08)}
+.timeline-item{position:relative;padding-bottom:24px;padding-left:16px}
+.timeline-item:last-child{padding-bottom:0}
+.timeline-dot{position:absolute;left:-36px;top:2px;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:800;z-index:1;transition:all 0.3s}
+.timeline-dot.done{background:rgba(16,185,129,0.15);color:#10B981;border:2px solid rgba(16,185,129,0.3)}
+.timeline-dot.active{background:rgba(212,174,112,0.15);color:#D4AE70;border:2px solid rgba(212,174,112,0.4);box-shadow:0 0 20px rgba(212,174,112,0.2)}
+.timeline-dot.pending{background:rgba(255,255,255,0.04);color:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.06)}
+.timeline-dot.rejected{background:rgba(239,68,68,0.15);color:#EF4444;border:2px solid rgba(239,68,68,0.3)}
+.timeline-content .tl-role{font-size:0.85rem;font-weight:600;color:#fff}
+.timeline-content .tl-status{font-size:0.7rem;font-weight:600;margin-top:1px}
+.timeline-content .tl-status.done{color:#10B981}
+.timeline-content .tl-status.active{color:#D4AE70}
+.timeline-content .tl-status.pending{color:rgba(255,255,255,0.25)}
+.timeline-content .tl-status.rejected{color:#EF4444}
+/* ===== APPROVAL HISTORY ===== */
+.approval-card{padding:14px 16px;border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.05);margin-bottom:8px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.approval-card-left{flex:1}
+.approval-card .ac-role{font-size:0.8rem;font-weight:700;color:#fff}
+.approval-card .ac-action{font-size:0.7rem;font-weight:600;color:#10B981;margin-top:1px}
+.approval-card .ac-remarks{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.04)}
+.approval-card .ac-date{font-size:0.7rem;color:rgba(255,255,255,0.3);white-space:nowrap;text-align:right;flex-shrink:0}
+/* ===== DOCUMENTS ===== */
+.doc-list{display:flex;flex-wrap:wrap;gap:8px}
+.doc-item{display:flex;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);font-size:0.8rem;font-weight:500;color:rgba(255,255,255,0.7);transition:all 0.2s;cursor:default}
+.doc-item:hover{background:rgba(255,255,255,0.06)}
+.doc-item .doc-icon{opacity:0.4;flex-shrink:0}
+.doc-item .doc-name{flex:1}
+.doc-item .doc-dl{cursor:pointer;color:#D4AE70;transition:color 0.2s}
+.doc-item .doc-dl:hover{color:#E8C98B}
+/* ===== REJECTION BANNER ===== */
+.rejection-banner{padding:16px 20px;border-radius:14px;margin-bottom:24px;background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.12);display:flex;align-items:flex-start;gap:12px}
+.rejection-banner .rb-icon{flex-shrink:0;margin-top:2px}
+.rejection-banner .rb-content{flex:1}
+.rejection-banner .rb-title{font-size:0.85rem;font-weight:700;color:#EF4444}
+.rejection-banner .rb-reason{font-size:0.8rem;color:rgba(255,255,255,0.6);margin-top:4px}
+.rejection-banner .rb-meta{font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:4px}
 .toast-container{position:fixed;bottom:24px;right:24px;z-index:999;display:flex;flex-direction:column;gap:8px}
 .toast{padding:14px 24px;border-radius:14px;font-size:0.85rem;font-weight:600;color:#fff;animation:fadeInUp 0.3s ease;display:flex;align-items:center;gap:10px;min-width:280px;max-width:400px}
 .toast.success{background:linear-gradient(135deg,#059669,#10B981);box-shadow:0 8px 30px rgba(16,185,129,0.3)}
@@ -101,10 +172,35 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
 .custom-dd-opt:hover,.custom-dd-opt.hovered{background:#D4AE70;color:#051632;font-weight:600}
 .custom-dd-opt.selected{background:rgba(212,174,112,0.15);color:#D4AE70;font-weight:600}
 .custom-dd-opt.selected:hover{background:#D4AE70;color:#051632}
+.filter-select-wrap{position:relative;flex-shrink:0;min-width:130px}.filter-select-wrap select{display:none}
+/* Ensure filter dropdown stacks above table content */
+#view-myapps>.filter-bar{position:relative;z-index:10}
+/* ===== FILTER CUSTOM DROPDOWN ===== */
+.filter-dd-btn{display:flex;align-items:center;justify-content:space-between;gap:8px;width:100%;padding:12px 16px;border-radius:12px;border:1px solid rgba(255,255,255,0.1);background:rgba(255,255,255,0.06);color:#fff;font-family:'Inter',sans-serif;font-size:0.85rem;cursor:pointer;white-space:nowrap;min-height:46px;text-align:left;transition:border-color 0.2s}
+.filter-dd-btn:hover{border-color:rgba(255,255,255,0.2)}
+.filter-dd-btn.open{border-color:#D4AE70}
+.filter-dd-btn svg{transition:transform 0.25s ease;flex-shrink:0}
+.filter-dd-btn.open svg{transform:rotate(180deg)}
+.filter-dd-menu{position:absolute;top:calc(100% + 6px);left:0;right:0;z-index:999;background:rgba(10,36,84,0.97);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:6px;box-shadow:0 16px 48px rgba(0,0,0,0.5);opacity:0;visibility:hidden;transform:translateY(-8px);transition:all 0.22s ease;max-height:220px;overflow-y:auto}
+.filter-dd-menu.show{opacity:1;visibility:visible;transform:translateY(0)}
+.filter-dd-opt{padding:10px 14px;cursor:pointer;border-radius:10px;color:rgba(255,255,255,0.88);font-size:0.85rem;font-weight:500;transition:all 0.12s ease}
+.filter-dd-opt:hover{background:#D4AE70;color:#051632;font-weight:600}
+.filter-dd-opt.selected{background:rgba(212,174,112,0.15);color:#D4AE70;font-weight:600}
+.filter-dd-opt.selected:hover{background:#D4AE70;color:#051632}
+
 .custom-dd-menu::-webkit-scrollbar{width:4px}
 .custom-dd-menu::-webkit-scrollbar-track{background:transparent}
 .custom-dd-menu::-webkit-scrollbar-thumb{background:#D4AE70;border-radius:2px}
 .custom-dd-menu{scrollbar-width:thin;scrollbar-color:#D4AE70 transparent}
+/* ===== FAQ ACCORDION ===== */
+.faq-item{border-radius:12px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.06);overflow:hidden;transition:all 0.2s}
+.faq-item:hover{border-color:rgba(255,255,255,0.1)}
+.faq-question{display:flex;align-items:center;justify-content:space-between;width:100%;padding:16px 20px;background:none;border:none;color:#fff;font-size:0.85rem;font-weight:600;cursor:pointer;text-align:left;gap:12px;transition:background 0.2s;font-family:'Inter',sans-serif}
+.faq-question:hover{background:rgba(255,255,255,0.04)}
+.faq-arrow{flex-shrink:0;transition:transform 0.3s ease;color:rgba(255,255,255,0.3)}
+.faq-item.open .faq-arrow{transform:rotate(180deg);color:#D4AE70}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height 0.3s ease;padding:0 20px;color:rgba(255,255,255,0.6);font-size:0.82rem;line-height:1.7}
+.faq-item.open .faq-answer{padding-bottom:16px}
 </style>
 </head>
 <body class="min-h-screen text-white relative">
@@ -122,14 +218,14 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
     </div>
     <div class="relative">
         <button id="profileBtn" class="flex items-center gap-3 px-3 py-2 rounded-2xl transition-all hover:bg-white/5">
-            <div class="text-right hidden sm:block"><p class="text-sm font-semibold text-white" id="headerStudentName">Kaviya S</p><p class="text-xs" style="color:rgba(255,255,255,0.5)" id="headerRegNo">21CSE045</p></div>
-            <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold overflow-hidden" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="avatarCircle"><span id="avatarInitials">KS</span></div>
+            <div class="text-right hidden sm:block"><p class="text-sm font-semibold text-white" id="headerStudentName">Student</p><p class="text-xs" style="color:rgba(255,255,255,0.5)" id="headerRegNo"></p></div>
+            <div class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold overflow-hidden" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="avatarCircle"><span id="avatarInitials">?</span></div>
         </button>
         <div id="profileDropdown" class="profile-dropdown absolute right-0 top-full mt-2 w-64 glass-card p-2 z-50">
             <div class="px-4 py-3 border-b border-white/6 mb-2">
-                <p class="text-sm font-bold text-white" id="dropName">Kaviya S</p>
-                <p class="text-xs text-white/40" id="dropReg">21CSE045</p>
-                <p class="text-xs text-white/40" id="dropDept">Computer Science & Engineering</p>
+                <p class="text-sm font-bold text-white" id="dropName">Student</p>
+                <p class="text-xs text-white/40" id="dropReg"></p>
+                <p class="text-xs text-white/40" id="dropDept"></p>
             </div>
             <button onclick="navigateTo('profile')" class="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-white/80 hover:bg-white/8 transition flex items-center gap-3">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile
@@ -157,7 +253,9 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
         <div onclick="navigateTo('myapps')" class="nav-item" data-nav="myapps"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>My Applications</div>
         <div onclick="navigateTo('notifications')" class="nav-item" data-nav="notifications" style="position:relative"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>Notifications<span class="notif-dot" id="notifBadge"></span></div>
         <div onclick="navigateTo('profile')" class="nav-item" data-nav="profile"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Profile</div>
-        <a href="student-login.html" class="nav-item" style="color:rgba(239,68,68,0.7)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
+        <div onclick="navigateTo('settings')" class="nav-item" data-nav="settings"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</div>
+        <div onclick="navigateTo('help')" class="nav-item" data-nav="help"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help & Support</div>
+        <a href="student-login.html" onclick="event.preventDefault();['studentProfile','certificateApps','studentNotifs','profilePhoto'].forEach(k=>localStorage.removeItem(k));window.location.href='student-login.html'" class="nav-item" style="color:rgba(239,68,68,0.7)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>Logout</a>
     </div>
 </aside>
 
@@ -168,7 +266,7 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
         <div id="view-home" class="view active">
             <div class="glass-card p-6 sm:p-8 mb-6 mt-4 animate-in" style="background:linear-gradient(135deg,rgba(78,21,38,0.25),rgba(10,36,84,0.4))">
                 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <div><h2 class="text-xl sm:text-2xl font-black text-white">Welcome back, <span style="color:#D4AE70" id="welcomeName">Kaviya</span></h2><p class="text-sm text-white/40 mt-1">Track your certificate applications and manage your academic profile.</p></div>
+                    <div><h2 class="text-xl sm:text-2xl font-black text-white">Welcome back, <span style="color:#D4AE70" id="welcomeName">Student</span></h2><p class="text-sm text-white/40 mt-1">Track your certificate applications and manage your academic profile.</p></div>
                     <button onclick="navigateTo('myapps')" class="btn-primary text-sm px-5 py-2.5">View My Applications</button>
                 </div>
             </div>
@@ -193,8 +291,8 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
                 <p class="text-xs text-white/40 mb-6 uppercase tracking-widest font-semibold" id="formSubtitle">Upload required documents and submit</p>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 mb-6 p-4 rounded-xl" style="background:rgba(212,174,112,0.06);border:1px solid rgba(212,174,112,0.1)">
-                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Name</span><span class="text-sm font-semibold text-white" id="afName">Kaviya S</span></div>
-                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Reg No</span><span class="text-sm font-semibold text-white" id="afReg">21CSE045</span></div>
+                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Name</span><span class="text-sm font-semibold text-white" id="afName">—</span></div>
+                    <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Reg No</span><span class="text-sm font-semibold text-white" id="afReg">—</span></div>
                     <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Department</span><span class="text-sm font-semibold text-white" id="afDept">CSE</span></div>
                     <div class="py-2 flex justify-between border-b border-white/4"><span class="text-xs font-semibold text-white/40">Year / Semester</span><span class="text-sm font-semibold text-white" id="afYear">III / 5</span></div>
                     <div class="py-2 flex justify-between sm:border-b border-white/4"><span class="text-xs font-semibold text-white/40">Academic Status</span><span class="text-sm font-semibold text-white" id="afStatus">Studying</span></div>
@@ -203,6 +301,8 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
 
                 <div id="formFields"></div>
 
+                <div class="form-group mb-6"><label class="form-label" style="font-size:0.75rem;padding-top:8px;border-top:1px solid rgba(255,255,255,0.06)">Upload Documents</label><div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2" id="docUploadGrid"><div class="flex items-center gap-3 p-3 rounded-xl" style="background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.1)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg><input type="file" id="docUpload" class="text-xs text-white/60 file:mr-3 file:py-1.5 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-gold/10 file:text-gold-DEFAULT hover:file:bg-gold/20" multiple></div></div><div class="flex flex-wrap gap-2 mt-2" id="docPreview"></div></div>
+
                 <div class="flex gap-3 mt-8">
                     <button onclick="submitApplication()" class="btn-primary flex-1" id="submitAppBtn">Submit Application</button>
                     <button onclick="navigateTo('home')" class="btn-secondary">Cancel</button>
@@ -210,15 +310,22 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
             </div>
         </div>
 
+        <!-- ===== APPLICATION PREVIEW VIEW ===== -->
+        <div id="view-apppreview" class="view hidden">
+            <button onclick="navigateTo('appform')" class="flex items-center gap-2 text-sm text-white/40 hover:text-white/80 transition mb-4 animate-in"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Back to Application Form</button>
+            <div id="previewContent"></div>
+        </div>
+
         <!-- ===== MY APPLICATIONS VIEW ===== -->
         <div id="view-myapps" class="view hidden">
             <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 animate-in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>My Applications</h2>
-            <div class="glass-card p-4 mb-6 flex flex-wrap items-center gap-4 animate-in">
+            <div class="glass-card p-4 mb-6 flex flex-wrap items-center gap-4 animate-in filter-bar">
                 <div class="flex-1 min-w-[200px] relative">
                     <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-                    <input type="text" id="appSearch" placeholder="Search applications..." class="search-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium" oninput="renderMyApps()">
+                    <input type="text" id="appSearch" placeholder="Search by ID, Certificate, Type, Purpose..." class="search-input w-full pl-10 pr-4 py-3 rounded-xl text-sm font-medium" oninput="renderMyApps()">
                 </div>
-                <div class="custom-dd-wrap" id="appFilterWrap" style="min-width:140px"><select id="appFilter" class="form-input form-select w-auto min-w-[140px] py-3" onchange="renderMyApps()"><option value="all">All Status</option><option value="Pending">Pending</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option></select></div>
+                <div class="filter-select-wrap"><select id="appFilter" onchange="renderMyApps()"><option value="all">All Status</option><option value="Pending">Pending</option><option value="Under Review">Under Review</option><option value="Approved">Approved</option><option value="Rejected">Rejected</option><option value="Completed">Completed</option></select></div>
+                <div class="filter-select-wrap"><select id="appTimeFilter" onchange="renderMyApps()"><option value="all">All Time</option><option value="today">Today</option><option value="7days">Last 7 Days</option><option value="30days">Last 30 Days</option><option value="semester">This Semester</option></select></div>
             </div>
             <div id="myAppsContainer" class="space-y-4 animate-in"></div>
             <div id="myAppsEmpty" class="empty-state hidden"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><p class="text-lg font-semibold">No applications yet</p><p class="text-sm mt-1">Start by applying for a certificate from the dashboard.</p></div>
@@ -247,31 +354,106 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
                 <div class="lg:col-span-1">
                     <div class="glass-card p-6 text-center animate-in">
                         <div class="relative inline-block mb-4">
-                            <div class="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold mx-auto overflow-hidden" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="profileAvatar"><span>KS</span></div>
+                            <div class="w-24 h-24 rounded-full flex items-center justify-center text-3xl font-bold mx-auto overflow-hidden" style="background:linear-gradient(135deg,#4E1526,#7C2A40);color:#D4AE70" id="profileAvatar"><span id="profileAvatarInitials">?</span></div>
                             <label class="absolute bottom-1 right-0 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer" style="background:#D4AE70"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#051632" stroke-width="2.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><input type="file" accept="image/*" class="hidden" id="profilePhotoInput" onchange="updateProfilePhoto(event)"></label>
                         </div>
-                        <h3 class="text-lg font-bold text-white">Kaviya S</h3>
-                        <p class="text-sm" style="color:#D4AE70">21CSE045</p>
-                        <p class="text-xs text-white/40 mt-1">CSE — 3rd Year</p>
+                        <h3 class="text-lg font-bold text-white" id="profileCardName">—</h3>
+                        <p class="text-sm" style="color:#D4AE70" id="profileCardReg">—</p>
+                        <p class="text-xs text-white/40 mt-1" id="profileCardYear">—</p>
                         <hr class="border-white/6 my-4">
                         <div class="space-y-3">
-                            <div class="flex justify-between text-sm"><span class="text-white/40">Gender</span><span class="text-white font-medium">Female</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-white/40">DOB</span><span class="text-white font-medium">15-06-2004</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-white/40">Blood Group</span><span class="text-white font-medium">B+</span></div>
-                            <div class="flex justify-between text-sm"><span class="text-white/40">Batch</span><span class="text-white font-medium">2027</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">Gender</span><span class="text-white font-medium" id="profileCardGender">—</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">DOB</span><span class="text-white font-medium" id="profileCardDob">—</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">Blood Group</span><span class="text-white font-medium" id="profileCardBlood">—</span></div>
+                            <div class="flex justify-between text-sm"><span class="text-white/40">Batch</span><span class="text-white font-medium" id="profileCardBatch">—</span></div>
                         </div>
                         <div class="mt-4 flex gap-2">
-                            <label class="cursor-pointer w-28 h-16 rounded-xl flex flex-col items-center justify-center gap-1" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="text-[10px] text-white/30">Photo</span><input type="file" accept="image/*" class="hidden"></label>
+                            <label class="cursor-pointer w-28 h-16 rounded-xl flex flex-col items-center justify-center gap-1" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg><span class="text-[10px] text-white/30">Photo</span><input type="file" accept="image/*" class="hidden" onchange="updateProfilePhoto(event)"></label>
                             <label class="cursor-pointer w-28 h-16 rounded-xl flex flex-col items-center justify-center gap-1" style="background:rgba(255,255,255,0.04);border:1px dashed rgba(255,255,255,0.15)"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="1.5"><path d="M11 5H6a2 2 0 0 0-2 2v11a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2v-5"/><path d="M18 2l3 3-9 9-4 1 1-4 9-9z"/></svg><span class="text-[10px] text-white/30">Signature</span><input type="file" accept="image/*" class="hidden"></label>
                         </div>
                     </div>
                 </div>
                 <div class="lg:col-span-2 space-y-6">
                     <div class="glass-card p-6 animate-in"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Personal Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Student Name</label><input class="form-input" id="pName" disabled></div><div><label class="form-label">Register Number</label><input class="form-input" id="pRegNo" disabled></div><div><label class="form-label">Roll Number</label><input class="form-input" id="pRollNo" disabled></div><div><label class="form-label">Gender</label><input class="form-input" id="pGender" disabled></div><div><label class="form-label">Date of Birth</label><input class="form-input" id="pDob" disabled></div><div><label class="form-label">Blood Group</label><input class="form-input" id="pBloodGroup"></div><div><label class="form-label">Community</label><input class="form-input" id="pCommunity"></div><div><label class="form-label">Nationality</label><input class="form-input" id="pNationality"></div><div><label class="form-label">Aadhaar Number</label><input class="form-input" id="pAadhaar"></div></div></div>
-                    <div class="glass-card p-6 animate-in" style="animation-delay:0.05s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Academic Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Degree</label><input class="form-input" id="pDegree" disabled></div><div><label class="form-label">Department</label><input class="form-input" id="pDept" disabled></div><div><label class="form-label">Batch</label><input class="form-input" id="pBatch" disabled></div><div><label class="form-label">Admission Year</label><input class="form-input" id="pAdmissionYear" disabled></div><div><label class="form-label">Current Year</label><input class="form-input" id="pCurrentYear" disabled></div><div><label class="form-label">Semester</label><input class="form-input" id="pSemester" disabled></div><div><label class="form-label">Section</label><input class="form-input" id="pSection" disabled></div><div><label class="form-label">Academic Status</label><input class="form-input" id="pAcadStatus" disabled></div></div></div>
+                    <div class="glass-card p-6 animate-in" style="animation-delay:0.05s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>Academic Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Degree</label><input class="form-input" id="pDegree" list="degreeList" placeholder="Enter or select degree"><datalist id="degreeList"><option value="B.E"><option value="B.Tech"></datalist></div><div><label class="form-label">Department</label><input class="form-input" id="pDept" disabled></div><div><label class="form-label">Batch</label><input class="form-input" id="pBatch" disabled></div><div><label class="form-label">Admission Year</label><input class="form-input" id="pAdmissionYear" disabled></div><div><label class="form-label">Current Year</label><input class="form-input" id="pCurrentYear" disabled></div><div><label class="form-label">Semester</label><input class="form-input" id="pSemester" disabled></div><div><label class="form-label">Section</label><input class="form-input" id="pSection" disabled></div><div><label class="form-label">Academic Status</label><input class="form-input" id="pAcadStatus" disabled></div></div></div>
                     <div class="glass-card p-6 animate-in" style="animation-delay:0.1s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Contact Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Mobile Number</label><input class="form-input" id="pPhone"></div><div><label class="form-label">Email Address</label><input class="form-input" id="pEmail"></div><div class="sm:col-span-2"><label class="form-label">Address</label><textarea class="form-input" id="pAddress" rows="2"></textarea></div><div><label class="form-label">City</label><input class="form-input" id="pCity"></div><div><label class="form-label">State</label><input class="form-input" id="pState"></div><div><label class="form-label">Pincode</label><input class="form-input" id="pPincode"></div></div></div>
                     <div class="glass-card p-6 animate-in" style="animation-delay:0.15s"><h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>Parent / Guardian Details</h3><div class="grid grid-cols-1 sm:grid-cols-2 gap-4"><div><label class="form-label">Father Name</label><input class="form-input" id="pFatherName"></div><div><label class="form-label">Mother Name</label><input class="form-input" id="pMotherName"></div><div><label class="form-label">Guardian Name</label><input class="form-input" id="pGuardianName"></div><div><label class="form-label">Parent Mobile</label><input class="form-input" id="pParentPhone"></div></div></div>
                     <div class="flex justify-end gap-3 animate-in" style="animation-delay:0.2s"><button onclick="saveProfileChanges()" class="btn-primary">Save Changes</button></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== SETTINGS VIEW ===== -->
+        <div id="view-settings" class="view hidden">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 animate-in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Settings</h2>
+            <div class="space-y-6">
+                <div class="glass-card p-6 sm:p-8 animate-in">
+                    <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Change Password</h3>
+                    <p class="text-xs text-white/40 mb-5">Update your account password. Use a strong password with at least 8 characters.</p>
+                    <div id="pwdForm" class="space-y-4 max-w-md">
+                        <div class="form-group">
+                            <label class="form-label">Current Password</label>
+                            <div class="relative">
+                                <input type="password" class="form-input pr-10" id="pwdCurrent" placeholder="Enter current password">
+                                <button type="button" onclick="togglePwdVis('pwdCurrent',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            </div>
+                            <div class="form-error" id="errPwdCurrent">Current password is required</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">New Password</label>
+                            <div class="relative">
+                                <input type="password" class="form-input pr-10" id="pwdNew" placeholder="Enter new password">
+                                <button type="button" onclick="togglePwdVis('pwdNew',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            </div>
+                            <div class="form-error" id="errPwdNew">Password must be at least 8 characters with uppercase, lowercase, and a number</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Confirm New Password</label>
+                            <div class="relative">
+                                <input type="password" class="form-input pr-10" id="pwdConfirm" placeholder="Confirm new password">
+                                <button type="button" onclick="togglePwdVis('pwdConfirm',this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-white/30 hover:text-white/60 transition"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg></button>
+                            </div>
+                            <div class="form-error" id="errPwdConfirm">Passwords do not match</div>
+                        </div>
+                        <button onclick="updatePassword()" class="btn-primary">Update Password</button>
+                    </div>
+                    <div id="pwdSuccess" class="hidden mt-4 p-4 rounded-xl flex items-center gap-3" style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.15)">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        <span class="text-sm font-semibold text-white">Password updated successfully.</span>
+                    </div>
+                </div>
+                <div class="glass-card p-6 sm:p-8 animate-in" style="animation-delay:0.05s">
+                    <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Security Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-grid-item"><div class="label">Authentication</div><div class="value">JWT Token Authentication</div></div>
+                        <div class="detail-grid-item"><div class="label">Password Encryption</div><div class="value">bcrypt (10 Salt Rounds)</div></div>
+                    </div>
+                    <p class="text-xs text-white/30 mt-4">This section is informational only. Security configurations are managed by the system administrator.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===== HELP & SUPPORT VIEW ===== -->
+        <div id="view-help" class="view hidden">
+            <h2 class="text-xl font-bold text-white mb-6 flex items-center gap-2 animate-in"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Help & Support</h2>
+            <div class="space-y-6">
+                <div class="glass-card p-6 sm:p-8 animate-in">
+                    <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>Frequently Asked Questions</h3>
+                    <div class="space-y-2" id="faqContainer">
+                        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>How do I submit an Original Certificate request?</span><svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer">To submit an Original Certificate request, navigate to <strong>My Applications</strong> from the sidebar, or click <strong>Applications → Original Certificate</strong>. Fill in the required details including certificate type and purpose, upload the necessary documents, and click <strong>Submit Application</strong>. Your application will then enter the approval workflow.</div></div>
+                        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>How long does approval take?</span><svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer">The approval process involves multiple stages: <strong>Tutor → HOD → Office Staff → DRS</strong>. Each stage is reviewed sequentially. The total time depends on the responsiveness of each approver. Typically, straightforward applications are processed within 5–7 working days.</div></div>
+                        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Can I edit an application after submission?</span><svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer">Once an application is submitted and enters the approval workflow, modifications are not possible until the application has been reviewed. If you need to make changes, you may cancel the application (if it is still at the <strong>Tutor</strong> stage) and submit a new one. For applications already under review, please contact the respective approver.</div></div>
+                        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>Who should I contact for urgent requests?</span><svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer">For urgent requests, please contact the <strong>Office Staff</strong> directly during working hours. You can also reach the college administration at <strong>admin@psnacet.edu.in</strong> with the subject line marked as <em>"Urgent – Certificate Application"</em> along with your application ID.</div></div>
+                        <div class="faq-item"><button class="faq-question" onclick="toggleFaq(this)"><span>How do I reset my password?</span><svg class="faq-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></button><div class="faq-answer">You can change your password by navigating to <strong>Settings</strong> from the sidebar. Enter your current password, set a new password (minimum 8 characters with uppercase, lowercase, and a number), and confirm it. If you have forgotten your current password, please contact the administration office to request a password reset.</div></div>
+                    </div>
+                </div>
+                <div class="glass-card p-6 sm:p-8 animate-in" style="animation-delay:0.05s">
+                    <h3 class="text-sm font-bold text-white mb-4 flex items-center gap-2"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>Contact Information</h3>
+                    <div class="detail-grid">
+                        <div class="detail-grid-item"><div class="label">Email</div><div class="value"><a href="mailto:admin@psnacet.edu.in" style="color:#D4AE70;text-decoration:none">admin@psnacet.edu.in</a></div></div>
+                        <div class="detail-grid-item"><div class="label">Phone</div><div class="value">+91 XXXXX XXXXX</div></div>
+                        <div class="detail-grid-item" style="grid-column:1/-1"><div class="label">College Address</div><div class="value">PSNA College of Engineering and Technology<br>Dindigul, Tamil Nadu</div></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -296,7 +478,7 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
     <div class="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 success-pop" style="background:rgba(16,185,129,0.15)"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.5"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
     <h3 class="text-lg font-bold text-white mb-2">Application Submitted!</h3>
     <p class="text-sm text-white/50">Your application has been submitted successfully.</p>
-    <div class="mt-4 p-3 rounded-xl" style="background:rgba(255,255,255,0.04)"><p class="text-xs text-white/40">Application ID</p><p class="text-sm font-bold text-white" id="successAppId">APP-2026-0001</p></div>
+    <div class="mt-4 p-3 rounded-xl" style="background:rgba(255,255,255,0.04)"><p class="text-xs text-white/40">Application ID</p><p class="text-sm font-bold text-white" id="successAppId">OCR-2026-000001</p></div>
     <button onclick="closeSuccessModal()" class="btn-primary w-full mt-6">View My Applications</button>
 </div>
 </div>
@@ -318,7 +500,7 @@ body{font-family:'Inter',sans-serif;background:#051632;scrollbar-width:thin;scro
 <script>
 'use strict';
 // ===== STUDENT DATA =====
-const profileDefaults={name:'Kaviya S',regNo:'21CSE045',rollNo:'21001',gender:'Female',dob:'15-06-2004',bloodGroup:'B+',community:'OC',nationality:'Indian',aadhaar:'XXXX-XXXX-1234',degree:'B.E.',department:'Computer Science & Engineering',batch:'2027',admissionYear:'2023',currentYear:'3rd Year',semester:'5',section:'A',academicStatus:'Studying',expectedGradYear:'2027',phone:'+91 98765 43210',email:'kaviya.s@psna.ac.in',address:'123, Anna Nagar, Dindigul',city:'Dindigul',state:'Tamil Nadu',pincode:'624001',fatherName:'S. Subramanian',motherName:'S. Lalitha',guardianName:'S. Subramanian',parentPhone:'+91 98765 12345',tutorName:'',initials:'KS'};
+const profileDefaults={name:'',regNo:'',rollNo:'',gender:'',dob:'',bloodGroup:'',community:'',nationality:'',aadhaar:'',degree:'',department:'',batch:'',admissionYear:'',currentYear:'',semester:'',section:'',academicStatus:'',expectedGradYear:'',phone:'',email:'',address:'',city:'',state:'',pincode:'',fatherName:'',motherName:'',guardianName:'',parentPhone:'',tutorName:''};
 function loadProfile(){const stored=JSON.parse(localStorage.getItem('studentProfile'));return stored?{...profileDefaults,...stored}:profileDefaults;}
 let studentProfile=loadProfile();
 
@@ -326,8 +508,8 @@ let applications=JSON.parse(localStorage.getItem('certificateApps'))||[];
 let notifications=JSON.parse(localStorage.getItem('studentNotifs'))||[];
 
 // Seed sample data
-if(applications.length===0){const now=new Date();applications=[{id:'APP-2026-0001',type:'Bonafide',purpose:'Internship',copies:2,status:'Pending',currentApprover:'Tutor',date:new Date(now-86400000*3).toISOString(),lastUpdated:new Date(now-86400000*2).toISOString(),workflow:{tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'},steps:[{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]},{id:'APP-2026-0002',type:'CGPA/Percentage',certType:'CGPA',purpose:'Placement',status:'Approved',currentApprover:'Completed',date:new Date(now-86400000*10).toISOString(),lastUpdated:new Date(now-86400000*1).toISOString(),workflow:{tutor:'Approved',hod:'Approved',nodal:'Approved',os:'Approved',drs:'Approved'},steps:[{role:'Tutor',status:'done',date:'2026-07-10'},{role:'HOD',status:'done',date:'2026-07-12'},{role:'Nodal Officer',status:'done',date:'2026-07-14'},{role:'OS',status:'done',date:'2026-07-16'},{role:'DRS',status:'done',date:'2026-07-18'}]},{id:'APP-2026-0003',type:'Original',certificateType:'10th Certificate',purpose:'Passport',status:'Rejected',currentApprover:'HOD',date:new Date(now-86400000*5).toISOString(),lastUpdated:new Date(now-86400000*3).toISOString(),rejectedBy:'HOD',rejectionReason:'Incomplete document — marksheet not attached',rejectionDate:new Date(now-86400000*3).toISOString(),workflow:{tutor:'Approved',hod:'Rejected'},steps:[{role:'Tutor',status:'done',date:'2026-07-13'},{role:'HOD',status:'rejected',date:'2026-07-15'},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]},{id:'APP-2026-0004',type:'Bonafide',purpose:'Hostel',copies:1,status:'Pending',currentApprover:'HOD',date:new Date(now-86400000*2).toISOString(),lastUpdated:new Date(now-86400000*1).toISOString(),workflow:{tutor:'Approved',hod:'Pending',nodal:'—',os:'—',drs:'—'},steps:[{role:'Tutor',status:'done',date:'2026-07-17'},{role:'HOD',status:'active',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]}];saveApps();}
-if(notifications.length===0){notifications=[{id:'N001',appId:'APP-2026-0004',message:'Application APP-2026-0004 has been approved by Tutor',type:'tutor_approved',read:false,date:new Date(Date.now()-86400000*1).toISOString()},{id:'N002',appId:'APP-2026-0003',message:'Application APP-2026-0003 was rejected by HOD',type:'hod_rejected',read:false,date:new Date(Date.now()-86400000*3).toISOString()},{id:'N003',appId:'APP-2026-0002',message:'Application APP-2026-0002 has been approved. Certificate ready for collection.',type:'cert_ready',read:true,date:new Date(Date.now()-86400000*1).toISOString()}];saveNotifs();}
+if(applications.length===0){const now=new Date();const d1=now-86400000*1;const d2=now-86400000*2;const d3=now-86400000*3;const d5=now-86400000*5;const d10=now-86400000*10;const d20=now-86400000*20;const di=function(d){return new Date(d).toISOString();};const ds=function(d){return new Date(d).toISOString().slice(0,10);};applications=[{id:'BCR-2026-000001',type:'Bonafide',certificateType:'Bonafide',certificateName:'Bonafide Certificate',purpose:'Internship',submittedDate:di(d3),date:ds(d3),currentStage:'Tutor',currentStatus:'Pending',status:'Pending',lastUpdated:di(d2),workflow:{tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'},steps:[{role:'Submitted',status:'done',date:di(d3)},{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''},{role:'Completed',status:'pending',date:''}],approvalHistory:[],uploadedDocs:[{name:'Bonafide Application',file:'bonafide_app.pdf'},{name:'ID Proof',file:'id_proof.pdf'}],copies:2,student:{name:'Kaviya S',regNo:'21CSE045',department:'CSE',year:'III',email:'kaviya@psna.ac.in',phone:'+91 98765 12345'},studentInfo:{name:'Kaviya S',regNo:'21CSE045',department:'CSE',year:'III',rollNo:'',batch:'2021-2025',currentYear:'III',semester:'5',section:'A',tutor:'Dr. Kavitha S'}},{id:'CPR-2026-000001',type:'CGPA/Percentage',certificateType:'CGPA/Percentage',certificateName:'CGPA Certificate',purpose:'Placement',submittedDate:di(d10),date:ds(d10),currentStage:'Completed',currentStatus:'Completed',status:'Approved',lastUpdated:di(d1),workflow:{tutor:'Approved',hod:'Approved',nodal:'Approved',os:'Approved',drs:'Approved'},steps:[{role:'Submitted',status:'done',date:di(d10)},{role:'Tutor',status:'done',date:'2026-07-10'},{role:'HOD',status:'done',date:'2026-07-12'},{role:'Nodal Officer',status:'done',date:'2026-07-13'},{role:'OS',status:'done',date:'2026-07-14'},{role:'DRS',status:'done',date:'2026-07-16'},{role:'Completed',status:'done',date:'2026-07-18'}],approvalHistory:[{role:'Tutor',action:'Approved',date:'10 Jul 2026',time:'09:30 AM',remarks:'Verified. CGPA matches records.'},{role:'HOD',action:'Approved',date:'12 Jul 2026',time:'02:15 PM',remarks:'Recommended.'},{role:'Office Staff',action:'Approved',date:'14 Jul 2026',time:'11:00 AM',remarks:'Documents verified.'},{role:'DRS',action:'Approved',date:'16 Jul 2026',time:'04:30 PM',remarks:'Approved for issuance.'}],uploadedDocs:[{name:'Marksheet',file:'marksheet_sem1_5.pdf'},{name:'Photo',file:'photo.jpg'}],student:{name:'Arjun K',regNo:'22CSE046',department:'CSE',year:'II',email:'arjun@psna.ac.in',phone:'+91 98765 23456'},studentInfo:{name:'Arjun K',regNo:'22CSE046',department:'CSE',year:'II',rollNo:'',batch:'2022-2026',currentYear:'II',semester:'3',section:'B',tutor:'Dr. Kavitha S'}},{id:'OCR-2026-000001',type:'Original',certificateType:'Original',certificateName:'10th Certificate',purpose:'Passport',submittedDate:di(d5),date:ds(d5),currentStage:'HOD',currentStatus:'Rejected',status:'Rejected',lastUpdated:di(d3),rejectedBy:'HOD',rejectionReason:'Incomplete document — marksheet not attached',rejectionDate:di(d3),workflow:{tutor:'Approved',hod:'Rejected',nodal:'—',os:'—',drs:'—'},steps:[{role:'Submitted',status:'done',date:di(d5)},{role:'Tutor',status:'done',date:'2026-07-13'},{role:'HOD',status:'rejected',date:'2026-07-15'},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''},{role:'Completed',status:'pending',date:''}],approvalHistory:[{role:'Tutor',action:'Approved',date:'13 Jul 2026',time:'10:00 AM',remarks:'Forwarded to HOD.'},{role:'HOD',action:'Rejected',date:'15 Jul 2026',time:'03:20 PM',remarks:'Incomplete document — marksheet not attached.'}],uploadedDocs:[{name:'Aadhaar Card',file:'aadhaar.pdf'},{name:'Marksheet',file:'marksheet.pdf'}],student:{name:'Priya K',regNo:'20CSE012',department:'CSE',year:'IV',email:'priya@psna.ac.in',phone:'+91 98765 34567'},studentInfo:{name:'Priya K',regNo:'20CSE012',department:'CSE',year:'IV',rollNo:'',batch:'2020-2024',currentYear:'IV',semester:'7',section:'A',tutor:'Dr. Kavitha S'}},{id:'BCR-2026-000002',type:'Bonafide',certificateType:'Bonafide',certificateName:'Bonafide Certificate',purpose:'Hostel',submittedDate:di(d2),date:ds(d2),currentStage:'HOD',currentStatus:'Under Review',status:'Pending',lastUpdated:di(d1),workflow:{tutor:'Approved',hod:'Pending',nodal:'—',os:'—',drs:'—'},steps:[{role:'Submitted',status:'done',date:di(d2)},{role:'Tutor',status:'done',date:'2026-07-17'},{role:'HOD',status:'active',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''},{role:'Completed',status:'pending',date:''}],approvalHistory:[{role:'Tutor',action:'Approved',date:'17 Jul 2026',time:'11:45 AM',remarks:'Verified. Student is in good standing.'}],uploadedDocs:[{name:'Hostel Allotment Letter',file:'hostel_letter.pdf'},{name:'ID Proof',file:'id_proof.pdf'}],copies:1,student:{name:'Sneha V',regNo:'21EEE033',department:'EEE',year:'III',email:'sneha@psna.ac.in',phone:'+91 98765 56789'},studentInfo:{name:'Sneha V',regNo:'21EEE033',department:'EEE',year:'III',rollNo:'',batch:'2021-2025',currentYear:'III',semester:'5',section:'B',tutor:'Dr. Kavitha S'}},{id:'OCR-2026-000002',type:'Original',certificateType:'Original',certificateName:'12th Certificate',purpose:'Higher Studies',submittedDate:di(d20),date:ds(d20),currentStage:'DRS',currentStatus:'Approved',status:'Approved',lastUpdated:di(d1),workflow:{tutor:'Approved',hod:'Approved',nodal:'Approved',os:'Approved',drs:'Approved'},steps:[{role:'Submitted',status:'done',date:di(d20)},{role:'Tutor',status:'done',date:'2026-06-28'},{role:'HOD',status:'done',date:'2026-06-30'},{role:'Nodal Officer',status:'done',date:'2026-07-01'},{role:'OS',status:'done',date:'2026-07-02'},{role:'DRS',status:'done',date:'2026-07-04'},{role:'Completed',status:'active',date:''}],approvalHistory:[{role:'Tutor',action:'Approved',date:'28 Jun 2026',time:'08:15 AM',remarks:'Verified.'},{role:'HOD',action:'Approved',date:'30 Jun 2026',time:'01:30 PM',remarks:'Recommended for higher studies.'},{role:'Office Staff',action:'Approved',date:'02 Jul 2026',time:'10:00 AM',remarks:'All documents verified.'},{role:'DRS',action:'Approved',date:'04 Jul 2026',time:'03:45 PM',remarks:'Certificate ready for collection.'}],uploadedDocs:[{name:'12th Marksheet',file:'12th_marksheet.pdf'},{name:'Aadhaar Card',file:'aadhaar.pdf'},{name:'Passport Photo',file:'photo.jpg'},{name:'Income Certificate',file:'income.pdf'}],student:{name:'Karthik P',regNo:'22CSE078',department:'CSE',year:'II',email:'karthik@psna.ac.in',phone:'+91 98765 67890'},studentInfo:{name:'Karthik P',regNo:'22CSE078',department:'CSE',year:'II',rollNo:'',batch:'2022-2026',currentYear:'II',semester:'3',section:'A',tutor:'Dr. Kavitha S'}}];saveApps();}
+if(notifications.length===0){notifications=[{id:'N001',appId:'BCR-2026-000002',message:'Application BCR-2026-000002 has been approved by Tutor',type:'tutor_approved',read:false,date:new Date(Date.now()-86400000*1).toISOString()},{id:'N002',appId:'OCR-2026-000001',message:'Application OCR-2026-000001 was rejected by HOD',type:'hod_rejected',read:false,date:new Date(Date.now()-86400000*3).toISOString()},{id:'N003',appId:'CPR-2026-000001',message:'Application CPR-2026-000001 has been approved. Certificate ready for collection.',type:'cert_ready',read:true,date:new Date(Date.now()-86400000*1).toISOString()}];saveNotifs();}
 
 // ===== PERSISTENCE =====
 function saveApps(){localStorage.setItem('certificateApps',JSON.stringify(applications));}
@@ -342,12 +524,13 @@ function navigateTo(view){document.querySelectorAll('.view').forEach(v=>v.classL
 function toggleSubNav(e){const sub=document.getElementById('appSubNav');sub.classList.toggle('open');const icon=e.currentTarget.querySelector('svg:last-child');if(icon)icon.style.transform=sub.classList.contains('open')?'rotate(180deg)':'rotate(0)';}
 
 // ===== HOME =====
-function renderHomeStats(){const total=applications.length;const pending=applications.filter(a=>a.status==='Pending').length;const approved=applications.filter(a=>a.status==='Approved').length;const rejected=applications.filter(a=>a.status==='Rejected').length;document.getElementById('statTotal').textContent=total;document.getElementById('statPending').textContent=pending;document.getElementById('statApproved').textContent=approved;document.getElementById('statRejected').textContent=rejected;}
+function renderHomeStats(){const total=applications.length;const pending=applications.filter(a=>a.currentStatus==='Pending').length;const approved=applications.filter(a=>a.currentStatus==='Approved'||a.currentStatus==='Completed').length;const rejected=applications.filter(a=>a.currentStatus==='Rejected').length;document.getElementById('statTotal').textContent=total;document.getElementById('statPending').textContent=pending;document.getElementById('statApproved').textContent=approved;document.getElementById('statRejected').textContent=rejected;}
 
 // ===== APPLICATION FORM =====
 function openApplicationForm(type){appFormType=type;const titles={original:'Apply for Original Certificate',bonafide:'Apply for Bonafide Certificate',cgpa:'Apply for CGPA / Percentage Certificate'};const subs={original:'Submit your request for original academic documents',bonafide:'Request a bonafide certificate for official purposes',cgpa:'Request CGPA or Percentage certificate'};document.getElementById('formTitle').textContent=titles[type];document.getElementById('formSubtitle').textContent=subs[type];document.getElementById('afName').textContent=studentProfile.name;document.getElementById('afReg').textContent=studentProfile.regNo;document.getElementById('afDept').textContent=studentProfile.department;document.getElementById('afYear').textContent=studentProfile.currentYear+' / '+studentProfile.semester;document.getElementById('afStatus').textContent=studentProfile.academicStatus;document.getElementById('afEmail').textContent=studentProfile.email;let html='';
 
-if(type==='original'){const isGrad=studentProfile.academicStatus==='Graduated';html=`<div class="form-group"><label class="form-label">Certificate Type</label><div class="custom-dd-wrap"><select id="origCertType" onchange="validateForm()"><option value="">Select certificate type</option><option value="10th Certificate">10th Certificate</option><option value="12th Certificate">12th Certificate</option>${isGrad?'<option value="UG Degree Certificate">UG Degree Certificate</option>':''}<option value="Transfer Certificate (TC)">Transfer Certificate (TC)</option></select></div><div class="form-error" id="errCertType">Please select a certificate type</div></div>
+if(type==='original'){const isGrad=studentProfile.academicStatus==='Graduated';html=`<div class="form-group"><label class="form-label">Certificate Type</label><div class="custom-dd-wrap"><select id="origCertType" onchange="toggleOtherCertName(this.value)"><option value="">Select certificate type</option><option value="10th Certificate">10th Certificate</option><option value="12th Certificate">12th Certificate</option>${isGrad?'<option value="UG Degree Certificate">UG Degree Certificate</option>':''}<option value="Transfer Certificate (TC)">Transfer Certificate (TC)</option><option value="Migration Certificate">Migration Certificate</option><option value="Community Certificate">Community Certificate</option><option value="Income Certificate">Income Certificate</option><option value="Conduct Certificate">Conduct Certificate</option><option value="Nativity Certificate">Nativity Certificate</option><option value="UG Admission Documents">UG Admission Documents</option><option value="Any Other Certificate">Any Other Certificate</option></select></div><div class="form-error" id="errCertType">Please select a certificate type</div></div>
+<div class="form-group hidden" id="origOtherCertNameGroup"><label class="form-label">Specify Certificate Name <span class="text-white/20 text-[10px]">(optional)</span></label><input type="text" class="form-input" id="origOtherCertName" placeholder="Enter certificate name" maxlength="100"></div>
 <div class="form-group"><label class="form-label">Purpose / Reason</label><div class="custom-dd-wrap"><select id="origPurpose" onchange="toggleOtherReason('orig',this.value)"><option value="">Select purpose</option><option value="Higher Studies">Higher Studies</option><option value="Passport">Passport</option><option value="Visa">Visa</option><option value="Government Verification">Government Verification</option><option value="Employment">Employment</option><option value="Scholarship">Scholarship</option><option value="Education Loan">Education Loan</option><option value="Other">Other</option></select></div><div class="form-error" id="errOrigPurpose">Please select a purpose</div></div>
 <div class="form-group hidden" id="origOtherReasonGroup"><label class="form-label">Specify Reason</label><textarea class="form-input" id="origOtherReason" rows="2" placeholder="Enter your reason..."></textarea></div>`;}else if(type==='bonafide'){html=`<div class="form-group"><label class="form-label">Purpose / Reason</label><div class="custom-dd-wrap"><select id="bonaPurpose" onchange="toggleOtherReason('bona',this.value)"><option value="">Select purpose</option><option value="Internship">Internship</option><option value="Scholarship">Scholarship</option><option value="Passport">Passport</option><option value="Visa">Visa</option><option value="Higher Studies">Higher Studies</option><option value="Hostel">Hostel</option><option value="Education Loan">Education Loan</option><option value="Bank">Bank</option><option value="Other">Other</option></select></div><div class="form-error" id="errBonaPurpose">Please select a purpose</div></div>
 <div class="form-group hidden" id="bonaOtherReasonGroup"><label class="form-label">Specify Reason</label><textarea class="form-input" id="bonaOtherReason" rows="2" placeholder="Enter your reason..."></textarea></div>
@@ -360,19 +543,29 @@ document.getElementById('submitAppBtn').disabled=true;navigateTo('appform');}
 
 function toggleOtherReason(prefix,val){const group=document.getElementById(prefix+'OtherReasonGroup');if(group){group.classList.toggle('hidden',val!=='Other');}validateForm();}
 
+function toggleOtherCertName(val){const group=document.getElementById('origOtherCertNameGroup');if(group){group.classList.toggle('hidden',val!=='Any Other Certificate');if(val!=='Any Other Certificate'){const inp=document.getElementById('origOtherCertName');if(inp)inp.value='';}}validateForm();}
+
 function changeCopies(delta){const inp=document.getElementById('bonaCopies');let v=parseInt(inp.value)||1;v=Math.max(1,Math.min(10,v+delta));inp.value=v;}
 
 function validateForm(){let valid=true;if(appFormType==='original'){const ct=document.getElementById('origCertType');const pu=document.getElementById('origPurpose');if(!ct.value){valid=false;document.getElementById('errCertType').classList.add('show');}else{document.getElementById('errCertType').classList.remove('show');}if(!pu.value){valid=false;document.getElementById('errOrigPurpose').classList.add('show');}else{document.getElementById('errOrigPurpose').classList.remove('show');}}else if(appFormType==='bonafide'){const pu=document.getElementById('bonaPurpose');if(!pu.value){valid=false;document.getElementById('errBonaPurpose').classList.add('show');}else{document.getElementById('errBonaPurpose').classList.remove('show');}}else if(appFormType==='cgpa'){const ct=document.getElementById('cgpaCertType');const pu=document.getElementById('cgpaPurpose');if(!ct.value){valid=false;document.getElementById('errCgpaCertType').classList.add('show');}else{document.getElementById('errCgpaCertType').classList.remove('show');}if(!pu.value){valid=false;document.getElementById('errCgpaPurpose').classList.add('show');}else{document.getElementById('errCgpaPurpose').classList.remove('show');}}document.getElementById('submitAppBtn').disabled=!valid;}
 
-function submitApplication(){if(document.getElementById('submitAppBtn').disabled)return;document.getElementById('confirmModal').classList.add('open');}
+function submitApplication(){if(document.getElementById('submitAppBtn').disabled)return;showPreview();}
+
+function showPreview(){if(document.getElementById('submitAppBtn').disabled)return;const now=new Date();let certName='',purpose='',customCertName='';if(appFormType==='original'){const ct=document.getElementById('origCertType');certName=ct.options[ct.selectedIndex]?ct.options[ct.selectedIndex].text:'';const puEl=document.getElementById('origPurpose');purpose=puEl.options[puEl.selectedIndex]?puEl.options[puEl.selectedIndex].text:'';if(puEl.value==='Other')purpose+=': '+document.getElementById('origOtherReason').value;if(ct.value==='Any Other Certificate'){customCertName=document.getElementById('origOtherCertName').value.trim();}}else if(appFormType==='bonafide'){certName='Bonafide Certificate';const puEl=document.getElementById('bonaPurpose');purpose=puEl.options[puEl.selectedIndex]?puEl.options[puEl.selectedIndex].text:'';if(puEl.value==='Other')purpose+=': '+document.getElementById('bonaOtherReason').value;}else if(appFormType==='cgpa'){const ct=document.getElementById('cgpaCertType');certName=ct.options[ct.selectedIndex]?ct.options[ct.selectedIndex].text:'';const puEl=document.getElementById('cgpaPurpose');purpose=puEl.options[puEl.selectedIndex]?puEl.options[puEl.selectedIndex].text:'';if(puEl.value==='Other')purpose+=': '+document.getElementById('cgpaOtherReason').value;}const docs=getUploadedDocs();const s=studentProfile;const previewHtml=`<div class="glass-card p-6 sm:p-8 animate-in"><h2 class="text-xl font-bold text-white mb-1">Preview & Confirm</h2><p class="text-xs text-white/40 mb-6 uppercase tracking-widest font-semibold">Please review your application before submitting</p><div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Student Information</div><div class="detail-grid"><div class="detail-grid-item"><div class="label">Full Name</div><div class="value">${s.name}</div></div><div class="detail-grid-item"><div class="label">Registration Number</div><div class="value">${s.regNo}</div></div><div class="detail-grid-item"><div class="label">Roll Number</div><div class="value">${s.rollNo||'—'}</div></div><div class="detail-grid-item"><div class="label">Department</div><div class="value">${s.department}</div></div><div class="detail-grid-item"><div class="label">Batch</div><div class="value">${s.batch||'—'}</div></div><div class="detail-grid-item"><div class="label">Year</div><div class="value">${s.currentYear||'—'}</div></div><div class="detail-grid-item"><div class="label">Section</div><div class="value">${s.section||'—'}</div></div><div class="detail-grid-item"><div class="label">Tutor Name</div><div class="value">${s.tutorName||'—'}</div></div><div class="detail-grid-item"><div class="label">Email</div><div class="value">${s.email}</div></div></div></div><div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Application Details</div><div class="detail-grid"><div class="detail-grid-item"><div class="label">Certificate Type</div><div class="value">${certName}</div></div>${customCertName?'<div class="detail-grid-item"><div class="label">Specified Certificate Name</div><div class="value">'+customCertName+'</div></div>':''}<div class="detail-grid-item"><div class="label">Purpose</div><div class="value">${purpose||'—'}</div></div><div class="detail-grid-item"><div class="label">Application Date</div><div class="value">${formatDate(now.toISOString())}</div></div><div class="detail-grid-item"><div class="label">Uploaded Documents</div><div class="value">${docs.length?docs.map(d=>d.name).join(', '):'None'}</div></div></div></div><div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Declaration</div><div style="padding:16px;border-radius:14px;background:rgba(212,174,112,0.06);border:1px solid rgba(212,174,112,0.1)"><p style="font-size:0.85rem;color:rgba(255,255,255,0.7);line-height:1.6">Please verify all the above information before submitting your application.<br>After submission, modification may not be possible until the application is reviewed.</p></div></div><div class="flex gap-3 mt-8"><button onclick="confirmSubmit()" class="btn-primary flex-1">Confirm & Submit</button><button onclick="navigateTo('appform')" class="btn-secondary flex-1">Edit</button></div></div>`;document.getElementById('previewContent').innerHTML=previewHtml;navigateTo('apppreview');}
 
 let pendingSubmitData=null;
 
-function confirmSubmit(){closeConfirmModal();const now=new Date();const appId='APP-2026-'+String(applications.length+1).padStart(4,'0');let certType='',purpose='',copies=1;
-if(appFormType==='original'){certType=document.getElementById('origCertType').value;purpose=document.getElementById('origPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('origOtherReason').value;}else if(appFormType==='bonafide'){certType='Bonafide';purpose=document.getElementById('bonaPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('bonaOtherReason').value;copies=parseInt(document.getElementById('bonaCopies').value)||1;}else if(appFormType==='cgpa'){certType=document.getElementById('cgpaCertType').value;purpose=document.getElementById('cgpaPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('cgpaOtherReason').value;}
+const PREFIX_MAP={original:{'10th Certificate':'OCR','12th Certificate':'OCR','UG Degree Certificate':'OCR','Transfer Certificate (TC)':'TCR','Migration Certificate':'MCR','Community Certificate':'CCR','Income Certificate':'ICR','Conduct Certificate':'CONR','Nativity Certificate':'NCR','UG Admission Documents':'OCR','Any Other Certificate':'ACR'},bonafide:'BCR',cgpa:'CPR'};function getPrefix(){if(appFormType==='original'){const ct=document.getElementById('origCertType');const val=ct?ct.value:'';return PREFIX_MAP.original[val]||'OCR';}return PREFIX_MAP[appFormType]||'OCR';}function generateRequestId(prefix){const year=new Date().getFullYear();let maxNum=0;const regex=new RegExp('^'+prefix+'-'+year+'-(\\d{6})$');applications.forEach(a=>{const m=a.id&&a.id.match(regex);if(m){const n=parseInt(m[1],10);if(n>maxNum)maxNum=n;}});return prefix+'-'+year+'-'+String(maxNum+1).padStart(6,'0');}
+
+function getUploadedDocs(){const input=document.getElementById('docUpload');const preview=document.getElementById('docPreview');const docs=[];if(input&&input.files){Array.from(input.files).forEach(f=>{docs.push({name:f.name.replace(/\.[^.]+$/,''),file:f.name});});}return docs;}
+
+function confirmSubmit(){const now=new Date();const prefix=getPrefix();const appId=generateRequestId(prefix);let certName='',purpose='',copies=1;
+if(appFormType==='original'){const ct=document.getElementById('origCertType');certName=ct?ct.value:'Original Certificate';if(ct&&ct.value==='Any Other Certificate'){const cn=document.getElementById('origOtherCertName');if(cn)certName=cn.value.trim();}purpose=document.getElementById('origPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('origOtherReason').value;}else if(appFormType==='bonafide'){certName='Bonafide Certificate';purpose=document.getElementById('bonaPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('bonaOtherReason').value;copies=parseInt(document.getElementById('bonaCopies').value)||1;}else if(appFormType==='cgpa'){certName=document.getElementById('cgpaCertType').value;purpose=document.getElementById('cgpaPurpose').value;if(purpose==='Other')purpose='Other: '+document.getElementById('cgpaOtherReason').value;}
 
 const types={original:'Original',bonafide:'Bonafide',cgpa:'CGPA/Percentage'};
-const app={id:appId,type:types[appFormType],certificateType:certType,purpose:copies>1?purpose+' ('+copies+' copies)':purpose,copies:copies,status:'Pending',currentApprover:'Tutor',date:now.toISOString(),lastUpdated:now.toISOString(),workflow:{tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'},steps:[{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''}]};
+const docs=getUploadedDocs();
+const student=studentProfile;
+const dateStr=now.toISOString().slice(0,10);const app={id:appId,type:types[appFormType],certificateType:types[appFormType],certificateName:certName,purpose:copies>1?purpose+' ('+copies+' copies)':purpose,submittedDate:now.toISOString(),date:dateStr,currentStage:'Tutor',currentStatus:'Pending',status:'Pending',lastUpdated:now.toISOString(),workflow:{tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'},steps:[{role:'Submitted',status:'done',date:now.toISOString()},{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''},{role:'Completed',status:'pending',date:''}],approvalHistory:[],uploadedDocs:docs.length?docs:[{name:'Pending Upload',file:''}],copies:copies||1,student:{name:student.name,regNo:student.regNo,department:student.department,year:student.currentYear,email:student.email,phone:student.phone},studentInfo:{name:student.name,regNo:student.regNo,rollNo:student.rollNo,department:student.department,batch:student.batch,currentYear:student.currentYear,semester:student.semester,section:student.section,tutor:student.tutorName}};
 applications.unshift(app);saveApps();
 
 const notif={id:'N'+String(notifications.length+1).padStart(3,'0'),appId:appId,message:'Application '+appId+' has been submitted successfully',type:'submitted',read:false,date:now.toISOString()};notifications.unshift(notif);saveNotifs();
@@ -384,33 +577,66 @@ function closeConfirmModal(){document.getElementById('confirmModal').classList.r
 function closeSuccessModal(){document.getElementById('successModal').classList.remove('open');navigateTo('myapps');}
 function closeRejectionModal(){document.getElementById('rejectionModal').classList.remove('open');}
 
+// ===== HELPERS =====
+function getStatusBadge(status){const m={Pending:'badge-pending','Under Review':'badge-progress',Approved:'badge-approved',Rejected:'badge-rejected',Completed:'badge-approved'};return m[status]||'badge-pending';}
+
+function getStageLabel(stage){const m={Tutor:'Tutor Approval',HOD:'HOD Approval','Nodal Officer':'Nodal Officer',OS:'Office Staff',DRS:'DRS'};return m[stage]||stage;}
+
+function getStageOrder(stage){const order=['Submitted','Tutor','HOD','Nodal Officer','OS','DRS','Completed'];return order.indexOf(stage);}
+
+function getActionButtons(a){let btns='<button onclick="viewAppDetail(\''+a.id+'\')" class="view-app-btn">View</button>';if(a.currentStatus==='Rejected')btns+='<button onclick="reapply(\''+a.id+'\')" class="reapply-btn">Reapply</button>';if(a.currentStatus==='Completed')btns+='<button class="download-btn" onclick="showToast(\'Certificate download coming soon\',\'info\')" title="Download Certificate">Download</button>';if(a.currentStatus==='Pending'&&a.currentStage==='Tutor')btns+='<button onclick="cancelApp(\''+a.id+'\')" class="cancel-app-btn">Cancel</button>';return btns;}
+
+function formatDateTime(d){if(!d)return'—';const dt=new Date(d);return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'})+' '+dt.toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});}
+
 // ===== MY APPLICATIONS =====
-function renderMyApps(){const container=document.getElementById('myAppsContainer');const empty=document.getElementById('myAppsEmpty');const search=(document.getElementById('appSearch').value||'').toLowerCase();const filter=document.getElementById('appFilter').value;let filtered=applications;if(search)filtered=filtered.filter(a=>a.id.toLowerCase().includes(search)||a.type.toLowerCase().includes(search));if(filter!=='all')filtered=filtered.filter(a=>a.status===filter);
+function renderMyApps(){const container=document.getElementById('myAppsContainer');const empty=document.getElementById('myAppsEmpty');const search=(document.getElementById('appSearch').value||'').toLowerCase();const filter=document.getElementById('appFilter').value;const timeFilter=document.getElementById('appTimeFilter').value;let filtered=applications;if(search)filtered=filtered.filter(a=>a.id.toLowerCase().includes(search)||(a.certificateName||'').toLowerCase().includes(search)||a.type.toLowerCase().includes(search)||(a.purpose||'').toLowerCase().includes(search));if(filter!=='all')filtered=filtered.filter(a=>a.currentStatus===filter);if(timeFilter!=='all'){const now=new Date();let cutoff;if(timeFilter==='today'){cutoff=new Date(now.getFullYear(),now.getMonth(),now.getDate());}else if(timeFilter==='7days'){cutoff=new Date(now-86400000*7);}else if(timeFilter==='30days'){cutoff=new Date(now-86400000*30);}else if(timeFilter==='semester'){cutoff=new Date(now.getFullYear(),now.getMonth()<6?0:6,1);}filtered=filtered.filter(a=>new Date(a.submittedDate||a.date)>=cutoff);}
 if(filtered.length===0){container.innerHTML='';empty.classList.remove('hidden');return;}empty.classList.add('hidden');
-container.innerHTML=filtered.map(a=>{
-const statusClass=a.status==='Pending'?'badge-pending':a.status==='Approved'?'badge-approved':'badge-rejected';
-const stepDots=a.steps.map((s,i)=>{
-let cls='step-dot ';let label='';if(s.status==='done'){cls+='done';label='✓';}else if(s.status==='active'){cls+='active';label=String(i+1);}else if(s.status==='rejected'){cls+='pending';label='✗';}else{cls+='pending';label=String(i+1);}
-const line=i<a.steps.length-1?`<div class="step-line ${s.status==='done'?'done':''}"></div>`:'';
-return`<div class="step"><div class="${cls}">${label}</div>${line}</div>`;
-}).join('');
-return`<div class="glass-card p-5 sm:p-6 hover:border-gold-DEFAULT/20 border border-transparent transition-all"><div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-4"><div><div class="flex items-center gap-3"><h3 class="text-white font-bold">${a.id}</h3><span class="status-badge ${statusClass}">${a.status}</span></div><p class="text-sm text-white/40 mt-1">${a.type}${a.certificateType?' — '+a.certificateType:''} · ${a.purpose}</p></div><div class="text-right text-xs text-white/30"><p>Applied: ${formatDate(a.date)}</p><p class="mt-1">Current: ${a.currentApprover}</p></div></div><div class="flex flex-wrap items-center gap-1 mb-4">${stepDots}</div><div class="flex flex-wrap gap-2"><button onclick="viewAppDetail('${a.id}')" class="view-btn">View Details</button>${a.status==='Pending'&&a.currentApprover==='Tutor'?`<button onclick="cancelApp('${a.id}')" class="reject-btn">Cancel</button>`:''}</div></div>`;
-}).join('');}
+
+container.innerHTML='<div class="apps-table-wrap"><table class="apps-table"><thead><tr><th>Request ID</th><th>Type</th><th>Certificate</th><th>Purpose</th><th>Submitted</th><th>Stage</th><th>Status</th><th>Updated</th><th>Action</th></tr></thead><tbody>'+filtered.map(a=>{
+const statusCls=getStatusBadge(a.currentStatus);
+const stageLabel=getStageLabel(a.currentStage);
+return'<tr><td class="td-id" onclick="viewAppDetail(\''+a.id+'\')">'+a.id+'</td><td>'+a.type+'</td><td>'+(a.certificateName||a.certificateType||'—')+'</td><td>'+(a.purpose||'—')+'</td><td class="td-date">'+formatDate(a.submittedDate||a.date)+'</td><td>'+stageLabel+'</td><td><span class="status-badge '+statusCls+'">'+a.currentStatus+'</span></td><td class="td-date">'+formatDate(a.lastUpdated)+'</td><td class="td-actions">'+getActionButtons(a)+'</td></tr>';
+}).join('')+'</tbody></table></div>';}
 
 function viewAppDetail(id){const app=applications.find(a=>a.id===id);if(!app){showToast('Application not found','error');return;}
-const container=document.getElementById('appDetailContent');
-const statusClass=app.status==='Pending'?'badge-pending':app.status==='Approved'?'badge-approved':'badge-rejected';
-const stepsHtml=app.steps.map((s,i)=>{
-const statusMap={done:'Approved',active:'Waiting...',rejected:'Rejected',pending:'Pending'};
-const colorMap={done:'text-green-400',active:'text-gold-DEFAULT',rejected:'text-red-400',pending:'text-white/30'};
-const iconMap={done:'✓',active:'●',rejected:'✗',pending:'○'};
-return`<div class="flex items-start gap-3 py-3 border-b border-white/4 last:border-0"><div class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0 ${s.status==='done'?'bg-green-500/15 text-green-400':s.status==='active'?'bg-gold/10 text-gold-DEFAULT':s.status==='rejected'?'bg-red-500/15 text-red-400':'bg-white/5 text-white/30'}">${iconMap[s.status]}</div><div class="flex-1"><p class="text-sm font-semibold text-white">${s.role}</p><p class="text-xs ${colorMap[s.status]}">${statusMap[s.status]}${s.date?' · '+s.date:''}</p></div></div>`;
-}).join('');
-const rejectionHtml=app.status==='Rejected'?`<div class="mt-4 p-4 rounded-xl" style="background:rgba(239,68,68,0.08);border:1px solid rgba(239,68,68,0.15)"><p class="text-sm font-bold text-red-400 mb-2">Rejected by ${app.rejectedBy||'N/A'}</p><p class="text-sm text-white/60">${app.rejectionReason||'No reason provided'}</p><p class="text-xs text-white/30 mt-1">${app.rejectionDate?formatDate(app.rejectionDate):''}</p></div>`:'';
-container.innerHTML=`<div class="flex items-center justify-between mb-6"><div><h3 class="text-lg font-bold text-white">${app.id}</h3><p class="text-xs text-white/40 mt-1">${app.type}${app.certificateType?' — '+app.certificateType:''}</p></div><span class="status-badge ${statusClass}">${app.status}</span></div><div class="grid grid-cols-2 sm:grid-cols-3 gap-4 mb-6 p-4 rounded-xl" style="background:rgba(255,255,255,0.03)"><div><p class="text-xs text-white/40">Purpose</p><p class="text-sm font-semibold text-white">${app.purpose}</p></div><div><p class="text-xs text-white/40">Applied Date</p><p class="text-sm font-semibold text-white">${formatDate(app.date)}</p></div><div><p class="text-xs text-white/40">Current Approver</p><p class="text-sm font-semibold text-white">${app.currentApprover}</p></div>${app.copies?`<div><p class="text-xs text-white/40">Copies</p><p class="text-sm font-semibold text-white">${app.copies}</p></div>`:''}</div><h4 class="text-sm font-bold text-white mb-3">Approval Timeline</h4><div class="space-y-1">${stepsHtml}</div>${rejectionHtml}`;
+const c=document.getElementById('appDetailContent');
+const statusCls=getStatusBadge(app.currentStatus);
+
+// Rejection banner
+const rejectionBanner=app.currentStatus==='Rejected'?'<div class="rejection-banner"><div class="rb-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div><div class="rb-content"><div class="rb-title">Application Rejected by '+(app.rejectedBy||'N/A')+'</div><div class="rb-reason">'+(app.rejectionReason||'No reason provided')+'</div><div class="rb-meta">'+(app.rejectionDate?formatDate(app.rejectionDate)+' · '+app.rejectionTime:'')+'</div></div></div>':'';
+
+// Section A - Application Header
+const sectionA='<div class="detail-header"><div class="detail-header-left"><h2>Application '+app.id+'</h2><p>'+app.type+(app.certificateName?' — '+app.certificateName:'')+'</p></div><div style="display:flex;align-items:center;gap:12px"><span class="status-badge '+statusCls+'">'+app.currentStatus+'</span></div></div>'+rejectionBanner;
+
+// Section B - Application Timeline
+const statusLabels={done:'Approved',active:'Current Stage',rejected:'Rejected',pending:'Pending'};
+const statusTexts={done:'done',active:'active',rejected:'rejected',pending:'pending'};
+const timelineSteps=app.steps&&app.steps.length?app.steps:[{role:'Submitted',status:'done',date:app.submittedDate},{role:'Tutor',status:'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''},{role:'Completed',status:'pending',date:''}];
+const sectionB='<div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>Application Timeline</div><div class="timeline">'+timelineSteps.map(s=>{const dotCls='timeline-dot '+statusTexts[s.status];const tlCls='tl-status '+statusTexts[s.status];const icon=s.status==='done'?'✓':s.status==='active'?'●':s.status==='rejected'?'✗':'○';return'<div class="timeline-item"><div class="'+dotCls+'">'+icon+'</div><div class="timeline-content"><div class="tl-role">'+s.role+(s.role==='Submitted'?'':' Approval')+'</div><div class="'+tlCls+'">'+(statusLabels[s.status]||'Pending')+(s.date?' <span style="opacity:0.5;font-weight:400">· '+formatDate(s.date)+'</span>':'')+'</div></div></div>';}).join('')+'</div></div>';
+
+// Section C - Student Information
+const si=app.studentInfo||app.student||{};const sy=si.currentYear||si.year||'';
+const sectionC='<div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Student Information</div><div class="detail-grid"><div class="detail-grid-item"><div class="label">Student Name</div><div class="value">'+(si.name||studentProfile.name)+'</div></div><div class="detail-grid-item"><div class="label">Registration No</div><div class="value">'+(si.regNo||studentProfile.regNo)+'</div></div><div class="detail-grid-item"><div class="label">Roll Number</div><div class="value">'+(si.rollNo||studentProfile.rollNo||'—')+'</div></div><div class="detail-grid-item"><div class="label">Department</div><div class="value">'+(si.department||studentProfile.department)+'</div></div><div class="detail-grid-item"><div class="label">Batch</div><div class="value">'+(si.batch||studentProfile.batch||'—')+'</div></div><div class="detail-grid-item"><div class="label">Year</div><div class="value">'+(sy||studentProfile.currentYear||'—')+'</div></div><div class="detail-grid-item"><div class="label">Semester</div><div class="value">'+(si.semester||studentProfile.semester||'—')+'</div></div><div class="detail-grid-item"><div class="label">Section</div><div class="value">'+(si.section||studentProfile.section||'—')+'</div></div><div class="detail-grid-item"><div class="label">Tutor</div><div class="value">'+(si.tutor||studentProfile.tutorName||'—')+'</div></div></div></div>';
+
+// Section D - Application Information
+const sectionD='<div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Application Information</div><div class="detail-grid"><div class="detail-grid-item"><div class="label">Certificate Requested</div><div class="value">'+(app.certificateName||app.certificateType||'—')+'</div></div><div class="detail-grid-item"><div class="label">Application Type</div><div class="value">'+app.type+'</div></div><div class="detail-grid-item"><div class="label">Purpose</div><div class="value">'+(app.purpose||'—')+'</div></div><div class="detail-grid-item"><div class="label">Remarks</div><div class="value">'+(app.remarks||'—')+'</div></div><div class="detail-grid-item"><div class="label">Submitted Date</div><div class="value">'+(app.submittedDate?formatDateTime(app.submittedDate):'—')+'</div></div><div class="detail-grid-item"><div class="label">Last Updated</div><div class="value">'+(app.lastUpdated?formatDateTime(app.lastUpdated):'—')+'</div></div>'+(app.copies?'<div class="detail-grid-item"><div class="label">Copies</div><div class="value">'+app.copies+'</div></div>':'')+'</div></div>';
+
+// Section E - Approval History
+const hist=app.approvalHistory||[];
+const sectionE='<div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>Approval History</div>'+(hist.length?hist.map(h=>'<div class="approval-card"><div class="approval-card-left"><div class="ac-role">'+h.role+(h.role==='Submitted'?'':' Approval')+'</div><div class="ac-action">'+h.action+'</div>'+(h.remarks?'<div class="ac-remarks">Remarks: '+h.remarks+'</div>':'')+'</div><div class="ac-date">'+(h.date||'')+(h.time?'<br>'+h.time:'')+'</div></div>').join(''):'<div style="color:rgba(255,255,255,0.25);font-size:0.8rem;padding:12px 0">No approval history yet.</div>')+'</div>';
+
+// Section F - Uploaded Documents
+const docs=app.uploadedDocs||[];
+const sectionF='<div class="detail-section"><div class="detail-section-title"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>Uploaded Documents</div><div class="doc-list">'+(docs.length?docs.map(d=>'<div class="doc-item"><svg class="doc-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg><span class="doc-name">'+(d.name||'Document')+'</span>'+(d.file?'<svg class="doc-dl" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" onclick="showToast(\'Download: '+d.file+'\',\'info\')"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>':'')+'</div>').join(''):'<div style="color:rgba(255,255,255,0.25);font-size:0.8rem;padding:12px 0">No documents uploaded.</div>')+'</div></div>';
+
+c.innerHTML=sectionA+sectionB+sectionC+sectionD+sectionE+sectionF;
 navigateTo('appdetail');}
 
 function cancelApp(id){if(!confirm('Are you sure you want to cancel this application?'))return;applications=applications.filter(a=>a.id!==id);saveApps();renderMyApps();renderHomeStats();showToast('Application cancelled','info');}
+
+function reapply(id){const app=applications.find(a=>a.id===id);if(!app)return;const types={Original:'original',Bonafide:'bonafide','CGPA/Percentage':'cgpa'};const t=types[app.type]||'original';openApplicationForm(t);showToast('Reapplying for '+app.certificateName||app.type,'info');}
+
+function migrateApps(){const TYPE_PREFIX_MAP={'Bonafide':'BCR','Education Loan':'ELR','CGPA/Percentage':'CPR','Original':'OCR','Community':'CCR','Income':'ICR','Conduct':'CONR','Nativity':'NCR','Migration':'MCR','Transfer Certificate (TC)':'TCR','TC':'TCR','Any Other Certificate':'ACR','Other':'ACR'};let changed=false;applications.forEach(a=>{if(!a.currentStatus){a.currentStatus=a.status||'Pending';changed=true;}if(!a.submittedDate){a.submittedDate=a.date;changed=true;}if(!a.date){a.date=(a.submittedDate||'').slice(0,10);changed=true;}if(!a.status){a.status=a.currentStatus||'Pending';changed=true;}if(!a.certificateName&&a.certificateType){a.certificateName=a.certificateType;changed=true;}if(!a.currentStage){a.currentStage=a.currentApprover||'Tutor';changed=true;}if(!a.student&&a.studentInfo){a.student={name:a.studentInfo.name,regNo:a.studentInfo.regNo,department:a.studentInfo.department,year:a.studentInfo.currentYear,email:studentProfile.email,phone:studentProfile.phone};changed=true;}if(!a.workflow){a.workflow={tutor:'Pending',hod:'—',nodal:'—',os:'—',drs:'—'};changed=true;}if(a.workflow.nodal===undefined){a.workflow.nodal='—';changed=true;}if(!a.steps||a.steps.length<4){a.steps=[{role:'Submitted',status:'done',date:a.submittedDate},{role:'Tutor',status:a.workflow&&a.workflow.tutor==='Approved'?'done':'active',date:''},{role:'HOD',status:'pending',date:''},{role:'Nodal Officer',status:'pending',date:''},{role:'OS',status:'pending',date:''},{role:'DRS',status:'pending',date:''},{role:'Completed',status:'pending',date:''}];changed=true;}else{var needsRemap=false;a.steps.forEach(function(s){if(s.role==='Office Staff'){s.role='OS';needsRemap=true;}});if(needsRemap)changed=true;}if(!a.approvalHistory)a.approvalHistory=[];if(!a.uploadedDocs)a.uploadedDocs=[];if(a.id&&a.id.startsWith('APP-')){const prefix=TYPE_PREFIX_MAP[a.type]||'OCR';const year=new Date().getFullYear();let maxNum=0;const regex=new RegExp('^('+Object.values(PREFIX_MAP).filter(v=>typeof v==='string').concat(Object.values(PREFIX_MAP.original)).join('|')+')-'+year+'-(\\d{6})$');applications.forEach(app2=>{const m2=app2.id&&app2.id.match(regex);if(m2){const n=parseInt(m2[2],10);if(n>maxNum)maxNum=n;}});a.id=prefix+'-'+year+'-'+String(maxNum+1).padStart(6,'0');changed=true;}});if(changed)saveApps();}
 
 // ===== NOTIFICATIONS =====
 function renderNotifs(){const container=document.getElementById('notifContainer');const empty=document.getElementById('notifEmpty');if(notifications.length===0){container.innerHTML='';empty.classList.remove('hidden');return;}empty.classList.add('hidden');
@@ -434,31 +660,48 @@ function populateProfileView(){
         const el=document.getElementById(id);
         if(el) el.value=studentProfile[map[id]]||'';
     });
+    const s=studentProfile;
+    document.getElementById('profileCardName').textContent=s.name||'—';
+    document.getElementById('profileCardReg').textContent=s.regNo||'—';
+    document.getElementById('profileCardYear').textContent=(s.department?s.department+' — ':'')+(s.currentYear||'');
+    document.getElementById('profileCardGender').textContent=s.gender||'—';
+    document.getElementById('profileCardDob').textContent=s.dob||'—';
+    document.getElementById('profileCardBlood').textContent=s.bloodGroup||'—';
+    document.getElementById('profileCardBatch').textContent=s.batch||'—';
+    const initials=getInitials(s.name);
+    const pai=document.getElementById('profileAvatarInitials');if(pai)pai.textContent=initials;
+    const acs=document.querySelector('#avatarCircle span');if(acs)acs.textContent=initials;
+    const aii=document.getElementById('avatarInitials');if(aii)aii.textContent=initials;
 }
 
 function saveProfileChanges(){
-    const editable=['pBloodGroup','pCommunity','pNationality','pAadhaar','pPhone','pEmail','pAddress','pCity','pState','pPincode','pFatherName','pMotherName','pGuardianName','pParentPhone'];
+    const editable=['pDegree','pBloodGroup','pCommunity','pNationality','pAadhaar','pPhone','pEmail','pAddress','pCity','pState','pPincode','pFatherName','pMotherName','pGuardianName','pParentPhone'];
     editable.forEach(id=>{
         const el=document.getElementById(id);
         if(el) studentProfile[id.replace('p','').replace(/^./,c=>c.toLowerCase())]=el.value;
     });
     localStorage.setItem('studentProfile',JSON.stringify(studentProfile));
-    updateProfileHeader();
+    updateProfileHeader();populateProfileView();
     showToast('Profile updated successfully','success');
 }
 
+function getInitials(name){if(!name||!name.trim())return'?';const parts=name.trim().split(/\s+/);if(parts.length===1)return parts[0].charAt(0).toUpperCase();return(parts[0].charAt(0)+parts[parts.length-1].charAt(0)).toUpperCase();}
+
 function updateProfileHeader(){
-    document.getElementById('headerStudentName').textContent=studentProfile.name;
-    document.getElementById('headerRegNo').textContent=studentProfile.regNo;
-    document.getElementById('avatarInitials').textContent=studentProfile.initials;
-    document.getElementById('welcomeName').textContent=studentProfile.name.split(' ')[0];
-    document.querySelector('#avatarCircle span').textContent=studentProfile.initials;
-    document.getElementById('dropName').textContent=studentProfile.name;
-    document.getElementById('dropReg').textContent=studentProfile.regNo;
-    document.getElementById('dropDept').textContent=studentProfile.department;
+    const initials=getInitials(studentProfile.name);
+    document.getElementById('headerStudentName').textContent=studentProfile.name||'Student';
+    document.getElementById('headerRegNo').textContent=studentProfile.regNo||'';
+    const ai=document.getElementById('avatarInitials');if(ai)ai.textContent=initials;
+    document.getElementById('welcomeName').textContent=studentProfile.name?studentProfile.name.split(' ')[0]:'Student';
+    const as=document.querySelector('#avatarCircle span');if(as)as.textContent=initials;
+    document.getElementById('dropName').textContent=studentProfile.name||'Student';
+    document.getElementById('dropReg').textContent=studentProfile.regNo||'';
+    document.getElementById('dropDept').textContent=studentProfile.department||'';
 }
 
-function updateProfilePhoto(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=function(ev){const url=ev.target.result;document.querySelector('#avatarCircle').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;document.querySelector('#profileAvatar').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;};r.readAsDataURL(file);}
+function updateProfilePhoto(e){const file=e.target.files[0];if(!file)return;const r=new FileReader();r.onload=function(ev){const url=ev.target.result;document.querySelector('#avatarCircle').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;document.querySelector('#profileAvatar').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;localStorage.setItem('profilePhoto',url);};r.readAsDataURL(file);}
+
+function loadProfilePhoto(){const url=localStorage.getItem('profilePhoto');if(url){document.querySelector('#avatarCircle').innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;const pa=document.querySelector('#profileAvatar');if(pa)pa.innerHTML=`<img src="${url}" class="w-full h-full rounded-full object-cover">`;}}
 
 // ===== CUSTOM DROPDOWN COMPONENT =====
 function initCustomDropdown(selectId){
@@ -508,11 +751,67 @@ function initCustomDropdown(selectId){
 }
 // ===== END CUSTOM DROPDOWN =====
 
+// ===== FILTER DROPDOWN =====
+function initFilterDropdown(id){
+  var el=document.getElementById(id);if(!el)return;
+  var wrap=el.parentNode;wrap.style.position='relative';
+  el.style.display='none';
+  var btn=document.createElement('button');btn.type='button';btn.className='filter-dd-btn';
+  var cur=el.options[el.selectedIndex];btn.innerHTML='<span>'+(cur?cur.text:'')+'</span><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AE70" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg>';
+  var menu=document.createElement('div');menu.className='filter-dd-menu';
+  Array.from(el.options).forEach(function(o){
+    var d=document.createElement('div');d.className='filter-dd-opt'+(o.selected?' selected':'');d.textContent=o.text;
+    d.setAttribute('data-val',o.value);d.setAttribute('data-sel',id);
+    menu.appendChild(d);
+  });
+  btn.setAttribute('data-toggle',id);
+  wrap.appendChild(btn);wrap.appendChild(menu);
+}
+function setupFilterDropdowns(){
+  document.addEventListener('click',function(e){
+    var t=e.target;
+    var toggle=t.closest('[data-toggle]');
+    if(toggle){
+      var id=toggle.getAttribute('data-toggle');
+      var wrap=toggle.parentNode;
+      var menu=wrap.querySelector('.filter-dd-menu');
+      var isOpen=menu.classList.contains('show');
+      if(!isOpen){menu.classList.add('show');toggle.classList.add('open');}
+      else{menu.classList.remove('show');toggle.classList.remove('open');}
+      return;
+    }
+    var opt=t.closest('.filter-dd-opt');
+    if(opt){
+      var val=opt.getAttribute('data-val');
+      var selId=opt.getAttribute('data-sel');
+      var sel=document.getElementById(selId);
+      if(sel){sel.value=val;sel.dispatchEvent(new Event('change',{bubbles:true}));}
+      var wrap=opt.closest('.filter-select-wrap');
+      if(wrap){
+        var btn=wrap.querySelector('.filter-dd-btn');
+        var menu=wrap.querySelector('.filter-dd-menu');
+        if(btn)btn.querySelector('span').textContent=opt.textContent;
+        if(menu){menu.classList.remove('show');if(btn)btn.classList.remove('open');}
+        wrap.querySelectorAll('.filter-dd-opt').forEach(function(el){el.classList.remove('selected');});
+        opt.classList.add('selected');
+      }
+      return;
+    }
+    document.querySelectorAll('.filter-dd-menu.show').forEach(function(m){m.classList.remove('show');});
+    document.querySelectorAll('.filter-dd-btn.open').forEach(function(b){b.classList.remove('open');});
+  });
+}
+
 // ===== UTILITY =====
 function formatDate(d){if(!d)return'—';const dt=new Date(d);return dt.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});}
 
 function showToast(msg,type='info'){const container=document.getElementById('toastContainer');const t=document.createElement('div');t.className='toast '+type;const icons={success:'✓',error:'✗',info:'ℹ'};t.innerHTML=`<span>${icons[type]||'ℹ'}</span><span>${msg}</span>`;container.appendChild(t);setTimeout(()=>{t.style.opacity='0';t.style.transition='opacity 0.3s';setTimeout(()=>t.remove(),300);},3000);}
 
+// ===== SETTINGS =====
+function togglePwdVis(id,btn){const inp=document.getElementById(id);if(!inp)return;const isPwd=inp.type==='password';inp.type=isPwd?'text':'password';const openEye='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>';const closedEye='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>';btn.innerHTML=isPwd?closedEye:openEye;}
+function updatePassword(){const current=document.getElementById('pwdCurrent');const newPwd=document.getElementById('pwdNew');const confirm=document.getElementById('pwdConfirm');let valid=true;document.querySelectorAll('#pwdForm .form-error').forEach(e=>e.classList.remove('show'));document.getElementById('pwdSuccess').classList.add('hidden');if(!current.value.trim()){document.getElementById('errPwdCurrent').classList.add('show');valid=false;}const pwdRegex=/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/;if(!newPwd.value.trim()||!pwdRegex.test(newPwd.value)){document.getElementById('errPwdNew').classList.add('show');valid=false;}if(newPwd.value!==confirm.value){document.getElementById('errPwdConfirm').classList.add('show');valid=false;}if(!valid)return;document.getElementById('pwdSuccess').classList.remove('hidden');current.value='';newPwd.value='';confirm.value='';showToast('Password updated successfully','success');}
+// ===== HELP & SUPPORT =====
+function toggleFaq(btn){const item=btn.closest('.faq-item');const answer=item.querySelector('.faq-answer');const isOpen=item.classList.contains('open');document.querySelectorAll('.faq-item.open').forEach(el=>{if(el!==item){el.classList.remove('open');el.querySelector('.faq-answer').style.maxHeight='0';}});if(isOpen){item.classList.remove('open');answer.style.maxHeight='0';}else{item.classList.add('open');answer.style.maxHeight=answer.scrollHeight+'px';}}
 // ===== EVENT BINDINGS =====
 document.getElementById('profileBtn').addEventListener('click',(e)=>{e.stopPropagation();document.getElementById('profileDropdown').classList.toggle('open');});
 document.addEventListener('click',()=>document.getElementById('profileDropdown').classList.remove('open'));
@@ -522,8 +821,11 @@ document.getElementById('confirmModal').addEventListener('click',(e)=>{if(e.targ
 document.getElementById('successModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeSuccessModal();});
 document.getElementById('rejectionModal').addEventListener('click',(e)=>{if(e.target===e.currentTarget)closeRejectionModal();});
 
+// ===== FILE UPLOAD PREVIEW =====
+document.getElementById('docUpload')&&document.getElementById('docUpload').addEventListener('change',function(){const preview=document.getElementById('docPreview');if(!preview)return;preview.innerHTML='';Array.from(this.files).forEach(f=>{preview.innerHTML+='<span style="display:inline-flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:rgba(212,174,112,0.08);border:1px solid rgba(212,174,112,0.12);font-size:0.75rem;color:#D4AE70"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>'+f.name+'</span>';});});
+
 // ===== INIT =====
-initCustomDropdown('appFilter');updateProfileHeader();populateProfileView();renderHomeStats();renderMyApps();renderNotifs();updateBadge();
+loadProfilePhoto();migrateApps();initFilterDropdown('appFilter');initFilterDropdown('appTimeFilter');setupFilterDropdowns();updateProfileHeader();populateProfileView();renderHomeStats();renderMyApps();renderNotifs();updateBadge();
 </script>
 </body>
 </html>

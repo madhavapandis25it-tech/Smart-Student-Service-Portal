@@ -1665,8 +1665,8 @@ ol {
 .auth-label {
     position: absolute;
     left: 18px;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 22px;
+    transform: translateY(0);
     font-size: 0.9375rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.7);
@@ -1675,14 +1675,16 @@ ol {
     transform-origin: left top;
 }
 
-.auth-input:focus~.auth-label {
-    transform: translateY(-90%) scale(0.72);
+.auth-input:focus~.auth-label,
+.auth-email-wrapper:focus-within~.auth-label {
+    transform: translateY(-100%) scale(0.72);
     color: var(--wine-red);
     font-weight: 600;
 }
 
-.auth-input:not(:placeholder-shown)~.auth-label {
-    transform: translateY(-90%) scale(0.72);
+.auth-input.has-value~.auth-label,
+.auth-email-wrapper.has-value~.auth-label {
+    transform: translateY(-100%) scale(0.72);
     color: var(--accent-gold);
     font-weight: 600;
 }
@@ -2065,7 +2067,7 @@ ol {
 }
 
 .auth-select:valid~.auth-label {
-    transform: translateY(-90%) scale(0.72);
+    transform: translateY(-100%) scale(0.72);
     color: var(--accent-gold);
     font-weight: 600;
 }
@@ -2096,9 +2098,9 @@ ol {
 }
 
 .auth-date-input::-webkit-calendar-picker-indicator {
-    filter: invert(0.7);
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23D4AE70' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2' ry='2'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='3' y1='10' x2='21' y2='10'/%3E%3C/svg%3E") center/contain no-repeat;
     cursor: pointer;
-    opacity: 0.5;
+    opacity: 0.7;
     transition: opacity 0.2s ease;
 }
 
@@ -2107,7 +2109,8 @@ ol {
 }
 
 .auth-date-label {
-    transform: translateY(-90%) scale(0.72);
+    top: 22px;
+    transform: translateY(-100%) scale(0.72);
     color: rgba(255, 255, 255, 0.4);
     font-weight: 500;
 }
@@ -2117,7 +2120,7 @@ ol {
     font-weight: 600;
 }
 
-.auth-date-input:not(:placeholder-shown)~.auth-date-label {
+.auth-date-input.has-value~.auth-date-label {
     color: var(--accent-gold);
     font-weight: 600;
 }
@@ -2394,4 +2397,253 @@ ol {
 
 .auth-page .slide-up {
     animation: none;
+}
+
+/* ----- Email Domain Suffix Wrapper ----- */
+.auth-email-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.auth-email-input {
+    padding-right: 140px !important;
+}
+
+.auth-email-domain {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 400;
+    pointer-events: none;
+    white-space: nowrap;
+    font-family: var(--font-primary);
+}
+
+.auth-email-wrapper .auth-input:focus ~ .auth-email-domain,
+.auth-email-wrapper .auth-input.has-value ~ .auth-email-domain {
+    color: rgba(255, 255, 255, 0.45);
+}
+
+/* ----- Registration Preview ----- */
+.auth-preview {
+    animation: fadeIn 0.4s ease both;
+}
+
+.preview-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.preview-item {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    padding: 12px 16px;
+    transition: border-color 0.2s ease;
+}
+
+.preview-item:hover {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.preview-item-full {
+    grid-column: 1 / -1;
+}
+
+.preview-item-label {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 4px;
+    display: block;
+}
+
+.preview-item-value {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: var(--white);
+    word-break: break-word;
+}
+
+.preview-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.preview-btn {
+    flex: 1;
+}
+
+.preview-btn.btn-ghost {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 28px;
+    border-radius: 16px;
+    font-size: 0.9375rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.25s var(--ease-out);
+}
+
+.preview-btn.btn-ghost:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--white);
+}
+
+@media (max-width: 480px) {
+    .preview-details {
+        grid-template-columns: 1fr;
+    }
+    .preview-actions {
+        flex-direction: column;
+    }
+    .auth-email-input {
+        padding-right: 120px !important;
+    }
+    .auth-email-domain {
+        font-size: 0.75rem;
+        right: 12px;
+    }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* ----- Forgot Password — Full Email Input ----- */
+.full-email-wrapper .auth-input {
+    padding-right: 18px !important;
+}
+
+/* ----- Auth Card Body (for success/error views) ----- */
+.auth-card-body {
+    padding: 8px 0 4px;
+}
+
+/* ----- Forgot Password Success View ----- */
+.fp-success-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--white);
+    text-align: center;
+    margin-bottom: 12px;
+    letter-spacing: -0.02em;
+}
+
+.fp-success-message {
+    font-size: 0.9375rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    line-height: 1.6;
+    margin-bottom: 6px;
+}
+
+.fp-success-detail {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.55);
+    text-align: center;
+    line-height: 1.7;
+    margin-bottom: 24px;
+}
+
+.fp-success-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 8px;
+}
+
+/* ----- Secondary / Ghost Button ----- */
+.btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 16px 28px;
+    border-radius: 40px;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    font-family: var(--font-primary);
+    letter-spacing: 0.03em;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    cursor: pointer;
+    transition: all 0.35s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.14);
+    color: var(--white);
+    transform: translateY(-2px);
+}
+
+.btn-secondary:active {
+    transform: translateY(0);
+}
+
+.btn-secondary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-secondary .spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    border-top-color: var(--white);
+    animation: spin 0.8s linear infinite;
+    margin-left: 8px;
+}
+
+/* ----- Password Requirements List ----- */
+.password-requirements {
+    margin-top: -8px;
+    margin-bottom: 4px;
+}
+
+.rp-req-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.rp-req-item {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.5);
+    padding: 3px 0;
+    transition: color 0.2s ease;
+}
+
+.rp-req-icon {
+    display: inline-block;
+    width: 14px;
+    font-size: 10px;
+    transition: color 0.2s ease;
 }

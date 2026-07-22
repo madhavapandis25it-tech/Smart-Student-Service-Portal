@@ -583,6 +583,16 @@
         border-radius: 14px;
     }
 
+    .auth-label {
+        left: 14px;
+        top: 20px;
+        font-size: 0.875rem;
+    }
+
+    .auth-date-label {
+        top: 20px;
+    }
+
     .auth-submit-btn {
         padding: 14px 20px;
         font-size: 0.875rem;

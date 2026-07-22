@@ -1,5 +1,7 @@
 'use strict';
 
+const SUPER_ADMIN_EMAIL_DOMAIN = '@psnacet.edu.in';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const loginForm = document.getElementById('superAdminLoginForm');
@@ -58,11 +60,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateAdminId() {
         const value = adminIdField.value.trim();
         if (!value) {
-            showError(adminIdField, adminIdError, 'Administrator ID or email is required.');
+            showError(adminIdField, adminIdError, 'Administrator username is required.');
             return false;
         }
-        if (value.length < 3) {
-            showError(adminIdField, adminIdError, 'Please enter a valid administrator ID or email.');
+        const clean = value.replace(/@.*$/, '').trim();
+        if (!clean || clean.length < 3) {
+            showError(adminIdField, adminIdError, 'Please enter a valid administrator username.');
             return false;
         }
         return true;
@@ -108,6 +111,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return;
         }
+
+        const usernameRaw = adminIdField.value.trim();
+        const username = usernameRaw.replace(/@.*$/, '').trim();
+        adminIdField.value = username + SUPER_ADMIN_EMAIL_DOMAIN;
 
         submitBtn.disabled = true;
         if (btnSpinner) btnSpinner.style.display = 'inline-block';

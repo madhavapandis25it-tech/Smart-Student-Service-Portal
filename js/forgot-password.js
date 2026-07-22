@@ -1,50 +1,27 @@
 'use strict';
 
+const FP_INSTITUTIONAL_DOMAIN = '@psnacet.edu.in';
+const FP_TOKEN_EXPIRY_MS = 15 * 60 * 1000;
+const STORAGE_KEY = 'passwordResetTokens';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const step1 = document.getElementById('fpStep1');
     const step2 = document.getElementById('fpStep2');
     const emailForm = document.getElementById('fpEmailForm');
-    const resetForm = document.getElementById('fpResetForm');
     const fpEmail = document.getElementById('fpEmail');
-    const sendOtpBtn = document.getElementById('sendOtpBtn');
-    const sendOtpSpinner = document.getElementById('sendOtpSpinner');
-    const resetPwdBtn = document.getElementById('resetPwdBtn');
-    const resetPwdSpinner = document.getElementById('resetPwdSpinner');
+    const sendBtn = document.getElementById('sendResetLinkBtn');
+    const sendSpinner = document.getElementById('sendResetSpinner');
+    const resendBtn = document.getElementById('resendLinkBtn');
+    const resendSpinner = document.getElementById('resendSpinner');
     const statusLive = document.getElementById('fpStatusLive');
 
-    const otpInputs = [
-        document.getElementById('otp1'),
-        document.getElementById('otp2'),
-        document.getElementById('otp3'),
-        document.getElementById('otp4'),
-        document.getElementById('otp5'),
-        document.getElementById('otp6')
-    ];
-
-    const fpNewPassword = document.getElementById('fpNewPassword');
-    const fpConfirmPassword = document.getElementById('fpConfirmPassword');
-
-    let simulatedOtp = '';
+    let currentEmail = '';
 
     function announce(msg) {
         if (statusLive) statusLive.textContent = msg;
     }
 
-    // --- Eye toggles ---
-    document.querySelectorAll('.auth-eye-toggle').forEach((btn) => {
-        const input = btn.closest('.auth-field').querySelector('.auth-input');
-        if (!input) return;
-        btn.addEventListener('click', () => {
-            const isPassword = input.getAttribute('type') === 'password';
-            input.setAttribute('type', isPassword ? 'text' : 'password');
-            btn.querySelector('.eye-on').style.display = isPassword ? 'block' : 'none';
-            btn.querySelector('.eye-off').style.display = isPassword ? 'none' : 'block';
-            btn.setAttribute('aria-label', isPassword ? 'Hide password' : 'Show password');
-        });
-    });
-
-    // --- Clear errors ---
     function clearFieldError(field) {
         const container = field.closest('.auth-field');
         if (container) {
@@ -67,158 +44,143 @@ document.addEventListener('DOMContentLoaded', () => {
             errorDiv.textContent = msg;
             errorDiv.style.display = 'block';
         }
-        announce(`Error: ${msg}`);
+        announce('Error: ' + msg);
     }
 
-    // --- OTP Auto-advance ---
-    otpInputs.forEach((input, index) => {
-        if (!input) return;
+    function generateResetToken() {
+        const array = new Uint8Array(32);
+        crypto.getRandomValues(array);
+        return Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+    }
 
-        input.addEventListener('input', () => {
-            input.value = input.value.replace(/\D/g, '').slice(0, 1);
-            if (input.value) {
-                input.classList.add('filled');
-                if (index < otpInputs.length - 1) {
-                    otpInputs[index + 1].focus();
-                }
-            } else {
-                input.classList.remove('filled');
+    function saveToken(email, token) {
+        const tokens = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        const now = Date.now();
+        const emailLower = email.toLowerCase();
+
+        const filtered = tokens.filter(function(t) {
+            if (t.email === emailLower && !t.used && t.expiresAt > now) {
+                return false;
             }
+            return true;
         });
 
-        input.addEventListener('keydown', (e) => {
-            if (e.key === 'Backspace' && !input.value && index > 0) {
-                otpInputs[index - 1].focus();
-            }
+        filtered.push({
+            token: token,
+            email: emailLower,
+            role: 'student',
+            createdAt: now,
+            expiresAt: now + FP_TOKEN_EXPIRY_MS,
+            used: false
         });
 
-        input.addEventListener('paste', (e) => {
-            e.preventDefault();
-            const paste = (e.clipboardData || window.clipboardData).getData('text').replace(/\D/g, '').slice(0, 6);
-            for (let i = 0; i < paste.length && i < otpInputs.length; i++) {
-                otpInputs[i].value = paste[i];
-                otpInputs[i].classList.add('filled');
-            }
-            const nextEmpty = otpInputs.findIndex(inp => !inp.value);
-            if (nextEmpty >= 0 && nextEmpty < otpInputs.length) {
-                otpInputs[nextEmpty].focus();
-            } else {
-                otpInputs[otpInputs.length - 1].focus();
-            }
-        });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    }
 
-        input.addEventListener('focus', () => input.select());
-    });
+    function sendResetEmail(email) {
+        const token = generateResetToken();
+        saveToken(email, token);
 
-    // --- Step 1: Send OTP ---
-    emailForm.addEventListener('submit', (e) => {
-        e.preventDefault();
+        const resetLink = window.location.origin.replace(/\/+$/, '') +
+            '/reset-password.html?token=' + token;
 
-        const val = fpEmail.value.trim();
-        if (!val) {
-            showFieldError(fpEmail, 'Email address is required.');
-            fpEmail.focus();
-            return;
-        }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-            showFieldError(fpEmail, 'Please enter a valid email address.');
-            fpEmail.focus();
-            return;
-        }
+        console.log('--- SIMULATED EMAIL ---');
+        console.log('To:', email);
+        console.log('Subject: Password Reset Request');
+        console.log('Body:');
+        console.log('Dear Student,');
+        console.log('');
+        console.log('A request has been received to reset your password for the Smart Student Service Portal.');
+        console.log('');
+        console.log('Click the secure link below to reset your password:');
+        console.log(resetLink);
+        console.log('');
+        console.log('This link is valid for 15 minutes.');
+        console.log('');
+        console.log('If you did not request this reset, please ignore this email.');
+        console.log('');
+        console.log('Regards,');
+        console.log('Smart Student Service Portal');
+        console.log('PSNA College of Engineering and Technology');
+        console.log('--- END EMAIL ---');
+    }
 
+    function showSuccessView(email) {
+        currentEmail = email;
+        step1.style.display = 'none';
+        step2.style.display = 'block';
+        announce('Password reset link sent to ' + email + '. Please check your inbox.');
+    }
+
+    function showEmailForm() {
+        step2.style.display = 'none';
+        step1.style.display = 'block';
+        fpEmail.value = '';
+        fpEmail.focus();
+    }
+
+    function handleSendResetLink(email) {
         clearFieldError(fpEmail);
-        sendOtpBtn.disabled = true;
-        if (sendOtpSpinner) sendOtpSpinner.style.display = 'inline-block';
-        const sendBtnText = sendOtpBtn.querySelector('.btn-text');
-        if (sendBtnText) sendBtnText.textContent = 'Sending...';
-        announce('Sending OTP to your email...');
+        sendBtn.disabled = true;
+        if (sendSpinner) sendSpinner.style.display = 'inline-block';
+        var btnText = sendBtn.querySelector('.btn-text');
+        if (btnText) btnText.textContent = 'Sending...';
+        announce('Sending password reset link to your email...');
 
-        setTimeout(() => {
-            simulatedOtp = String(Math.floor(100000 + Math.random() * 900000));
-            announce('OTP sent successfully. Check your email.');
-
-            sendOtpBtn.style.display = 'none';
-            step1.style.display = 'none';
-            step2.style.display = 'block';
-
-            otpInputs[0].focus();
+        setTimeout(function() {
+            sendResetEmail(email);
+            showSuccessView(email);
+            sendBtn.disabled = false;
+            if (sendSpinner) sendSpinner.style.display = 'none';
+            if (btnText) btnText.textContent = 'Send Reset Link';
         }, 1500);
-    });
+    }
 
-    // --- Step 2: Reset Password ---
-    resetForm.addEventListener('submit', (e) => {
+    emailForm.addEventListener('submit', function(e) {
         e.preventDefault();
 
-        // Validate OTP
-        const otpValue = otpInputs.map(inp => inp.value).join('');
-        const otpError = document.getElementById('otpError');
+        var val = fpEmail.value.trim();
 
-        if (otpValue.length !== 6) {
-            if (otpError) {
-                otpError.textContent = 'Please enter the complete 6-digit OTP.';
-                otpError.style.display = 'block';
-            }
-            announce('Error: Please enter the complete 6-digit OTP.');
-            const firstEmpty = otpInputs.findIndex(inp => !inp.value);
-            if (firstEmpty >= 0) otpInputs[firstEmpty].focus();
+        if (!val) {
+            showFieldError(fpEmail, 'Email is required.');
+            fpEmail.focus();
             return;
         }
 
-        if (otpValue !== simulatedOtp) {
-            if (otpError) {
-                otpError.textContent = 'Invalid OTP. Please try again.';
-                otpError.style.display = 'block';
-            }
-            announce('Error: Invalid OTP.');
-            otpInputs[0].focus();
+        var username = val.replace(/@.*$/, '').trim();
+        if (!username) {
+            showFieldError(fpEmail, 'Please enter a valid username.');
+            fpEmail.focus();
             return;
         }
 
-        if (otpError) {
-            otpError.textContent = '';
-            otpError.style.display = 'none';
-        }
+        var email = username + FP_INSTITUTIONAL_DOMAIN;
+        fpEmail.value = username;
 
-        // Validate passwords
-        const pwd = fpNewPassword.value;
-        if (!pwd) { showFieldError(fpNewPassword, 'Password is required.'); fpNewPassword.focus(); return; }
-        if (pwd.length < 6) { showFieldError(fpNewPassword, 'Minimum 6 characters.'); fpNewPassword.focus(); return; }
-        clearFieldError(fpNewPassword);
-
-        if (!fpConfirmPassword.value) { showFieldError(fpConfirmPassword, 'Please confirm your password.'); fpConfirmPassword.focus(); return; }
-        if (fpConfirmPassword.value !== pwd) { showFieldError(fpConfirmPassword, 'Passwords do not match.'); fpConfirmPassword.focus(); return; }
-        clearFieldError(fpConfirmPassword);
-
-        // Submit
-        resetPwdBtn.disabled = true;
-        if (resetPwdSpinner) resetPwdSpinner.style.display = 'inline-block';
-        const resetBtnText = resetPwdBtn.querySelector('.btn-text');
-        if (resetBtnText) resetBtnText.textContent = 'Resetting...';
-        fpNewPassword.disabled = true;
-        fpConfirmPassword.disabled = true;
-        otpInputs.forEach(inp => inp.disabled = true);
-
-        announce('Resetting your password...');
-
-        setTimeout(() => {
-            const role = sessionStorage.getItem('fpRole') || 'student';
-            const loginPage = role === 'staff' ? 'staff-role-selection.html' : 'student-login.html';
-            announce('Password reset successfully! Redirecting to login...');
-            setTimeout(() => {
-                window.location.href = loginPage;
-            }, 1000);
-        }, 1500);
+        handleSendResetLink(email);
     });
 
-    // Clear OTP error on input
-    otpInputs.forEach(inp => {
-        inp.addEventListener('input', () => {
-            const otpError = document.getElementById('otpError');
-            if (otpError) {
-                otpError.textContent = '';
-                otpError.style.display = 'none';
-            }
+    fpEmail.addEventListener('input', function() {
+        clearFieldError(fpEmail);
+    });
+
+    if (resendBtn) {
+        resendBtn.addEventListener('click', function() {
+            if (!currentEmail) return;
+            resendBtn.disabled = true;
+            if (resendSpinner) resendSpinner.style.display = 'inline-block';
+            var btnText = resendBtn.querySelector('.btn-text');
+            if (btnText) btnText.textContent = 'Resending...';
+            announce('Resending password reset link...');
+
+            setTimeout(function() {
+                sendResetEmail(currentEmail);
+                announce('Password reset link resent to ' + currentEmail + '.');
+                resendBtn.disabled = false;
+                if (resendSpinner) resendSpinner.style.display = 'none';
+                if (btnText) btnText.textContent = 'Resend Link';
+            }, 1500);
         });
-    });
+    }
 
 });

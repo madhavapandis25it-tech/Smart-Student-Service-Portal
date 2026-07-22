@@ -127,21 +127,21 @@
 
                             <!-- Registration Number -->
                             <div class="auth-field">
-                                <input type="text" inputmode="numeric" id="regNumber" class="auth-input" placeholder=" " maxlength="16" pattern="[0-9]{16}" required aria-required="true" autocomplete="off">
+                                <input type="text" inputmode="numeric" id="regNumber" class="auth-input" pattern="[0-9]+" required aria-required="true" autocomplete="off">
                                 <label for="regNumber" class="auth-label">Registration Number</label>
                                 <div class="error-msg" id="regNumberError" aria-live="polite"></div>
                             </div>
 
                             <!-- Roll Number -->
                             <div class="auth-field">
-                                <input type="text" inputmode="numeric" id="rollNumber" class="auth-input" placeholder=" " maxlength="3" pattern="[0-9]{1,3}" required aria-required="true" autocomplete="off">
+                                <input type="text" inputmode="numeric" id="rollNumber" class="auth-input" maxlength="3" pattern="[0-9]{1,3}" required aria-required="true" autocomplete="off">
                                 <label for="rollNumber" class="auth-label">Roll Number</label>
                                 <div class="error-msg" id="rollNumberError" aria-live="polite"></div>
                             </div>
 
                             <!-- Full Name -->
                             <div class="auth-field register-full-width">
-                                <input type="text" id="fullName" class="auth-input" placeholder=" " required aria-required="true" autocomplete="name">
+                                <input type="text" id="fullName" class="auth-input" required aria-required="true" autocomplete="name">
                                 <label for="fullName" class="auth-label">Full Name</label>
                                 <div class="error-msg" id="fullNameError" aria-live="polite"></div>
                             </div>
@@ -151,10 +151,12 @@
                                 <div class="auth-select-wrapper">
                                     <select id="batch" class="auth-input auth-select" required aria-required="true">
                                         <option value="" disabled selected></option>
-                                        <option value="2027">2027</option>
-                                        <option value="2028">2028</option>
-                                        <option value="2029">2029</option>
-                                        <option value="2030">2030</option>
+                                        <option value="2023-2027">2023–2027</option>
+                                        <option value="2024-2028">2024–2028</option>
+                                        <option value="2025-2029">2025–2029</option>
+                                        <option value="2026-2030">2026–2030</option>
+                                        <option value="2027-2031">2027–2031</option>
+                                        <option value="2028-2032">2028–2032</option>
                                     </select>
                                     <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                                     <label for="batch" class="auth-label">Batch</label>
@@ -246,6 +248,7 @@
                                         <option value="" disabled selected></option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>
+                                        <option value="Others">Others</option>
                                     </select>
                                     <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
                                     <label for="gender" class="auth-label">Gender</label>
@@ -255,28 +258,36 @@
 
                             <!-- Date of Birth -->
                             <div class="auth-field register-full-width">
-                                <input type="date" id="dob" class="auth-input auth-date-input" required aria-required="true">
+                                <input type="date" id="dob" class="auth-input auth-date-input" min="1995-01-01" max="2010-12-31" required aria-required="true">
                                 <label for="dob" class="auth-label auth-date-label">Date of Birth</label>
                                 <div class="error-msg" id="dobError" aria-live="polite"></div>
                             </div>
 
                             <!-- Tutor Name -->
                             <div class="auth-field register-full-width">
-                                <input type="text" id="tutorName" class="auth-input" placeholder=" " required aria-required="true" autocomplete="off">
-                                <label for="tutorName" class="auth-label">Tutor Name</label>
+                                <div class="auth-select-wrapper">
+                                    <select id="tutorName" class="auth-input auth-select" required aria-required="true" disabled>
+                                        <option value="" disabled selected>Select Department First</option>
+                                    </select>
+                                    <svg class="auth-select-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+                                    <label for="tutorName" class="auth-label">Tutor Name</label>
+                                </div>
                                 <div class="error-msg" id="tutorNameError" aria-live="polite"></div>
                             </div>
 
                             <!-- Email -->
-                            <div class="auth-field register-full-width">
-                                <input type="email" id="email" class="auth-input" placeholder=" " required aria-required="true" autocomplete="email">
-                                <label for="email" class="auth-label">Email Address</label>
-                                <div class="error-msg" id="emailError" aria-live="polite"></div>
+                        <div class="auth-field register-full-width">
+                            <div class="auth-email-wrapper">
+                                <input type="text" id="email" class="auth-input auth-email-input" required aria-required="true" autocomplete="off" inputmode="text">
+                                <span class="auth-email-domain">@psnacet.edu.in</span>
                             </div>
+                            <label for="email" class="auth-label">Username</label>
+                            <div class="error-msg" id="emailError" aria-live="polite"></div>
+                        </div>
 
                             <!-- Password -->
                             <div class="auth-field">
-                                <input type="password" id="password" class="auth-input" placeholder=" " minlength="6" required aria-required="true" autocomplete="new-password">
+                                <input type="password" id="password" class="auth-input" minlength="6" required aria-required="true" autocomplete="new-password">
                                 <label for="password" class="auth-label">Password</label>
                                 <button type="button" class="auth-eye-toggle" aria-label="Show password" tabindex="0">
                                     <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -293,7 +304,7 @@
 
                             <!-- Confirm Password -->
                             <div class="auth-field">
-                                <input type="password" id="confirmPassword" class="auth-input" placeholder=" " required aria-required="true" autocomplete="new-password">
+                                <input type="password" id="confirmPassword" class="auth-input" required aria-required="true" autocomplete="new-password">
                                 <label for="confirmPassword" class="auth-label">Confirm Password</label>
                                 <button type="button" class="auth-eye-toggle" aria-label="Show password" tabindex="0">
                                     <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -340,6 +351,25 @@
                         </button>
 
                     </form>
+
+                    <!-- Registration Preview -->
+                    <div class="auth-preview" id="registrationPreview" style="display: none;">
+                        <div class="auth-card-header">
+                            <h2 class="auth-card-title">Registration Preview</h2>
+                            <p class="auth-card-subtitle">Please review your details before creating your account.</p>
+                        </div>
+                        <div class="preview-details" id="previewDetails"></div>
+                        <div class="preview-actions">
+                            <button type="button" class="btn preview-btn btn-ghost" id="previewEditBtn">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                <span class="btn-text">Edit</span>
+                            </button>
+                            <button type="button" class="btn btn-primary preview-btn" id="previewConfirmBtn">
+                                <span class="btn-text">Confirm &amp; Create Account</span>
+                                <div class="spinner" id="confirmSpinner" aria-hidden="true" style="display: none;"></div>
+                            </button>
+                        </div>
+                    </div>
 
                     <div class="auth-card-footer">
                         <p class="auth-signup-text">Already have an account? <a href="student-login.html" class="auth-signup-link">Log In</a></p>

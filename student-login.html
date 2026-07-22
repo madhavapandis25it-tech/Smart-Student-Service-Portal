@@ -126,14 +126,24 @@
 
                         <!-- Email Input Group -->
                         <div class="auth-field">
-                            <input type="email" id="email" class="auth-input" placeholder=" " required aria-required="true">
-                            <label for="email" class="auth-label">Email Address</label>
+
+                            <div class="auth-email-wrapper">
+
+                                <input type="text" id="email" class="auth-input auth-email-input" required aria-required="true" autocomplete="off">
+
+                                <span class="auth-email-domain">@psnacet.edu.in</span>
+
+                            </div>
+
+                            <label for="email" class="auth-label">Username</label>
+
                             <div class="error-msg" id="emailError" aria-live="polite"></div>
+
                         </div>
 
                         <!-- Password Input Group -->
                         <div class="auth-field">
-                            <input type="password" id="password" class="auth-input" placeholder=" " required aria-required="true">
+                            <input type="password" id="password" class="auth-input" required aria-required="true">
                             <label for="password" class="auth-label">Password</label>
                             <button type="button" class="auth-eye-toggle" aria-label="Show password" id="passwordToggle" tabindex="0">
                                 <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -199,3 +209,6 @@
     <script src="js/student-login.js"></script>
 </body>
 </html>
+
+
+

@@ -1,5 +1,23 @@
 'use strict';
 
+const TUTORS_BY_DEPT = {
+    'Computer Science and Engineering': ['Dr. Arunkumar', 'Mrs. Deepa', 'Mr. Sathish', 'Dr. Revathi'],
+    'Information Technology': ['Dr. Kumar', 'Mrs. Priya', 'Mr. Rajesh', 'Dr. Meena'],
+    'Bio Medical Engineering': ['Dr. Anitha', 'Mr. Dinesh', 'Mrs. Lavanya'],
+    'Computer Science and Business Systems': ['Dr. Jayashree', 'Mr. Karthik', 'Mrs. Nandhini'],
+    'Artificial Intelligence and Data Science': ['Dr. Senthil', 'Mrs. Uma', 'Mr. Praveen'],
+    'CSE (Cyber Security)': ['Dr. Raghavan', 'Mr. Arun', 'Mrs. Swathi'],
+    'CSE (Artificial Intelligence and Machine Learning)': ['Dr. Kavitha', 'Mr. Vinoth', 'Mrs. Anandhi'],
+    'Electronics Engineering (VLSI Design and Technology)': ['Dr. Gowri', 'Mr. Manikandan', 'Mrs. Shanthi'],
+    'Business Administration (MBA)': ['Dr. Balaji', 'Mr. Muthu', 'Mrs. Selvi'],
+    'Computer Applications (MCA)': ['Dr. Ramesh', 'Mrs. Padma', 'Mr. Prakash'],
+    'Science and Humanities': ['Dr. Vasanthi', 'Mr. Ganesan', 'Mrs. Lalitha', 'Dr. Murugan'],
+    'Civil Engineering': ['Dr. Sekar', 'Mr. Ravi', 'Mrs. Geetha'],
+    'Mechanical Engineering': ['Dr. Venkatesh', 'Mr. Saravanan', 'Mrs. Dhanalakshmi'],
+    'Electronics and Communication Engineering': ['Dr. Sharmila', 'Mr. Karthikeyan', 'Mrs. Nirmala', 'Dr. Prabhu'],
+    'Electrical and Electronics Engineering': ['Dr. Maheshwari', 'Mr. Jegan', 'Mrs. Abinaya']
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const form = document.getElementById('studentRegisterForm');
@@ -15,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const quota = document.getElementById('quota');
     const gender = document.getElementById('gender');
     const dob = document.getElementById('dob');
+    dob.addEventListener('keydown', (e) => e.preventDefault());
     const tutorName = document.getElementById('tutorName');
     const email = document.getElementById('email');
     const password = document.getElementById('password');
@@ -23,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const submitBtn = document.getElementById('submitBtn');
     const btnSpinner = document.getElementById('btnSpinner');
     const statusLive = document.getElementById('regStatusLive');
+
+    const previewSection = document.getElementById('registrationPreview');
+    const previewDetails = document.getElementById('previewDetails');
+    const previewEditBtn = document.getElementById('previewEditBtn');
+    const previewConfirmBtn = document.getElementById('previewConfirmBtn');
+    const confirmSpinner = document.getElementById('confirmSpinner');
 
     const strengthFill = document.getElementById('passwordStrengthFill');
     const strengthText = document.getElementById('passwordStrengthText');
@@ -33,8 +58,17 @@ document.addEventListener('DOMContentLoaded', () => {
         password, confirmPassword
     ];
 
+    const EMAIL_DOMAIN = '@psnacet.edu.in';
+
     function announce(msg) {
         if (statusLive) statusLive.textContent = msg;
+    }
+
+    function getFullEmail() {
+        const username = email.value.trim();
+        if (!username) return '';
+        const clean = username.replace(/@.*$/, '').trim();
+        return clean + EMAIL_DOMAIN;
     }
 
     // Roll number: digits only, max 3
@@ -44,10 +78,10 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // Registration number: numbers only
+    // Registration number: numbers only, no length limit
     if (regNumber) {
         regNumber.addEventListener('input', () => {
-            regNumber.value = regNumber.value.replace(/\D/g, '').slice(0, 16);
+            regNumber.value = regNumber.value.replace(/\D/g, '');
         });
     }
 
@@ -102,6 +136,39 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Tutor dropdown: update when department changes
+    if (department && tutorName) {
+        department.addEventListener('change', () => {
+            const dept = department.value;
+            tutorName.innerHTML = '';
+            if (!dept) {
+                const opt = document.createElement('option');
+                opt.value = '';
+                opt.disabled = true;
+                opt.selected = true;
+                opt.textContent = 'Select Department First';
+                tutorName.appendChild(opt);
+                tutorName.disabled = true;
+            } else {
+                const placeholder = document.createElement('option');
+                placeholder.value = '';
+                placeholder.disabled = true;
+                placeholder.selected = true;
+                placeholder.textContent = 'Select your tutor';
+                tutorName.appendChild(placeholder);
+                const tutors = TUTORS_BY_DEPT[dept] || [];
+                tutors.forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = t;
+                    opt.textContent = t;
+                    tutorName.appendChild(opt);
+                });
+                tutorName.disabled = false;
+            }
+            clearFieldError(tutorName);
+        });
+    }
+
     // Clear errors on input
     allFields.forEach((field) => {
         if (!field) return;
@@ -140,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateRegNumber() {
         const val = regNumber.value.trim();
         if (!val) { showFieldError(regNumber, 'Registration number is required.'); return false; }
-        if (!/^\d{16}$/.test(val)) { showFieldError(regNumber, 'Must contain exactly 16 digits.'); return false; }
+        if (!/^\d+$/.test(val)) { showFieldError(regNumber, 'Must contain only digits.'); return false; }
         return true;
     }
 
@@ -165,19 +232,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function validateDOB() {
         if (!dob.value) { showFieldError(dob, 'Date of birth is required.'); return false; }
+
+        const parts = dob.value.split('-');
+        if (parts.length !== 3) { showFieldError(dob, 'Please enter a valid date.'); return false; }
+
+        const yearStr = parts[0];
+        const month = parseInt(parts[1], 10);
+        const day = parseInt(parts[2], 10);
+        const year = parseInt(yearStr, 10);
+
+        if (yearStr.length !== 4 || isNaN(year) || year < 1) { showFieldError(dob, 'Year must be exactly 4 digits.'); return false; }
+
+        if (isNaN(month) || month < 1 || month > 12) { showFieldError(dob, 'Please enter a valid date.'); return false; }
+
+        const maxDay = new Date(year, month, 0).getDate();
+        if (isNaN(day) || day < 1 || day > maxDay) { showFieldError(dob, 'Please enter a valid date.'); return false; }
+
+        const today = new Date();
+        today.setHours(23, 59, 59, 999);
+        if (new Date(dob.value + 'T00:00:00') > today) { showFieldError(dob, 'Date of birth cannot be in the future.'); return false; }
+
+        if (year < 1995 || year > 2010) { showFieldError(dob, 'Please enter a valid date of birth (1995–2010).'); return false; }
+
         return true;
     }
 
     function validateTutorName() {
-        const val = tutorName.value.trim();
-        if (!val) { showFieldError(tutorName, 'Tutor name is required.'); return false; }
+        if (!tutorName.value) { showFieldError(tutorName, 'Please select a tutor.'); return false; }
         return true;
     }
 
-    function validateEmail() {
+    function validateEmail_() {
         const val = email.value.trim();
-        if (!val) { showFieldError(email, 'Email address is required.'); return false; }
-        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) { showFieldError(email, 'Please enter a valid email address.'); return false; }
+        if (!val) { showFieldError(email, 'Username is required.'); return false; }
+        const clean = val.replace(/@.*$/, '').trim();
+        if (!clean) { showFieldError(email, 'Please enter a valid username.'); return false; }
         return true;
     }
 
@@ -214,7 +303,115 @@ document.addEventListener('DOMContentLoaded', () => {
         return true;
     }
 
-    // Submit
+    function getFormData() {
+        return {
+            regNo: regNumber.value.trim(),
+            rollNo: rollNumber.value.trim(),
+            name: fullName.value.trim(),
+            batch: batch.value,
+            year: year.value,
+            section: section.value,
+            department: department.value,
+            quota: quota.value,
+            gender: gender.value,
+            dob: dob.value,
+            tutor: tutorName.value,
+            email: getFullEmail()
+        };
+    }
+
+    function renderPreview(data) {
+        const fields = [
+            { label: 'Registration Number', value: data.regNo },
+            { label: 'Roll Number', value: data.rollNo },
+            { label: 'Full Name', value: data.name },
+            { label: 'Batch', value: data.batch },
+            { label: 'Year', value: data.year },
+            { label: 'Section', value: data.section },
+            { label: 'Department', value: data.department },
+            { label: 'Quota', value: data.quota },
+            { label: 'Gender', value: data.gender },
+            { label: 'Date of Birth', value: data.dob },
+            { label: 'Tutor', value: data.tutor },
+            { label: 'Email', value: data.email }
+        ];
+        previewDetails.innerHTML = fields.map(f =>
+            `<div class="preview-item${f.label === 'Full Name' || f.label === 'Department' ? ' preview-item-full' : ''}">
+                <span class="preview-item-label">${f.label}</span>
+                <span class="preview-item-value">${f.value}</span>
+            </div>`
+        ).join('');
+    }
+
+    // Show preview
+    function showPreview() {
+        const data = getFormData();
+        renderPreview(data);
+        form.style.display = 'none';
+        previewSection.style.display = 'block';
+        submitBtn.style.display = 'none';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Back to form with values preserved
+    function backToForm() {
+        previewSection.style.display = 'none';
+        form.style.display = '';
+        submitBtn.style.display = '';
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Final submission
+    function submitRegistration() {
+        submitBtn.disabled = true;
+        if (confirmSpinner) confirmSpinner.style.display = 'inline-block';
+        const confirmText = previewConfirmBtn.querySelector('.btn-text');
+        if (confirmText) confirmText.textContent = 'Creating Account...';
+        previewEditBtn.disabled = true;
+        previewConfirmBtn.disabled = true;
+
+        announce('Creating your account...');
+
+        const data = getFormData();
+
+        setTimeout(() => {
+            const profileData = {
+                name: data.name,
+                regNo: data.regNo,
+                rollNo: data.rollNo,
+                gender: data.gender,
+                dob: data.dob,
+                batch: data.batch,
+                currentYear: data.year,
+                semester: '1',
+                section: data.section,
+                department: data.department,
+                tutorName: data.tutor,
+                email: data.email,
+                initials: data.name.split(' ').map(w => w[0]).join('').toUpperCase().slice(0, 2)
+            };
+            const existing = JSON.parse(localStorage.getItem('studentProfile')) || {};
+            const merged = { ...existing, ...profileData };
+            localStorage.setItem('studentProfile', JSON.stringify(merged));
+
+            announce('Account created successfully! Redirecting...');
+            setTimeout(() => {
+                window.location.href = 'registration-success.html';
+            }, 500);
+        }, 1500);
+    }
+
+    // Edit button: back to form
+    if (previewEditBtn) {
+        previewEditBtn.addEventListener('click', backToForm);
+    }
+
+    // Confirm button: finalize
+    if (previewConfirmBtn) {
+        previewConfirmBtn.addEventListener('click', submitRegistration);
+    }
+
+    // Submit: first show preview
     form.addEventListener('submit', (e) => {
         e.preventDefault();
 
@@ -230,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
             validateSelect(gender, 'Gender'),
             validateDOB(),
             validateTutorName(),
-            validateEmail(),
+            validateEmail_(),
             validatePassword(),
             validateConfirmPassword(),
             validateTerms()
@@ -245,38 +442,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        submitBtn.disabled = true;
-        btnSpinner.style.display = 'inline-block';
-        submitBtn.querySelector('.btn-text').textContent = 'Creating Account...';
-        allFields.forEach(f => { if (f) f.disabled = true; });
-
-        announce('Creating your account...');
-
-        setTimeout(() => {
-            const profileData = {
-                name: fullName.value.trim(),
-                regNo: regNumber.value.trim(),
-                rollNo: rollNumber.value.trim(),
-                gender: gender.value,
-                dob: dob.value,
-                batch: batch.value,
-                currentYear: year.value,
-                semester: '1',
-                section: section.value,
-                department: department.value,
-                tutorName: tutorName.value.trim(),
-                email: email.value.trim(),
-                initials: fullName.value.trim().split(' ').map(w => w[0]).join('').toUpperCase().slice(0,2)
-            };
-            const existing = JSON.parse(localStorage.getItem('studentProfile')) || {};
-            const merged = { ...existing, ...profileData };
-            localStorage.setItem('studentProfile', JSON.stringify(merged));
-
-            announce('Account created successfully! Redirecting...');
-            setTimeout(() => {
-                window.location.href = 'registration-success.html';
-            }, 500);
-        }, 1500);
+        showPreview();
     });
 
 });

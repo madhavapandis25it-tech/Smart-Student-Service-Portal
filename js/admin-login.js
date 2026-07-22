@@ -1,5 +1,7 @@
 'use strict';
 
+const ADMIN_EMAIL_DOMAIN = '@psnacet.edu.in';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const loginForm = document.getElementById('adminLoginForm');
@@ -19,12 +21,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const savedEmail = localStorage.getItem('adminRememberedEmail');
     if (savedEmail && rememberMeCheckbox && emailField) {
-        emailField.value = savedEmail;
+        emailField.value = savedEmail.replace(/@.*$/, '');
         rememberMeCheckbox.checked = true;
     }
 
     const ADMIN_CREDENTIALS = {
-        email: 'admin@college.edu',
+        email: 'admin@psnacet.edu.in',
         password: 'Admin@123'
     };
 
@@ -87,11 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateEmail() {
         const value = emailField.value.trim();
         if (!value) {
-            showError(emailField, emailError, 'Email/Username is required.');
+            showError(emailField, emailError, 'Username is required.');
             return false;
         }
-        if (!isValidEmail(value)) {
-            showError(emailField, emailError, 'Please enter a valid email address.');
+        const clean = value.replace(/@.*$/, '').trim();
+        if (!clean) {
+            showError(emailField, emailError, 'Please enter a valid username.');
             return false;
         }
         return true;
@@ -133,6 +136,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return;
         }
+
+        const usernameRaw = emailField.value.trim();
+        const username = usernameRaw.replace(/@.*$/, '').trim();
+        emailField.value = username + ADMIN_EMAIL_DOMAIN;
 
         const enteredEmail = emailField.value.trim();
         const enteredPassword = passwordField.value;

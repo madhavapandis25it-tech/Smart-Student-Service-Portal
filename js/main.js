@@ -180,6 +180,54 @@ const App = (() => {
         });
     }
 
+    /* ----- Email input sanitizer (all auth pages) ----- */
+    function initEmailInputFilter() {
+        document.addEventListener('input', (e) => {
+            const input = e.target.closest('.auth-email-input');
+            if (!input) return;
+
+            let val = input.value;
+            const original = val;
+
+            val = val.replace(/@/g, '');
+            val = val.replace(/\.(com|in)\b/gi, '');
+            val = val.replace(/\b(gmail|yahoo|hotmail|outlook)\b/gi, '');
+
+            if (val !== original) {
+                const start = input.selectionStart;
+                input.value = val;
+                const removed = original.length - val.length;
+                input.setSelectionRange(
+                    Math.max(0, start - removed),
+                    Math.max(0, start - removed)
+                );
+            }
+        });
+    }
+
+    /* ----- Floating label: toggle has-value class on auth inputs and wrappers ----- */
+    function initFloatingLabels() {
+        function toggleValue(input) {
+            const hasVal = input.value !== '';
+            input.classList.toggle('has-value', hasVal);
+            const wrapper = input.closest('.auth-email-wrapper');
+            if (wrapper) wrapper.classList.toggle('has-value', hasVal);
+        }
+        document.addEventListener('input', (e) => {
+            const input = e.target.closest('.auth-input');
+            if (!input) return;
+            toggleValue(input);
+        });
+        document.addEventListener('change', (e) => {
+            const input = e.target.closest('.auth-input');
+            if (!input) return;
+            toggleValue(input);
+        });
+        document.querySelectorAll('.auth-input').forEach((input) => {
+            if (input.value) toggleValue(input);
+        });
+    }
+
     /* ----- Initialize ----- */
     function init() {
         initHeaderScroll();
@@ -189,6 +237,8 @@ const App = (() => {
         initBackground();
         initSmoothScroll();
         initKeyboardNav();
+        initEmailInputFilter();
+        initFloatingLabels();
         Animations.init();
     }
 

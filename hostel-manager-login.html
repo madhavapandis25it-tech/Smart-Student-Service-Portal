@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Warden Login | Smart Student Service Portal</title>
-    <meta name="description" content="Warden login portal for the Smart Student Service Portal hostel management.">
+    <title>Hostel Manager Login | Smart Student Service Portal</title>
+    <meta name="description" content="Hostel Manager login portal for the Smart Student Service Portal hostel management.">
     <meta name="theme-color" content="#051632">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -114,26 +114,36 @@
                         <div class="auth-card-logo">
                             <img src="assets/logo/psna%20logo.png" alt="PSNA College Logo">
                         </div>
-                        <h2 class="auth-card-title">Warden Login</h2>
+                        <h2 class="auth-card-title">Hostel Manager Login</h2>
                         <p class="auth-card-welcome">Welcome Back</p>
-                        <p class="auth-card-subtitle">Sign in using your Warden credentials to access the hostel management & student services dashboard.</p>
+                        <p class="auth-card-subtitle">Sign in using your hostel manager credentials to access the hostel management & student services dashboard.</p>
                     </div>
 
                     <!-- Screen Reader Announcement Live Region -->
                     <div id="authStatusLive" class="sr-only" aria-live="assertive"></div>
 
-                    <form class="auth-form" id="wardenLoginForm" novalidate>
+                    <form class="auth-form" id="hostelManagerLoginForm" novalidate>
 
                         <!-- Email Input Group -->
                         <div class="auth-field">
-                            <input type="email" id="email" class="auth-input" placeholder=" " required aria-required="true">
-                            <label for="email" class="auth-label">Email Address</label>
+
+                            <div class="auth-email-wrapper">
+
+                                <input type="text" id="email" class="auth-input auth-email-input" required aria-required="true" autocomplete="off">
+
+                                <span class="auth-email-domain">@psnacet.edu.in</span>
+
+                            </div>
+
+                            <label for="email" class="auth-label">Username</label>
+
                             <div class="error-msg" id="emailError" aria-live="polite"></div>
+
                         </div>
 
                         <!-- Password Input Group -->
                         <div class="auth-field">
-                            <input type="password" id="password" class="auth-input" placeholder=" " required aria-required="true">
+                            <input type="password" id="password" class="auth-input" required aria-required="true">
                             <label for="password" class="auth-label">Password</label>
                             <button type="button" class="auth-eye-toggle" aria-label="Show password" id="passwordToggle" tabindex="0">
                                 <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -155,7 +165,7 @@
                                 <span class="checkbox-custom"></span>
                                 <span class="checkbox-label">Remember Me</span>
                             </label>
-                            <a href="forgot-password.html?role=warden" class="auth-forgot-link">Forgot Password?</a>
+                            <a href="forgot-password.html?role=hostel-manager" class="auth-forgot-link">Forgot Password?</a>
                         </div>
 
                         <!-- Submit Authentication Button -->
@@ -198,7 +208,7 @@
     <script>
     'use strict';
     document.addEventListener('DOMContentLoaded', () => {
-        const form = document.getElementById('wardenLoginForm');
+        const form = document.getElementById('hostelManagerLoginForm');
         const emailInput = document.getElementById('email');
         const passwordInput = document.getElementById('password');
         const submitBtn = document.getElementById('submitBtn');
@@ -242,11 +252,15 @@
             clearError(emailInput, emailError);
             clearError(passwordInput, passwordError);
 
-            if (!emailInput.value.trim()) {
-                showError(emailInput, emailError, 'Email address is required.');
+            var usernameRaw = emailInput.value.trim();
+            if (!usernameRaw) {
+                showError(emailInput, emailError, 'Username is required.');
                 valid = false;
-            } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value.trim())) {
-                showError(emailInput, emailError, 'Please enter a valid email address.');
+            } else if (usernameRaw.indexOf('@') !== -1) {
+                showError(emailInput, emailError, 'Please enter a valid username.');
+                valid = false;
+            } else if (!/^[a-zA-Z0-9_.-]+$/.test(usernameRaw)) {
+                showError(emailInput, emailError, 'Please enter a valid username.');
                 valid = false;
             }
 
@@ -266,10 +280,13 @@
             btnSpinner.style.display = 'inline-block';
 
             setTimeout(() => {
-                window.location.href = 'warden-dashboard.html';
+                window.location.href = 'hostel-manager-dashboard.html';
             }, 1500);
         });
     });
     </script>
 </body>
 </html>
+
+
+

@@ -5,6 +5,73 @@
 
 'use strict';
 
+const STUDENT_EMAIL_DOMAIN = '@psnacet.edu.in';
+
+// Student registry — maps usernames to full profile data.
+// Replace this lookup with a FastAPI/PostgreSQL call when the backend is ready.
+const studentRegistry = {
+  madhavapandi: {
+    name: 'Madhavapandi S', regNo: '21CSE101', rollNo: '21101',
+    gender: 'Male', dob: '12-03-2005', bloodGroup: 'O+',
+    community: 'BC', nationality: 'Indian', aadhaar: 'XXXX-XXXX-5678',
+    degree: 'B.E', department: 'Computer Science & Engineering',
+    batch: '2027', admissionYear: '2023', currentYear: '3rd Year',
+    semester: '5', section: 'A', academicStatus: 'Studying',
+    expectedGradYear: '2027', phone: '+91 98765 43210',
+    email: 'madhavapandi@psnacet.edu.in',
+    address: '45, Main Road, Madurai', city: 'Madurai',
+    state: 'Tamil Nadu', pincode: '625001',
+    fatherName: 'P. Subramanian', motherName: 'P. Lakshmi',
+    guardianName: 'P. Subramanian', parentPhone: '+91 98765 12345',
+    tutorName: 'Dr. R. Anand'
+  },
+  kaviya: {
+    name: 'Kaviya S', regNo: '21CSE045', rollNo: '21045',
+    gender: 'Female', dob: '15-06-2004', bloodGroup: 'B+',
+    community: 'OC', nationality: 'Indian', aadhaar: 'XXXX-XXXX-1234',
+    degree: 'B.E', department: 'Computer Science & Engineering',
+    batch: '2027', admissionYear: '2023', currentYear: '3rd Year',
+    semester: '5', section: 'A', academicStatus: 'Studying',
+    expectedGradYear: '2027', phone: '+91 98765 43210',
+    email: 'kaviya.s@psna.ac.in',
+    address: '123, Anna Nagar, Dindigul', city: 'Dindigul',
+    state: 'Tamil Nadu', pincode: '624001',
+    fatherName: 'S. Subramanian', motherName: 'S. Lalitha',
+    guardianName: 'S. Subramanian', parentPhone: '+91 98765 12345',
+    tutorName: 'Dr. R. Anand'
+  },
+  arun: {
+    name: 'Arun K', regNo: '21IT023', rollNo: '21023',
+    gender: 'Male', dob: '22-01-2005', bloodGroup: 'A+',
+    community: 'MBC', nationality: 'Indian', aadhaar: 'XXXX-XXXX-9012',
+    degree: 'B.Tech', department: 'Information Technology',
+    batch: '2027', admissionYear: '2023', currentYear: '3rd Year',
+    semester: '5', section: 'B', academicStatus: 'Studying',
+    expectedGradYear: '2027', phone: '+91 98765 67890',
+    email: 'arun@psnacet.edu.in',
+    address: '78, Gandhi Nagar, Trichy', city: 'Trichy',
+    state: 'Tamil Nadu', pincode: '620001',
+    fatherName: 'K. Murugan', motherName: 'K. Devi',
+    guardianName: 'K. Murugan', parentPhone: '+91 98765 54321',
+    tutorName: 'Dr. S. Priya'
+  },
+  priya: {
+    name: 'Priya R', regNo: '21EC056', rollNo: '21056',
+    gender: 'Female', dob: '08-11-2004', bloodGroup: 'AB+',
+    community: 'BC', nationality: 'Indian', aadhaar: 'XXXX-XXXX-3456',
+    degree: 'B.E', department: 'Electronics & Communication Engineering',
+    batch: '2027', admissionYear: '2023', currentYear: '3rd Year',
+    semester: '5', section: 'A', academicStatus: 'Studying',
+    expectedGradYear: '2027', phone: '+91 98765 78901',
+    email: 'priya@psnacet.edu.in',
+    address: '56, New Street, Salem', city: 'Salem',
+    state: 'Tamil Nadu', pincode: '636001',
+    fatherName: 'R. Rajan', motherName: 'R. Meena',
+    guardianName: 'R. Rajan', parentPhone: '+91 98765 23456',
+    tutorName: 'Dr. K. Vanishree'
+  }
+};
+
 document.addEventListener('DOMContentLoaded', () => {
 
     // DOM Targets
@@ -78,11 +145,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateEmail() {
         const value = emailField.value.trim();
         if (!value) {
-            showError(emailField, emailError, 'Email address is required.');
+            showError(emailField, emailError, 'Username is required.');
             return false;
         }
-        if (!isValidEmail(value)) {
-            showError(emailField, emailError, 'Please enter a valid academic email address.');
+        const clean = value.replace(/@.*$/, '').trim();
+        if (!clean) {
+            showError(emailField, emailError, 'Please enter a valid username.');
             return false;
         }
         return true;
@@ -133,6 +201,11 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Transform username to full email
+        const usernameRaw = emailField.value.trim();
+        const username = usernameRaw.replace(/@.*$/, '').trim();
+        emailField.value = username + STUDENT_EMAIL_DOMAIN;
+
         // Set Loading State
         submitBtn.disabled = true;
         if (btnSpinner) btnSpinner.style.display = 'inline-block';
@@ -144,6 +217,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Simulated academic database latency delay
         setTimeout(() => {
+            // Clear previous session
+            ['studentProfile','certificateApps','studentNotifs','profilePhoto'].forEach(k=>localStorage.removeItem(k));
+
+            // Build the authenticated student's profile
+            const profile = studentRegistry[username.toLowerCase()];
+            const studentProfile = profile ? { ...profile } : {
+              name: username.charAt(0).toUpperCase() + username.slice(1),
+              regNo: '—', rollNo: '—', gender: '—', dob: '—',
+              bloodGroup: '—', community: '—', nationality: 'Indian',
+              aadhaar: '—', degree: 'B.E', department: '—',
+              batch: '—', admissionYear: '—', currentYear: '—',
+              semester: '—', section: '—', academicStatus: '—',
+              expectedGradYear: '—', phone: '—',
+              email: username + STUDENT_EMAIL_DOMAIN,
+              address: '—', city: '—', state: 'Tamil Nadu',
+              pincode: '—', fatherName: '—', motherName: '—',
+              guardianName: '—', parentPhone: '—', tutorName: '—'
+            };
+
+            localStorage.setItem('studentProfile', JSON.stringify(studentProfile));
             announceLive('Authentication successful! Loading Dashboard...');
 
             // Redirect simulation

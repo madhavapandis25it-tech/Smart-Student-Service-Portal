@@ -1,5 +1,7 @@
 'use strict';
 
+const STAFF_EMAIL_DOMAIN = '@psnacet.edu.in';
+
 document.addEventListener('DOMContentLoaded', () => {
 
     const loginForm = document.getElementById('staffLoginForm');
@@ -62,11 +64,12 @@ document.addEventListener('DOMContentLoaded', () => {
     function validateEmail() {
         const value = emailField.value.trim();
         if (!value) {
-            showError(emailField, emailError, 'Email address is required.');
+            showError(emailField, emailError, 'Username is required.');
             return false;
         }
-        if (!isValidEmail(value)) {
-            showError(emailField, emailError, 'Please enter a valid email address.');
+        const clean = value.replace(/@.*$/, '').trim();
+        if (!clean) {
+            showError(emailField, emailError, 'Please enter a valid username.');
             return false;
         }
         return true;
@@ -112,6 +115,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             return;
         }
+
+        const usernameRaw = emailField.value.trim();
+        const username = usernameRaw.replace(/@.*$/, '').trim();
+        emailField.value = username + STAFF_EMAIL_DOMAIN;
 
         submitBtn.disabled = true;
         if (btnSpinner) btnSpinner.style.display = 'inline-block';

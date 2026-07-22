@@ -6,7 +6,7 @@ const roleRoutes = {
   'Nodal Officer': 'nodal-officer-login.html',
   'Office Superintendent': 'os-login.html',
   'DRS': 'drs-login.html',
-  'Warden': 'warden-login.html'
+  'Hostel Manager': 'hostel-manager-login.html'
 };
 
 document.addEventListener('DOMContentLoaded', () => {

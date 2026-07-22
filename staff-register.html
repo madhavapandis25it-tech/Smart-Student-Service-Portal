@@ -127,21 +127,21 @@
 
                             <!-- Employee ID -->
                             <div class="auth-field">
-                                <input type="text" id="employeeId" class="auth-input" placeholder=" " maxlength="20" required aria-required="true" autocomplete="off">
+                                <input type="text" id="employeeId" class="auth-input" maxlength="20" required aria-required="true" autocomplete="off">
                                 <label for="employeeId" class="auth-label">Employee ID</label>
                                 <div class="error-msg" id="employeeIdError" aria-live="polite"></div>
                             </div>
 
                             <!-- Designation -->
                             <div class="auth-field">
-                                <input type="text" id="designation" class="auth-input" placeholder=" " required aria-required="true" autocomplete="off">
+                                <input type="text" id="designation" class="auth-input" required aria-required="true" autocomplete="off">
                                 <label for="designation" class="auth-label">Designation</label>
                                 <div class="error-msg" id="designationError" aria-live="polite"></div>
                             </div>
 
                             <!-- Full Name -->
                             <div class="auth-field register-full-width">
-                                <input type="text" id="fullName" class="auth-input" placeholder=" " required aria-required="true" autocomplete="name">
+                                <input type="text" id="fullName" class="auth-input" required aria-required="true" autocomplete="name">
                                 <label for="fullName" class="auth-label">Full Name</label>
                                 <div class="error-msg" id="fullNameError" aria-live="polite"></div>
                             </div>
@@ -174,22 +174,25 @@
                             </div>
 
                             <!-- Email -->
-                            <div class="auth-field register-full-width">
-                                <input type="email" id="email" class="auth-input" placeholder=" " required aria-required="true" autocomplete="email">
-                                <label for="email" class="auth-label">Official Email Address</label>
-                                <div class="error-msg" id="emailError" aria-live="polite"></div>
+                        <div class="auth-field register-full-width">
+                            <div class="auth-email-wrapper">
+                                <input type="text" id="email" class="auth-input auth-email-input" required aria-required="true" autocomplete="off">
+                                <span class="auth-email-domain">@psnacet.edu.in</span>
                             </div>
+                            <label for="email" class="auth-label">Username</label>
+                            <div class="error-msg" id="emailError" aria-live="polite"></div>
+                        </div>
 
                             <!-- Phone -->
                             <div class="auth-field register-full-width">
-                                <input type="tel" id="phone" class="auth-input" placeholder=" " pattern="[0-9]{10}" maxlength="10" required aria-required="true" autocomplete="tel">
+                                <input type="tel" id="phone" class="auth-input" pattern="[0-9]{10}" maxlength="10" required aria-required="true" autocomplete="tel">
                                 <label for="phone" class="auth-label">Phone Number</label>
                                 <div class="error-msg" id="phoneError" aria-live="polite"></div>
                             </div>
 
                             <!-- Password -->
                             <div class="auth-field">
-                                <input type="password" id="password" class="auth-input" placeholder=" " minlength="6" required aria-required="true" autocomplete="new-password">
+                                <input type="password" id="password" class="auth-input" minlength="6" required aria-required="true" autocomplete="new-password">
                                 <label for="password" class="auth-label">Password</label>
                                 <button type="button" class="auth-eye-toggle" aria-label="Show password" tabindex="0">
                                     <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -206,7 +209,7 @@
 
                             <!-- Confirm Password -->
                             <div class="auth-field">
-                                <input type="password" id="confirmPassword" class="auth-input" placeholder=" " required aria-required="true" autocomplete="new-password">
+                                <input type="password" id="confirmPassword" class="auth-input" required aria-required="true" autocomplete="new-password">
                                 <label for="confirmPassword" class="auth-label">Confirm Password</label>
                                 <button type="button" class="auth-eye-toggle" aria-label="Show password" tabindex="0">
                                     <svg class="eye-icon eye-off" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
